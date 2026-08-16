@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "Proof Scores for Memory-Preserving Agents: A Benchmark Science for Claim Discipline, Evidence Lineage, and NeuroAI Governance"
+message: "If you use this archive, please cite it as below."
+type: article
+authors:
+  - family-names: "Medina Hernandez"
+    given-names: "Alfredo"
+version: "1.0.0-public-archive"
+date-released: "2026-06-08"
+abstract: "Proof Scores proposes a benchmark framework for evaluating memory-preserving research agents by claim discipline, evidence lineage, release boundaries, promotion control, and notary-readiness."
+license: "CC-BY-4.0"
+preferred-citation:
+  type: article
+  title: "Proof Scores for Memory-Preserving Agents: A Benchmark Science for Claim Discipline, Evidence Lineage, and NeuroAI Governance"
+  authors:
+    - family-names: "Medina Hernandez"
+      given-names: "Alfredo"
+  year: 2026
+  version: "1.0.0-public-archive"

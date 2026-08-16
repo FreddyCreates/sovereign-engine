@@ -1,0 +1,19 @@
+{
+  "name": "@parallax/trading-core",
+  "version": "0.1.0-alpha.0",
+  "private": true,
+  "type": "module",
+  "description": "Risk policy gate, matching engine, clearinghouse settlement, and receipt ledger for PARALLAX alpha (Gate 3: paper order loop).",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "vitest": "^2.1.9"
+  }
+}

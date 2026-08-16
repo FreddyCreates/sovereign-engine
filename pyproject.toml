@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sovereign-infrastructure"
+version = "3.0.0"
+authors = [
+    { name="ItsnotAIlabs" },
+    { name="ThyFriendlyFox [RGNT]" }
+]
+description = "Substrate-Embedded Multi-Agent Core Engines & RevenueCat Infrastructure"
+readme = "ECOSYSTEM_ARCHITECTURAL_MAP.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]

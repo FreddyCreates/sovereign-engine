@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stripe Replacement — Sovereign Engine OS</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="brand">
+      <div class="brand-icon">S</div>
+      <div>
+        <div class="brand-title">Sovereign Engine OS</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">Stripe Replacement Powered by RevenueCat Hub</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+      <span class="badge-revenuecat">RevenueCat Official SDK 8.2.0</span>
+      <div class="system-status-indicator">
+        <div class="pulse-dot"></div>
+        <span>Paywalls v2 Active</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- NAVIGATION TABS -->
+  <div class="nav-tabs-container">
+    <div class="nav-tabs">
+      <a href="overview.html" class="tab-btn">📊 C-Suite Overview</a>
+      <a href="quickbooks.html" class="tab-btn">💼 QuickBooks Replacement</a>
+      <a href="stripe.html" class="tab-btn active">💳 Stripe Replacement</a>
+      <a href="tokenomics.html" class="tab-btn">🪙 Tokenomics & Treasury</a>
+      <a href="iot.html" class="tab-btn">⌚ Wear OS & IoT Mesh</a>
+      <a href="nexs.html" class="tab-btn">⚡ Neural Synthesizer</a>
+    </div>
+  </div>
+
+  <!-- PAGE HEADER TITLE -->
+  <div class="page-header-title">
+    <div>
+      <h1>💳 Stripe Replacement & Dynamic Paywall Hub</h1>
+      <div class="page-header-sub">Configure dynamic AST Paywall variants and test AI-driven PULSE churn prevention intercepts</div>
+    </div>
+    <button class="btn-primary" onclick="mutatePaywallAST()">⚡ Mutate Live Paywall AST</button>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main-container">
+    <div class="grid-2">
+      <!-- PAYWALL AST DESIGNER & RETENTION -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h3 class="panel-title">🎨 RevenueCat Paywalls v2 AST Designer</h3>
+          <span class="status-pill cyan">NEXS Engine</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Paywall Theme Variant</label>
+          <select id="pw-theme" class="form-select" onchange="updatePaywallPreview()">
+            <option value="NEON_CYAN">Neon Cyan Cyberpunk (Recommended)</option>
+            <option value="GOLDEN_LUXURY">Golden Ratio Luxury</option>
+            <option value="MINIMAL_DARK">Minimal Deep Space Dark</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Headline CTA Headline</label>
+          <input type="text" id="pw-cta" class="form-input" value="Unlock Sovereign Pro Access" oninput="updatePaywallPreview()">
+        </div>
+        
+        <div class="panel-header" style="margin-top: 1.75rem;">
+          <h3 class="panel-title" style="font-size: 1.05rem;">🛡️ Customer Center Churn Intercept Simulator</h3>
+          <span class="status-pill rose">PULSE Core</span>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5;">
+          Simulate a user attempting to cancel their subscription. Sovereign Engine intercepts via RevenueCat Customer Center and dispatches a dynamic 50% winback offer.
+        </p>
+        <button class="btn-secondary" onclick="simulateCancellationIntercept()" style="width: 100%;">🚨 Trigger Churn Intercept</button>
+        
+        <div id="retention-result-container" style="margin-top: 1rem; display: none;">
+          <div class="terminal-wrapper">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+              </div>
+              <span class="terminal-title">pulse_retention_core.log</span>
+            </div>
+            <div id="retention-result" class="code-preview-box"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAYWALL VISUAL PREVIEW -->
+      <div class="glass-panel" style="text-align: center;">
+        <div class="panel-header">
+          <h3 class="panel-title">📱 Live Mobile Paywall Viewport (iOS / Android)</h3>
+          <span class="status-pill success">Live Preview</span>
+        </div>
+
+        <div class="paywall-device-frame" id="paywall-canvas">
+          <span class="paywall-badge">REVENUECAT OFFICIAL SDK</span>
+          <div class="paywall-title" id="pw-title-preview">Unlock Sovereign Pro Access</div>
+          <div class="paywall-sub">Unlimited AI Agents, Wear OS Hardware Sync, and 0% FX Settlement</div>
+
+          <div class="paywall-tier-card selected" onclick="selectPaywallTier(this)">
+            <div>
+              <strong style="color: #fff;">Annual Pro Pass</strong>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">$99.99/year (Save 40%)</div>
+            </div>
+            <strong style="color: var(--accent-cyan); font-family: var(--font-mono);">$8.33/mo</strong>
+          </div>
+
+          <div class="paywall-tier-card" onclick="selectPaywallTier(this)">
+            <div>
+              <strong style="color: #fff;">Monthly Pass</strong>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">$19.99/month</div>
+            </div>
+            <strong style="color: #fff; font-family: var(--font-mono);">$19.99/mo</strong>
+          </div>
+
+          <button class="btn-primary" style="width: 100%; margin-top: 1.25rem;" id="pw-btn-preview">Start 7-Day Free Trial</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

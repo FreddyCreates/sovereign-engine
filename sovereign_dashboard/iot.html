@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wear OS & IoT Mesh — Sovereign Engine OS</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="brand">
+      <div class="brand-icon">S</div>
+      <div>
+        <div class="brand-title">Sovereign Engine OS</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">GRID Wear OS & IoT Hardware Telemetry</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+      <span class="badge-revenuecat">Biometric Stream Radar Active</span>
+      <div class="system-status-indicator">
+        <div class="pulse-dot"></div>
+        <span>GRID Mesh Live</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- NAVIGATION TABS -->
+  <div class="nav-tabs-container">
+    <div class="nav-tabs">
+      <a href="overview.html" class="tab-btn">📊 C-Suite Overview</a>
+      <a href="quickbooks.html" class="tab-btn">💼 QuickBooks Replacement</a>
+      <a href="stripe.html" class="tab-btn">💳 Stripe Replacement</a>
+      <a href="tokenomics.html" class="tab-btn">🪙 Tokenomics & Treasury</a>
+      <a href="iot.html" class="tab-btn active">⌚ Wear OS & IoT Mesh</a>
+      <a href="nexs.html" class="tab-btn">⚡ Neural Synthesizer</a>
+    </div>
+  </div>
+
+  <!-- PAGE HEADER TITLE -->
+  <div class="page-header-title">
+    <div>
+      <h1>⌚ Wear OS & IoT Hardware Telemetry Mesh</h1>
+      <div class="page-header-sub">Biometric telemetry processing with RevenueCat entitlement hardware unlocks</div>
+    </div>
+    <button class="btn-primary" onclick="refreshIoTMesh()">🔄 Refresh Mesh Telemetry</button>
+  </div>
+
+  <!-- METRICS BAR -->
+  <section class="metrics-bar">
+    <div class="metric-card">
+      <div class="metric-label">Active Wear OS Nodes</div>
+      <div class="metric-value" style="color: var(--accent-cyan);">1,248 Watches</div>
+      <div class="metric-change positive">▲ 100% Entitlement Synced</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Avg Biometric Heart Rate</div>
+      <div class="metric-value" style="color: var(--accent-green);">72 BPM</div>
+      <div class="metric-change positive">▲ Optimal Coherence</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Biometric SpO2 Level</div>
+      <div class="metric-value">98.5%</div>
+      <div class="metric-change positive">▲ High Stream Accuracy</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Mesh Consensus Latency</div>
+      <div class="metric-value" style="color: var(--accent-gold);">12 ms</div>
+      <div class="metric-change positive">▲ Real-Time Processing</div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main-container" style="margin-top: 1rem;">
+    <div class="grid-2">
+      <!-- RADAR TELEMETRY PANEL -->
+      <div class="glass-panel" style="text-align: center;">
+        <div class="panel-header">
+          <h3 class="panel-title">⌚ GRID Biometric Telemetry Radar</h3>
+          <span class="status-pill cyan">Live Sweep</span>
+        </div>
+        <div class="radar-container">
+          <div class="radar-box">
+            <div class="radar-sweep"></div>
+            <div class="radar-dot" style="top: 45px; left: 65px;"></div>
+            <div class="radar-dot" style="top: 130px; left: 145px;"></div>
+            <div class="radar-dot" style="top: 90px; left: 110px; background-color: var(--accent-green); box-shadow: 0 0 12px var(--accent-green);"></div>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+            Parsing real-time Wear OS Heart Rate (BPM) & SpO2 % sensor streams via RevenueCat entitlement hardware bridge.
+          </p>
+        </div>
+      </div>
+
+      <!-- CONSENSUS TABLE PANEL -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h3 class="panel-title">🔒 Hardware Unlock Consensus Monitor</h3>
+          <span class="status-pill success">RevenueCat Verified</span>
+        </div>
+        <div class="table-responsive">
+          <table class="sovereign-table">
+            <thead>
+              <tr>
+                <th>Device ID</th>
+                <th>Hardware Type</th>
+                <th>Entitlement Status</th>
+                <th>Health Index</th>
+              </tr>
+            </thead>
+            <tbody id="iot-device-table-body">
+              <tr>
+                <td><strong style="font-family: var(--font-mono);">WATCH_01_DE</strong></td>
+                <td>Wear OS Watch</td>
+                <td><span class="status-pill success">UNLOCKED (Pro)</span></td>
+                <td><span style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 700;">0.98</span></td>
+              </tr>
+              <tr>
+                <td><strong style="font-family: var(--font-mono);">SENSOR_02_US</strong></td>
+                <td>Biometric Sensor</td>
+                <td><span class="status-pill success">UNLOCKED (Pro)</span></td>
+                <td><span style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 700;">0.94</span></td>
+              </tr>
+              <tr>
+                <td><strong style="font-family: var(--font-mono);">NODE_03_JP</strong></td>
+                <td>Smart Hardware Node</td>
+                <td><span class="status-pill gold">STANDBY (Basic)</span></td>
+                <td><span style="font-family: var(--font-mono); color: var(--accent-gold); font-weight: 700;">0.89</span></td>
+              </tr>
+              <tr>
+                <td><strong style="font-family: var(--font-mono);">WATCH_04_UK</strong></td>
+                <td>Galaxy Watch 6</td>
+                <td><span class="status-pill success">UNLOCKED (Pro)</span></td>
+                <td><span style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 700;">0.97</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

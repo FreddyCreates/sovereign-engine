@@ -1,0 +1,10 @@
+{
+  "notary_schema": "medina.notary_packet.v1",
+  "artifact_id": "NEUROAI-REPO-CERN-EXPANDED-20260601",
+  "created_at": "2026-06-01T23:55:00Z",
+  "hash_manifest_ref": "manifests/hash_manifest.json",
+  "operator_approval_required": true,
+  "receipt_status": "no_external_receipt_attached",
+  "public_wording_limit": "local hash only; not notarized",
+  "merkle_root": "1bd710601ffe95db2845d8ec9083accc47ca31c1696b5e3c969f02f90893289b"
+}

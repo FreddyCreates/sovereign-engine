@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickBooks Replacement — Sovereign Engine OS</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="brand">
+      <div class="brand-icon">S</div>
+      <div>
+        <div class="brand-title">Sovereign Engine OS</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">QuickBooks Replacement & General Ledger</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+      <span class="badge-revenuecat">AURA & XFIN Cores Entangled</span>
+      <div class="system-status-indicator">
+        <div class="pulse-dot"></div>
+        <span>Accounting Autonomic</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- NAVIGATION TABS -->
+  <div class="nav-tabs-container">
+    <div class="nav-tabs">
+      <a href="overview.html" class="tab-btn">📊 C-Suite Overview</a>
+      <a href="quickbooks.html" class="tab-btn active">💼 QuickBooks Replacement</a>
+      <a href="stripe.html" class="tab-btn">💳 Stripe Replacement</a>
+      <a href="tokenomics.html" class="tab-btn">🪙 Tokenomics & Treasury</a>
+      <a href="iot.html" class="tab-btn">⌚ Wear OS & IoT Mesh</a>
+      <a href="nexs.html" class="tab-btn">⚡ Neural Synthesizer</a>
+    </div>
+  </div>
+
+  <!-- PAGE HEADER TITLE -->
+  <div class="page-header-title">
+    <div>
+      <h1>💼 QuickBooks Replacement & Autonomic Ledger</h1>
+      <div class="page-header-sub">Real-time P&L Statement calculation with instant AURA B2B invoice underwriting</div>
+    </div>
+    <button class="btn-primary" onclick="exportPLStatement()">📥 Export P&L Statement (PDF/CSV)</button>
+  </div>
+
+  <!-- METRICS BAR -->
+  <section class="metrics-bar">
+    <div class="metric-card">
+      <div class="metric-label">Gross Subscription Revenue</div>
+      <div class="metric-value" style="color: var(--accent-green);">$446,760.00</div>
+      <div class="metric-change positive">▲ +22.4% vs last Qtr</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">App Store Platform Fees (COGS)</div>
+      <div class="metric-value" style="color: var(--accent-rose);">-$67,014.00</div>
+      <div class="metric-change positive">▼ Reduced via Direct Web Billing</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Autonomic Gross Profit</div>
+      <div class="metric-value">$379,746.00</div>
+      <div class="metric-change positive">▲ 85.0% Gross Margin</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Net Pre-Tax Income</div>
+      <div class="metric-value" style="color: var(--accent-cyan);">$331,246.00</div>
+      <div class="metric-change positive">▲ 74.2% Net Margin</div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main-container" style="margin-top: 1rem;">
+    <div class="grid-2">
+      <!-- P&L STATEMENT PANEL -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h3 class="panel-title">📊 Autonomic Profit & Loss Statement (Q3 2026)</h3>
+          <span class="status-pill success">QuickBooks Zero-Fee Replaced</span>
+        </div>
+        <div class="table-responsive">
+          <table class="sovereign-table">
+            <thead>
+              <tr>
+                <th>Financial Line Item</th>
+                <th>Quarterly Amount</th>
+                <th>YoY Growth</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Gross Subscription Revenue</strong></td>
+                <td style="color: var(--accent-green); font-weight: 700; font-family: var(--font-mono);">$446,760.00</td>
+                <td><span class="status-pill success">+22.4%</span></td>
+              </tr>
+              <tr>
+                <td>Cost of Goods Sold (App Store / Google 15% Fee)</td>
+                <td style="color: var(--accent-rose); font-family: var(--font-mono);">-$67,014.00</td>
+                <td><span class="status-pill rose">-15.0%</span></td>
+              </tr>
+              <tr style="background: rgba(255, 255, 255, 0.02);">
+                <td><strong>Gross Profit</strong></td>
+                <td style="font-weight: 700; font-family: var(--font-mono);">$379,746.00</td>
+                <td><span class="status-pill success">+24.1%</span></td>
+              </tr>
+              <tr>
+                <td>Operating Expenses (AI Compute & Infra)</td>
+                <td style="color: var(--accent-rose); font-family: var(--font-mono);">-$48,500.00</td>
+                <td><span class="status-pill gold">-4.2%</span></td>
+              </tr>
+              <tr style="background: rgba(0, 242, 254, 0.08); border-top: 2px solid var(--accent-cyan);">
+                <td><strong>Net Income (Pre-Tax)</strong></td>
+                <td style="color: var(--accent-cyan); font-weight: 800; font-size: 1.15rem; font-family: var(--font-mono);">$331,246.00</td>
+                <td><span class="status-pill cyan">+28.9%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- B2B INVOICE GENERATOR PANEL -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h3 class="panel-title">🧾 B2B Risk-Underwritten Invoice Generator</h3>
+          <span class="status-pill cyan">AURA Core Engine</span>
+        </div>
+        <form onsubmit="generateInvoice(event)">
+          <div class="form-group">
+            <label class="form-label">Client / Organization Name</label>
+            <input type="text" id="inv-client" class="form-input" value="Apex Global Technologies LLC" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Invoice Amount ($ USD)</label>
+            <input type="number" id="inv-amount" class="form-input" value="12500.00" step="100" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Payment Terms & Risk Model</label>
+            <select id="inv-terms" class="form-select">
+              <option value="NET_30">Net 30 Days (AURA Score Underwritten)</option>
+              <option value="DUE_NOW">Due Immediately (RevenueCat Web Paywall)</option>
+              <option value="NET_60">Net 60 Days (Enterprise Collateral Locked)</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%;">⚡ Generate Underwritten Invoice</button>
+        </form>
+
+        <div id="invoice-result-container" style="margin-top: 1.25rem; display: none;">
+          <div class="terminal-wrapper">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+              </div>
+              <span class="terminal-title">aura_underwriting_engine.log</span>
+            </div>
+            <div id="invoice-result" class="code-preview-box"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

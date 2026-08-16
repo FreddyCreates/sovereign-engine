@@ -1,0 +1,79 @@
+{
+  "matrix_schema": "medina.evidence_matrix.v1",
+  "artifact_id": "PAPER-NEUROEMERGENCE-CORE-UPGRADE-2026-06-12",
+  "authority_state": "INTERNAL_RESEARCH",
+  "evidence": [
+    {
+      "id": "E-001",
+      "source": "02-Pasted-text-18-.txt",
+      "source_type": "architecture_draft",
+      "supports": ["C-001", "C-002", "C-003"],
+      "evidence_class": "conceptual_source_material",
+      "strength": "medium_for_framing_low_for_implementation",
+      "limits": "No code, deployment proof, canister IDs, external citations, or benchmarks."
+    },
+    {
+      "id": "E-002",
+      "source": "08-core_brain_exp_1781225128938_2-1-.csv",
+      "source_type": "simulation_dataset",
+      "supports": ["C-004"],
+      "evidence_class": "internal_quantitative_result",
+      "strength": "strong_for_single_visible_scenario",
+      "limits": "No simulator code, preregistration, ablation, independence check, or external replication visible."
+    },
+    {
+      "id": "E-003",
+      "source": "06-Human-Connectome-Session-Report-session_1781227624519_kpt65-1-.pdf",
+      "source_type": "simulation_report",
+      "supports": ["C-006"],
+      "evidence_class": "internal_telemetry_report",
+      "strength": "medium_for_platform_trace",
+      "limits": "Saturation warning, correlation caveats, STDP-inspired approximation, and simulation-only boundary."
+    },
+    {
+      "id": "E-004",
+      "source": "04-Neuropharmacology-Lab-Report-Triaxion-47.pdf",
+      "source_type": "controlled_simulation_report",
+      "supports": ["C-008"],
+      "evidence_class": "internal_controlled_lab_report",
+      "strength": "medium_for_weak_effect_verdict",
+      "limits": "Not live-brain data, not clinical evidence, not full pharmacokinetic modeling."
+    },
+    {
+      "id": "E-005",
+      "source": "07-agent_rnd_report_1781227439518-1-.txt",
+      "source_type": "internal_diagnostic_report",
+      "supports": ["C-010"],
+      "evidence_class": "internal_diagnostic",
+      "strength": "low_for_capability_claims",
+      "limits": "All sections report WEAK EFFECT; military/political framing should remain private and unpromoted."
+    },
+    {
+      "id": "E-006",
+      "source": "03-Recording-2026-06-11-194343.gif",
+      "source_type": "ui_capture",
+      "supports": ["C-006"],
+      "evidence_class": "interface_existence_evidence",
+      "strength": "low_for_backend_validity",
+      "limits": "OCR is noisy; screenshot/UI capture does not prove underlying model validity."
+    },
+    {
+      "id": "E-007",
+      "source": "05-Copilot_20260611_201154.png",
+      "source_type": "ui_capture",
+      "supports": ["C-008"],
+      "evidence_class": "interface_existence_evidence",
+      "strength": "low_for_backend_validity",
+      "limits": "OCR is noisy; screenshot/UI capture does not prove biological or pharmacological validity."
+    }
+  ],
+  "missing_evidence": [
+    "Simulator source code or executable harness.",
+    "Scenario and metric definitions.",
+    "Ablation runs.",
+    "Statistical tests and confidence intervals.",
+    "External citations for Internet Computer canister capabilities and persistent-agent literature.",
+    "Independent reproduction runs.",
+    "Public/private IP review."
+  ]
+}

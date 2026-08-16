@@ -1,0 +1,16 @@
+Ruby on Rails API (services/rails-api/) — Full REST API with auth, repos, issues, PRs, search, webhooks
+Go Git Service (services/git-service/) — Performance-critical git operations using libgit2/go-git
+MySQL — Primary database with proper migrations
+Redis — Caching + Sidekiq background jobs
+Elasticsearch — Code search, repo search, user search
+Kafka — Event streaming (repo.created, etc.)
+Kubernetes — Production deployment manifests with auto-scaling
+Go CLI (services/cli/) — command CLI tool like gh
+TypeScript SDK (services/sdk-js/) — @command-platform/sdk like Octokit
+CI/CD — Full GitHub Actions pipeline testing all services
+From Caffeine AI's Stack:
+Rust Engine (services/rust-engine/) — Tree-sitter parsing, LSP, CRDT collaboration
+Python AI Service (services/ai-service/) — FastAPI with OpenAI + Anthropic LLM routing
+WebSockets — Real-time collaboration (ActionCable + Yjs CRDT)
+VS Code Extension (services/vscode-extension/) — Inline AI completions, chat, review
+LSP Protocol — Full Language Server Protocol implementation

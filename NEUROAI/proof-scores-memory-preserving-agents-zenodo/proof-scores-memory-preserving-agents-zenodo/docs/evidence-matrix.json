@@ -1,0 +1,41 @@
+{
+  "schema": "medina.evidence_matrix.v1",
+  "packet_id": "PROOF-SCORES-ZENODO-20260608",
+  "evidence": [
+    {
+      "evidence_id": "SRC-001",
+      "claim_ids_supported": ["PS-C001", "PS-C002", "PS-C004"],
+      "evidence_type": "user_supplied_source_text",
+      "citation_or_source": "source/source_pasted_text_21.txt",
+      "limitations": "Supports the proposal framing; does not validate the benchmark empirically."
+    },
+    {
+      "evidence_id": "EXT-001",
+      "claim_ids_supported": ["PS-C003"],
+      "evidence_type": "external_benchmark_precedent",
+      "citation_or_source": "Brain-Score platform, https://www.brain-score.org/",
+      "limitations": "Benchmark precedent only; does not validate Proof Scores."
+    },
+    {
+      "evidence_id": "EXT-002",
+      "claim_ids_supported": ["PS-C003"],
+      "evidence_type": "external_benchmark_precedent",
+      "citation_or_source": "Banville et al. 2026, NeuralBench, arXiv:2605.08495",
+      "limitations": "NeuroAI model benchmark precedent only."
+    },
+    {
+      "evidence_id": "EXT-003",
+      "claim_ids_supported": ["PS-C003"],
+      "evidence_type": "external_benchmark_precedent",
+      "citation_or_source": "NeuroBench framework, arXiv:2304.04640",
+      "limitations": "Neuromorphic benchmark precedent only."
+    },
+    {
+      "evidence_id": "PKT-001",
+      "claim_ids_supported": ["PS-C005", "PS-C007", "PS-C008", "PS-C009"],
+      "evidence_type": "generated_packet_files",
+      "citation_or_source": "code/, models/, data/, notebooks/, data/seed_suite_spec.json, docs/expert-panel-guide.md, docs/baseline-protocol.md, docs/public-release-checklist.md",
+      "limitations": "Starter scaffold only; no empirical benchmark validation is claimed."
+    }
+  ]
+}

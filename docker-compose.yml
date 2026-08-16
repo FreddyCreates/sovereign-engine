@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  sovereign-substrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sovereign_substrate_microservice
+    ports:
+      - "8089:8089"
+    environment:
+      - REVENUECAT_WEBHOOK_SECRET=rc_whsec_live_sovereign_2026
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - sqlite_data:/app/sovereign_revenuecat_protocols
+    restart: unless-stopped
+
+volumes:
+  sqlite_data:

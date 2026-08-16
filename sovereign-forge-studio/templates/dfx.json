@@ -1,0 +1,32 @@
+{
+  "canisters": {
+    "sovereign_backend": {
+      "type": "motoko",
+      "main": "src/backend/main.mo",
+      "candid": "src/backend/capsula.did"
+    },
+    "sovereign_token": {
+      "type": "motoko",
+      "main": "src/backend/token.mo",
+      "candid": "src/backend/token.did"
+    },
+    "sovereign_frontend": {
+      "type": "assets",
+      "source": [
+        "src/frontend/dist"
+      ],
+      "dependencies": [
+        "sovereign_backend",
+        "sovereign_token"
+      ]
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}

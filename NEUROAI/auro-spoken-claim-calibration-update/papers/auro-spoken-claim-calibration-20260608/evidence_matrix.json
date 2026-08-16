@@ -1,0 +1,43 @@
+{
+  "evidence_matrix_schema": "medina.evidence_matrix.v1",
+  "packet_id": "THESIS-AURO-SCC-20260608-A",
+  "source_packet_id": "NEUROAI-REPO-CERN-EXPANDED-20260601",
+  "evidence_items": [
+    {
+      "evidence_id": "AURO-SCC-EVID-001",
+      "related_claim_id": "AURO-SCC-CLAIM-004",
+      "evidence_type": "paper_reference",
+      "source_ref": "user_files/01-auro-dynamics-speaking-intelligence.pdf",
+      "status": "attached",
+      "environment_boundary": "Uploaded source PDF inspected in workspace.",
+      "notes": "Source paper states Auro is a research surface, not a validated biological system."
+    },
+    {
+      "evidence_id": "AURO-SCC-EVID-002",
+      "related_claim_id": "AURO-SCC-CLAIM-001",
+      "evidence_type": "paper_reference",
+      "source_ref": "source Section 12 and Section 15 Evaluation Matrix",
+      "status": "attached",
+      "environment_boundary": "Text extracted from uploaded PDF.",
+      "notes": "Source paper already names Spoken Claim Calibration and the failure example."
+    },
+    {
+      "evidence_id": "AURO-SCC-EVID-003",
+      "related_claim_id": "AURO-SCC-CLAIM-003",
+      "evidence_type": "experiment_plan",
+      "source_ref": "evaluation_rubric.json",
+      "status": "planned",
+      "environment_boundary": "Rubric prepared; no audio dataset or scoring results attached.",
+      "notes": "Defines metrics and target thresholds."
+    },
+    {
+      "evidence_id": "AURO-SCC-EVID-004",
+      "related_claim_id": "AURO-SCC-CLAIM-004",
+      "evidence_type": "operator_note",
+      "source_ref": "user request, 2026-06-08",
+      "status": "attached",
+      "environment_boundary": "User explicitly requested strict claim posture.",
+      "notes": "Auro is repo-native research surface, not validated biological or conscious system."
+    }
+  ]
+}

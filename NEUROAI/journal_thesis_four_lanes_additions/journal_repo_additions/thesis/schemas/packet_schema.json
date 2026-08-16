@@ -1,0 +1,21 @@
+{
+  "schema": "thesis.packet.v1",
+  "packet_id": "",
+  "packet_class": "research_packet",
+  "packet_family": "publication",
+  "source_artifacts": [],
+  "repositories": [],
+  "claim_class_summary": {},
+  "evidence_state": "mixed",
+  "release_boundary": "internal_research",
+  "outputs": {
+    "paper": null,
+    "claims_matrix": null,
+    "evidence_matrix": null,
+    "verifier_report": null,
+    "hash_manifest": null,
+    "print_bundle": null
+  },
+  "review_state": "operator_review_required",
+  "promotion_state": "draft"
+}

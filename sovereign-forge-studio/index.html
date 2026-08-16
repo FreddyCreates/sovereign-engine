@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedinaMemorySystems - Cursor IDE</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    
+    <!-- Top Window Title Bar -->
+    <div class="top-menu-bar">
+      <div class="menu-items">
+        <span class="menu-item">File</span>
+        <span class="menu-item">Edit</span>
+        <span class="menu-item">Selection</span>
+        <span class="menu-item">View</span>
+        <span class="menu-item">Go</span>
+        <span class="menu-item">Run</span>
+        <span class="menu-item">Terminal</span>
+        <span class="menu-item">Help</span>
+      </div>
+      <div class="window-title">MedinaMemorySystems</div>
+      <div class="window-controls-picker">
+        <button id="connect-ii-btn" class="agents-picker">Agents Window ▾</button>
+        <div class="window-buttons">
+          <span class="win-dot red"></span>
+          <span class="win-dot yellow"></span>
+          <span class="win-dot green"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Workspace Container -->
+    <div class="main-workspace">
+      
+      <!-- Activity Bar (Far Left) -->
+      <div class="activity-bar">
+        <div class="activity-icon active" title="Explorer">📁</div>
+        <div class="activity-icon" title="Search">🔍</div>
+        <div class="activity-icon" title="Source Control">⌥</div>
+        <div class="activity-icon" title="Extensions">⚃</div>
+        <div class="activity-icon" style="margin-top: auto; margin-bottom: 10px;" title="Settings">⚙️</div>
+      </div>
+
+      <!-- Left Sidebar (Changes, Agent Review, Commit Graph) -->
+      <div class="left-sidebar">
+        
+        <!-- Changes Block -->
+        <div class="sidebar-section">
+          <div class="sidebar-header">
+            <span>Changes</span>
+            <span style="color: var(--warning); font-weight:700;">36</span>
+          </div>
+          <div class="changes-content">
+            <input type="text" class="commit-input" placeholder='Message (Ctrl+Enter) to commit on "curs...'>
+            <button class="btn-commit">✓ Commit</button>
+            <div class="changes-list">
+              <div class="change-item" data-file="package-lock.json">
+                <div class="change-item-left">
+                  <span>{} package-lock.json</span>
+                </div>
+                <span class="change-status M">M</span>
+              </div>
+              <div class="change-item" data-file="next.config.js">
+                <div class="change-item-left">
+                  <span>JS next.config.js</span>
+                  <span class="change-path">apps/medina-builder...</span>
+                </div>
+                <span class="change-status U">U</span>
+              </div>
+              <div class="change-item" data-file="package.json">
+                <div class="change-item-left">
+                  <span>{} package.json</span>
+                  <span class="change-path">apps/medina-builder...</span>
+                </div>
+                <span class="change-status M">M</span>
+              </div>
+              <div class="change-item" data-file="layout.tsx">
+                <div class="change-item-left">
+                  <span>TS layout.tsx</span>
+                  <span class="change-path">apps/medina-builder...</span>
+                </div>
+                <span class="change-status U">U</span>
+              </div>
+              <div class="change-item" data-file="tokens.json">
+                <div class="change-item-left">
+                  <span>{} tokens.json</span>
+                  <span class="change-path">apps/medina-builder...</span>
+                </div>
+                <span class="change-status U">U</span>
+              </div>
+              <div class="change-item" data-file="main.mo">
+                <div class="change-item-left">
+                  <span>MO main.mo</span>
+                  <span class="change-path">canister/</span>
+                </div>
+                <span class="change-status M">M</span>
+              </div>
+              <div class="change-item" data-file="token.mo">
+                <div class="change-item-left">
+                  <span>MO token.mo</span>
+                  <span class="change-path">canister/</span>
+                </div>
+                <span class="change-status M">M</span>
+              </div>
+              <div class="change-item" data-file="lib.rs">
+                <div class="change-item-left">
+                  <span>RS lib.rs</span>
+                  <span class="change-path">rust/</span>
+                </div>
+                <span class="change-status M">M</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent Review Block -->
+        <div class="sidebar-section">
+          <div class="sidebar-header">Agent Review</div>
+          <div class="review-content">
+            <button class="btn-review">Find Issues</button>
+            <div style="font-size: 10px; color: var(--text-dark); text-align: center;">Review diffs vs. main.</div>
+          </div>
+        </div>
+
+        <!-- Git Graph Block -->
+        <div class="sidebar-section" style="flex: 1; display: flex; flex-direction: column; border-bottom: none;">
+          <div class="sidebar-header">Graph</div>
+          <div id="git-graph-container" class="graph-content">
+            <!-- Dynamically populated from repository commits history -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Center Pane (GitHub web view or IDE editor) -->
+      <div class="center-pane">
+        
+        <!-- Tab Bar -->
+        <div class="center-tabs-bar">
+          <div id="tab-gh-browser" class="center-tab active">
+            <span>🌐 ItsNotAILABS repositories · GitHub</span>
+            <span class="center-tab-close">×</span>
+          </div>
+          <div id="tab-editor-file" class="center-tab" style="display: none;">
+            <span id="editor-tab-name">Untitled-1</span>
+            <span class="center-tab-close" id="editor-tab-close-btn">×</span>
+          </div>
+        </div>
+
+        <!-- Simulated GitHub Browser (Tab 1 content) -->
+        <div id="view-browser-container" class="inapp-browser">
+          <div class="browser-url-bar">
+            <span class="browser-nav-btn">←</span>
+            <span class="browser-nav-btn">→</span>
+            <span class="browser-nav-btn">⟳</span>
+            <div class="browser-address">
+              <span style="color: #2ea043;">🔒</span>
+              <span>https://github.com/orgs/ItsNotAILABS/repositories</span>
+            </div>
+          </div>
+          
+          <div class="browser-content">
+            <div class="gh-org-header">
+              <div class="gh-org-avatar">I</div>
+              <div>
+                <div class="gh-org-name">ItsNotAILABS</div>
+                <div style="font-size: 11px; color: #8b949e; margin-top: 2px;">Dallas, Texas · Medina Sovereign Systems</div>
+              </div>
+            </div>
+
+            <div class="gh-tabs">
+              <div class="gh-tab">Overview</div>
+              <div class="gh-tab active">Repositories <span style="background: #30363d; border-radius: 10px; padding: 2px 6px; font-size: 10px; margin-left: 4px;">16</span></div>
+              <div class="gh-tab">Projects</div>
+              <div class="gh-tab">Packages</div>
+              <div class="gh-tab">People</div>
+            </div>
+
+            <div class="gh-repo-search">
+              <input type="text" class="gh-search-input" placeholder="Search repositories...">
+            </div>
+
+            <div class="gh-repos-list">
+              
+              <div class="gh-repo-card" data-repo="PRODUCTION-">
+                <div>
+                  <div class="gh-repo-title">PRODUCTION-</div>
+                  <div class="gh-repo-desc">Public template containing the stable Multi-Canister architectures.</div>
+                  <div class="gh-repo-meta">
+                    <span><span class="gh-lang-dot js"></span> JavaScript</span>
+                    <span>Updated 52 minutes ago</span>
+                  </div>
+                </div>
+                <div class="gh-sparkline">
+                  <div class="spark-bar" style="height: 10%;"></div>
+                  <div class="spark-bar" style="height: 25%;"></div>
+                  <div class="spark-bar" style="height: 40%;"></div>
+                  <div class="spark-bar" style="height: 90%;"></div>
+                </div>
+              </div>
+
+              <div class="gh-repo-card" data-repo="NEUROSWARMAI">
+                <div>
+                  <div class="gh-repo-title">NEUROSWARMAI</div>
+                  <div class="gh-repo-desc">A CHIMERIA POWERED SWARM. NOVA GOVERNED. ORO RUN TIME.</div>
+                  <div class="gh-repo-meta">
+                    <span><span class="gh-lang-dot motoko"></span> Motoko</span>
+                    <span>Updated 2 hours ago</span>
+                  </div>
+                </div>
+                <div class="gh-sparkline">
+                  <div class="spark-bar" style="height: 5%;"></div>
+                  <div class="spark-bar" style="height: 15%;"></div>
+                  <div class="spark-bar" style="height: 35%;"></div>
+                  <div class="spark-bar" style="height: 85%;"></div>
+                </div>
+              </div>
+
+              <div class="gh-repo-card" data-repo="LOOM-Memoria-De-Intelligencia-">
+                <div>
+                  <div class="gh-repo-title">LOOM-Memoria-De-Intelligencia-</div>
+                  <div class="gh-repo-desc">3Brains memory for Living Intelligence, Giving AI a Reality, Persistent memory mapping.</div>
+                  <div class="gh-repo-meta">
+                    <span><span class="gh-lang-dot motoko"></span> Motoko</span>
+                    <span>Updated 2 hours ago</span>
+                  </div>
+                </div>
+                <div class="gh-sparkline">
+                  <div class="spark-bar" style="height: 12%;"></div>
+                  <div class="spark-bar" style="height: 18%;"></div>
+                  <div class="spark-bar" style="height: 45%;"></div>
+                  <div class="spark-bar" style="height: 95%;"></div>
+                </div>
+              </div>
+
+              <div class="gh-repo-card" data-repo="MedinaMemorySystems">
+                <div>
+                  <div class="gh-repo-title">MedinaMemorySystems</div>
+                  <div class="gh-repo-desc">Workspace hub and web-to-local compilers for our sovereign tokenized ledgers.</div>
+                  <div class="gh-repo-meta">
+                    <span><span class="gh-lang-dot ts"></span> TypeScript</span>
+                    <span>Updated 19 hours ago</span>
+                  </div>
+                </div>
+                <div class="gh-sparkline">
+                  <div class="spark-bar" style="height: 20%;"></div>
+                  <div class="spark-bar" style="height: 30%;"></div>
+                  <div class="spark-bar" style="height: 15%;"></div>
+                  <div class="spark-bar" style="height: 60%;"></div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Simulated Code Editor Pane (Tab 2 content - hidden by default) -->
+        <div id="view-editor-container" class="editor-view" style="display: none; position: relative;">
+          <!-- Floating Diff Accept/Reject Bar -->
+          <div id="floating-diff-bar" class="floating-diff-bar" style="display: none;">
+            <span style="font-size: 11px; font-weight:600; color: #fff;">AI suggestions generated. Review modifications:</span>
+            <button id="btn-accept-diff" class="btn-diff-action accept">Accept ✓</button>
+            <button id="btn-reject-diff" class="btn-diff-action reject">Reject</button>
+          </div>
+          
+          <div class="editor-canvas-container">
+            <div id="editor-line-numbers" class="editor-line-numbers"></div>
+            <div style="flex:1; overflow:hidden; position:relative;">
+              <textarea id="code-editor-area" class="editor-textarea" readonly></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Panel (Console split terminals) -->
+        <div class="console-panel">
+          <div class="console-header">
+            <div class="console-tabs">
+              <span class="console-tab">Problems</span>
+              <span class="console-tab">Output</span>
+              <span class="console-tab">Debug Console</span>
+              <span class="console-tab active">Terminal</span>
+              <span class="console-tab">Ports</span>
+            </div>
+          </div>
+          <div class="console-split">
+            <!-- Terminal WSL (Left side) -->
+            <div id="wsl-terminal" class="terminal-shell">
+              <div class="terminal-row info">WSL environment loaded (wsl-Ubuntu). Compiler ready.</div>
+              <div class="terminal-row cmd">MESIE@CommandCenter:/mnt/c/Users/Medin/MedinaMemorySystems$</div>
+            </div>
+            
+            <!-- Terminal PowerShell (Right side) -->
+            <div id="powershell-terminal" class="terminal-shell powershell">
+              <div class="terminal-row info">Windows PowerShell console (MedinaMemorySystems).</div>
+              <div class="terminal-row cmd">PS C:\Users\Medin\MedinaMemorySystems></div>
+            </div>
+
+            <!-- Shell list toggles (Far right of console) -->
+            <div class="terminal-shell-list">
+              <span class="shell-item active">powershell</span>
+              <span class="shell-item">wsl</span>
+              <span class="shell-item">powershell</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column (Claude Chat / Agent Composer) -->
+      <section class="agent-col">
+        <div class="agent-header">
+          <span class="agent-title">New Agent</span>
+        </div>
+        
+        <div id="chat-container" class="agent-history">
+          <!-- Conversation messages populate here -->
+        </div>
+
+        <div class="agent-input-container">
+          <div class="agent-input-wrapper">
+            <textarea id="ai-prompt-input" class="agent-text-input" placeholder="Plan, Build, / for skills, @ for context"></textarea>
+            <div class="agent-input-footer">
+              <div class="agent-selector-pills">
+                <select id="model-select" class="agent-pill">
+                  <option value="cerebex">Agent (Auto)</option>
+                  <option value="claude">Claude 3.5 Sonnet</option>
+                  <option value="gemini">Gemini 1.5 Pro</option>
+                </select>
+              </div>
+              <div class="agent-input-icons">
+                <span class="agent-icon-btn" id="btn-attach" title="Attach file context">📎</span>
+                <span class="agent-icon-btn" title="Voice Input">🎤</span>
+                <button id="send-prompt-btn" class="btn-send">▲</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "route_id": "ROUTE-CAPSULA-ICP-20260616",
+  "work_class": "icp-native-platform-build",
+  "branch_status": "trunk-candidate",
+  "source_surface": "Source Engine",
+  "target_surfaces": [
+    "Forge Surface",
+    "Deploy Surface",
+    "Nexus Registry"
+  ],
+  "route": [
+    {
+      "surface": "Source Engine",
+      "purpose": "ingest ICP skill doctrine, memory-book capsules, repository intelligence, and artifact fingerprints",
+      "handoff_file": "handoffs/source-to-forge.md",
+      "expected_output": "source-qualified capsule manifests and build law"
+    },
+    {
+      "surface": "Forge Surface",
+      "purpose": "compile doctrine into Motoko canister code, asset UI, schemas, docs, and predeploy scripts",
+      "handoff_file": "handoffs/forge-to-deploy.md",
+      "expected_output": "deployable ICP repo with NERVUS predeploy chain"
+    },
+    {
+      "surface": "Deploy Surface",
+      "purpose": "validate local deployment readiness, mainnet promotion reason, identity, cycles, and canister configuration",
+      "handoff_file": "docs/PIPELINE.md",
+      "expected_output": "local deploy confirmation and mainnet gate decision"
+    },
+    {
+      "surface": "Nexus Registry",
+      "purpose": "register capsule ids, chain ids, file fingerprints, deployment records, and incident notes",
+      "handoff_file": "handoffs/nexus-registration.md",
+      "expected_output": "registry-ready object with lineage and deployment status"
+    }
+  ],
+  "registration_required": true,
+  "deployment_checks_required": true,
+  "primary_output": "CAPSULA ICP Platform repo",
+  "expected_external_output": "Internet Computer canister app for memory-book capsule registration and governance"
+}

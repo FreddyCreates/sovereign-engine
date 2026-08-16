@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://civos.local/schemas/capsule.schema.json",
+  "title": "CAPSULA Memory Book Manifest",
+  "type": "object",
+  "required": ["capsule_id", "title", "version", "status", "parent_system", "authority_level", "chain_id", "hash_manifest", "entrypoints"],
+  "properties": {
+    "capsule_id": { "type": "string", "pattern": "^CAPSULE-[0-9]{8}-[A-Z0-9-]+$" },
+    "title": { "type": "string", "minLength": 1 },
+    "version": { "type": "string" },
+    "status": { "enum": ["branch", "trunk-candidate", "trunk", "quarantined", "retired"] },
+    "parent_system": { "type": "string" },
+    "authority_level": { "enum": ["branch", "trunk-candidate", "trunk"] },
+    "chain_id": { "type": "string" },
+    "hash_manifest": { "type": "string" },
+    "entrypoints": {
+      "type": "object",
+      "properties": {
+        "runtime": { "type": "string" },
+        "dashboard": { "type": "string" },
+        "paper": { "type": "string" }
+      }
+    },
+    "allowed_operations": { "type": "array", "items": { "type": "string" } },
+    "forbidden_operations": { "type": "array", "items": { "type": "string" } }
+  }
+}

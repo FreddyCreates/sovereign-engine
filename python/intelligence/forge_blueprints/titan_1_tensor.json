@@ -1,0 +1,50 @@
+{
+    "name": "Titan 1 - Sovereign Tensor Engine",
+    "files": [
+        {
+            "path": "native/sovereign_c_sdk/include/tensor/tensor_core.hpp",
+            "language": "hpp",
+            "template_args": {
+                "namespace": "sovereign::tensor",
+                "class_name": "TensorCore",
+                "includes": ["vector", "stdexcept", "iostream", "memory"],
+                "methods": [
+                    {
+                        "name": "TensorCore",
+                        "args": "std::vector<int> shape",
+                        "body": "this->shape = shape;\nint total_size = 1;\nfor(int dim : shape) total_size *= dim;\ndata = std::vector<float>(total_size, 0.0f);"
+                    },
+                    {
+                        "name": "get_size",
+                        "return": "int",
+                        "args": "",
+                        "body": "return data.size();"
+                    }
+                ]
+            }
+        },
+        {
+            "path": "native/sovereign_c_sdk/src/tensor/tensor_math.cpp",
+            "language": "cpp",
+            "template_args": {
+                "namespace": "sovereign::tensor",
+                "class_name": "TensorMath",
+                "includes": ["tensor/tensor_core.hpp", "thread", "cmath"],
+                "methods": [
+                    {
+                        "name": "sigmoid",
+                        "return": "void",
+                        "args": "std::vector<float>& data",
+                        "body": "for(auto& val : data) {\n    val = 1.0f / (1.0f + std::exp(-val));\n}"
+                    },
+                    {
+                        "name": "relu",
+                        "return": "void",
+                        "args": "std::vector<float>& data",
+                        "body": "for(auto& val : data) {\n    val = std::max(0.0f, val);\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+{
+  "region": "DFW",
+  "agent_mode_enabled": true,
+  "broker_mode_enabled": false,
+  "escrow_required_new_pair_transactions": 3,
+  "dispatch_halt_driving_hours": "10.5",
+  "quickpay_one_day_fee": "0.00618",
+  "quickpay_two_day_fee": "0.00382",
+  "official_review_required": true
+}
+

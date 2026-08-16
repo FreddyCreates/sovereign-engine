@@ -1,0 +1,30 @@
+{
+  "name": "@medina/multi-model-sdk",
+  "version": "0.1.0-alpha.1",
+  "description": "Multi-Model SDK — orchestrates multiple AI models, routes between providers, manages model hierarchies, handles fallback chains, and provides unified inference across the RSHIP organism.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./model-orchestrator": "./lib/model-orchestrator.js",
+    "./provider-router": "./lib/provider-router.js",
+    "./inference-unifier": "./lib/inference-unifier.js",
+    "./fallback-chain": "./lib/fallback-chain.js",
+    "./model-registry": "./lib/model-registry.js",
+    "./context-manager": "./lib/context-manager.js"
+  },
+  "author": "Alfredo Medina Hernandez <medina@medinatech.io>",
+  "license": "MEDINA-SOVEREIGN",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MedinaTech/multi-model-sdk"
+  },
+  "keywords": [
+    "multi-model", "ai", "orchestration", "inference", "provider-routing",
+    "fallback", "context", "model-registry", "medina"
+  ],
+  "dependencies": {
+    "@medina/medina-heart": "^1.0.0",
+    "@medina/intelligence-routing-sdk": "^1.0.0"
+  }
+}

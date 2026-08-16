@@ -1,0 +1,19 @@
+name = "sovereign-skills"
+main = "worker.py"
+compatibility_date = "2026-06-20"
+compatibility_flags = ["python_workers"]
+
+# To deploy:
+# cd cloudflare-workers/sovereign-skills
+# wrangler deploy
+
+# For subdomain: In Cloudflare Dashboard > Workers & Pages > sovereign-skills > Settings > Domains & Routes > Add Custom Domain
+# e.g. skills.medinatechlabs.net or alpha-skills.medinatechlabs.net
+
+# Routes can be added in dashboard under Triggers > Routes
+# e.g. skills.medinatechlabs.net/*
+
+# This worker provides "alpha skills" - crypto, defense, protocols, intelligence tools
+# for AIs and the SovereignForge OS / Memory Bank.
+# Pure Python via Pyodide.
+# Call from Electron memory bank or any LLM as tools.

@@ -1,0 +1,47 @@
+{
+  "genesis_time": "2026-07-25T12:00:00Z",
+  "chain_id": "parallax-sovereign-chain-1",
+  "consensus_params": {
+    "block_time_ms": 873,
+    "phi_harmonic_scaling": true,
+    "max_block_size_bytes": 2097152
+  },
+  "tokenomics": {
+    "native_token": "FORMA",
+    "total_supply": 1000000000.0,
+    "decimals": 8,
+    "compounding_rate_phi": 1.618033988749895
+  },
+  "validators": [
+    {
+      "name": "COGNOVEX_NODE_1",
+      "pub_key": "ed25519:6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+      "power": 250000,
+      "role": "ARCHON"
+    },
+    {
+      "name": "NEXORIS_NODE_2",
+      "pub_key": "ed25519:d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "power": 250000,
+      "role": "VECTOR"
+    },
+    {
+      "name": "SYN_ENGINE_NODE_3",
+      "pub_key": "ed25519:4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "power": 250000,
+      "role": "LUMEN"
+    },
+    {
+      "name": "TRADEX_AGI_NODE_4",
+      "pub_key": "ed25519:ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+      "power": 250000,
+      "role": "FORGE"
+    }
+  ],
+  "treasury_allocations": {
+    "parallax_liquidity_pool": 400000000.0,
+    "oro_governance_treasury": 200000000.0,
+    "ecosystem_adoption": 200000000.0,
+    "validator_reserves": 200000000.0
+  }
+}

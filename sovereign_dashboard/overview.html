@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overview — Sovereign Engine OS</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="brand">
+      <div class="brand-icon">S</div>
+      <div>
+        <div class="brand-title">Sovereign Engine OS</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">C-Suite Executive Telemetry Dashboard</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+      <span class="badge-revenuecat">⚡ RevenueCat Substrate Active</span>
+      <div class="system-status-indicator">
+        <div class="pulse-dot"></div>
+        <span>6 Cores Entangled</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- NAVIGATION TABS -->
+  <div class="nav-tabs-container">
+    <div class="nav-tabs">
+      <a href="overview.html" class="tab-btn active">📊 C-Suite Overview</a>
+      <a href="quickbooks.html" class="tab-btn">💼 QuickBooks Replacement</a>
+      <a href="stripe.html" class="tab-btn">💳 Stripe Replacement</a>
+      <a href="tokenomics.html" class="tab-btn">🪙 Tokenomics & Treasury</a>
+      <a href="iot.html" class="tab-btn">⌚ Wear OS & IoT Mesh</a>
+      <a href="nexs.html" class="tab-btn">⚡ Neural Synthesizer</a>
+    </div>
+  </div>
+
+  <!-- PAGE HEADER TITLE -->
+  <div class="page-header-title">
+    <div>
+      <h1>📊 Executive Overview & Substrate Telemetry</h1>
+      <div class="page-header-sub">Real-time consolidated telemetry across 6 Next-Gen Sovereign Engine Cores</div>
+    </div>
+    <button class="btn-primary" onclick="refreshOverview()">🔄 Sync Substrate Telemetry</button>
+  </div>
+
+  <!-- EXECUTIVE METRICS BAR -->
+  <section class="metrics-bar">
+    <div class="metric-card">
+      <div class="metric-label">Monthly Recurring Revenue (MRR)</div>
+      <div class="metric-value" id="mrr-val">$148,920.00</div>
+      <div class="metric-change positive">▲ +18.4% vs last month</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Annual Run Rate (ARR)</div>
+      <div class="metric-value" id="arr-val">$1,787,040.00</div>
+      <div class="metric-change positive">▲ +22.1% YoY</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">LTV / CAC Efficiency Ratio</div>
+      <div class="metric-value">8.4x</div>
+      <div class="metric-change positive">▲ Top 1% SaaS Efficiency</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Autonomic Net Profit Margin</div>
+      <div class="metric-value">74.2%</div>
+      <div class="metric-change positive">▲ QuickBooks Autonomically Calculated</div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main-container" style="margin-top: 1rem;">
+    <div class="grid-2">
+      <!-- STORE MRR TELEMETRY PANEL -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h3 class="panel-title">📈 Multi-Store Subscription Telemetry</h3>
+          <span class="status-pill cyan">Live RevenueCat SDK</span>
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+            <span style="display: flex; align-items: center; gap: 0.4rem;">🍎 Apple App Store (StoreKit 2)</span>
+            <strong style="color: var(--accent-cyan); font-family: var(--font-mono);">$68,500.00 (46%)</strong>
+          </div>
+          <div style="background: rgba(255,255,255,0.06); height: 10px; border-radius: 6px; overflow: hidden; padding: 2px;">
+            <div style="background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple)); width: 46%; height: 100%; border-radius: 4px; box-shadow: 0 0 10px var(--accent-cyan);"></div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+            <span style="display: flex; align-items: center; gap: 0.4rem;">🤖 Google Play Store (Android Billing)</span>
+            <strong style="color: var(--accent-violet); font-family: var(--font-mono);">$54,200.00 (36%)</strong>
+          </div>
+          <div style="background: rgba(255,255,255,0.06); height: 10px; border-radius: 6px; overflow: hidden; padding: 2px;">
+            <div style="background: linear-gradient(90deg, var(--accent-violet), var(--accent-magenta)); width: 36%; height: 100%; border-radius: 4px; box-shadow: 0 0 10px var(--accent-violet);"></div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+            <span style="display: flex; align-items: center; gap: 0.4rem;">📱 Samsung Galaxy Store (Foldables)</span>
+            <strong style="color: var(--accent-green); font-family: var(--font-mono);">$16,400.00 (11%)</strong>
+          </div>
+          <div style="background: rgba(255,255,255,0.06); height: 10px; border-radius: 6px; overflow: hidden; padding: 2px;">
+            <div style="background: linear-gradient(90deg, var(--accent-green), #34d399); width: 11%; height: 100%; border-radius: 4px; box-shadow: 0 0 10px var(--accent-green);"></div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+            <span style="display: flex; align-items: center; gap: 0.4rem;">💳 Stripe Web Paywalls (RevenueCat Web)</span>
+            <strong style="color: var(--accent-gold); font-family: var(--font-mono);">$9,820.00 (7%)</strong>
+          </div>
+          <div style="background: rgba(255,255,255,0.06); height: 10px; border-radius: 6px; overflow: hidden; padding: 2px;">
+            <div style="background: linear-gradient(90deg, var(--accent-gold), #fbbf24); width: 7%; height: 100%; border-radius: 4px; box-shadow: 0 0 10px var(--accent-gold);"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIVE SUBSTRATE STREAM TERMINAL -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h3 class="panel-title">⚡ Live Protocol Substrate Stream</h3>
+          <span class="status-pill success">● Stream Connected</span>
+        </div>
+
+        <div class="terminal-wrapper">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <div class="dot red"></div>
+              <div class="dot yellow"></div>
+              <div class="dot green"></div>
+            </div>
+            <span class="terminal-title">substrate_daemon.log — 6 Cores Entangled</span>
+          </div>
+          <div id="live-stream-box" class="code-preview-box" style="height: 240px;">
+[00:01.02] XFIN: FX Micro-Settlement BRL 4,950 -> $1,000.00 USD Settled to Treasury
+[00:01.45] AURA: Credit Underwriting usr_981 -> APPROVED ($500 Micro-Line, Score: 780)
+[00:02.10] PULSE: Churn Intercept Triggered -> Customer Center 50% Winback Offer Accepted
+[00:02.89] MINT: 5,000 FORMA Burned on Subscription Renewal Event (Golden Ratio Yield)
+[00:03.14] GRID: Wear OS Watch Hardware Unlocked for Subscriber usr_981 (Heart Rate: 72 BPM)
+[00:03.95] NEXS: UCB1 Paywall Variant B Converted (+24% Conversion Rate Increase)
+[00:04.22] REVENUECAT: Webhook Received — Subscribed 'pro_access_annual' $99.99
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

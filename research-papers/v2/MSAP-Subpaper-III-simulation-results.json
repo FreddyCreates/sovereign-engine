@@ -1,0 +1,66 @@
+{
+  "params": {
+    "n_trials": 800,
+    "branching_factor": 8,
+    "K0": 1.618033988749895,
+    "coupling_scale": 0.35,
+    "max_rounds": 40,
+    "sigma_base": 0.55,
+    "sustain_rounds": 3,
+    "seed_start": 42000
+  },
+  "coherence_weighted": {
+    "depth_1": {
+      "full_hierarchy_success_rate": 0.845,
+      "std_error": 0.0128,
+      "mean_total_rounds": 19.64
+    },
+    "depth_2": {
+      "full_hierarchy_success_rate": 0.8438,
+      "std_error": 0.0128,
+      "mean_total_rounds": 27.99
+    },
+    "depth_3": {
+      "full_hierarchy_success_rate": 0.8438,
+      "std_error": 0.0128,
+      "mean_total_rounds": 35.58
+    },
+    "depth_4": {
+      "full_hierarchy_success_rate": 0.8438,
+      "std_error": 0.0128,
+      "mean_total_rounds": 42.67
+    },
+    "depth_5": {
+      "full_hierarchy_success_rate": 0.8438,
+      "std_error": 0.0128,
+      "mean_total_rounds": 50.19
+    }
+  },
+  "naive_flat": {
+    "depth_1": {
+      "full_hierarchy_success_rate": 0.845,
+      "std_error": 0.0128,
+      "mean_total_rounds": 19.64
+    },
+    "depth_2": {
+      "full_hierarchy_success_rate": 0.74,
+      "std_error": 0.0155,
+      "mean_total_rounds": 35.93
+    },
+    "depth_3": {
+      "full_hierarchy_success_rate": 0.6362,
+      "std_error": 0.017,
+      "mean_total_rounds": 50.38
+    },
+    "depth_4": {
+      "full_hierarchy_success_rate": 0.55,
+      "std_error": 0.0176,
+      "mean_total_rounds": 62.78
+    },
+    "depth_5": {
+      "full_hierarchy_success_rate": 0.4662,
+      "std_error": 0.0176,
+      "mean_total_rounds": 73.36
+    }
+  }
+}

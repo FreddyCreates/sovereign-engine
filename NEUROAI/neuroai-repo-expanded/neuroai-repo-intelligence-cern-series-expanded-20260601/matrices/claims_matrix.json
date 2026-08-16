@@ -1,0 +1,75 @@
+{
+  "matrix_schema": "medina.claims_matrix.v1",
+  "packet_id": "NEUROAI-REPO-CERN-EXPANDED-20260601",
+  "created_at": "2026-06-01T23:55:00Z",
+  "claims": [
+    {
+      "claim_id": "NRE-C001",
+      "paper": "P1",
+      "class": "C8/C9",
+      "summary": "Memory-governed runtime separation is a protocol/theorem candidate for long-horizon artificial cognition.",
+      "repo_substrate": [
+        "R1",
+        "R11",
+        "R12",
+        "R13"
+      ],
+      "posture": "supported architecture; unproven cognitive theorem",
+      "release": "public-safe draft"
+    },
+    {
+      "claim_id": "NRE-C002",
+      "paper": "P2",
+      "class": "C8/C4",
+      "summary": "Source/Forge/Deploy/Nexus forms a cognitive lifecycle for artifact-producing agents.",
+      "repo_substrate": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6"
+      ],
+      "posture": "repo-supported protocol architecture; cognitive interpretation remains hypothesis",
+      "release": "public-safe draft"
+    },
+    {
+      "claim_id": "NRE-C003",
+      "paper": "P3",
+      "class": "C8/C10",
+      "summary": "Proof behavior should be benchmarked through Claim-Score, Evidence-Score, Boundary-Score, Lineage-Score, Promotion-Score, and Notary-Readiness.",
+      "repo_substrate": [
+        "R9",
+        "R10",
+        "R11",
+        "R12",
+        "R13"
+      ],
+      "posture": "benchmark proposal, not implemented field benchmark",
+      "release": "public-safe draft"
+    },
+    {
+      "claim_id": "NRE-C004",
+      "paper": "P4",
+      "class": "C4/C3",
+      "summary": "Auro is a Medina-native speaking-intelligence research surface involving voice, memory, affect, authority, and role coherence.",
+      "repo_substrate": [
+        "R3",
+        "R7",
+        "R8"
+      ],
+      "posture": "strategic thesis / hypothesis",
+      "release": "public-safe draft"
+    },
+    {
+      "claim_id": "NRE-C005",
+      "paper": "series",
+      "class": "C6 blocked",
+      "summary": "Claims of biological equivalence, clinical validation, production deployment, external notarization, legal protection, or CERN affiliation are unsupported.",
+      "repo_substrate": [
+        "release_boundary.md"
+      ],
+      "posture": "blocked public claim",
+      "release": "blocked"
+    }
+  ]
+}

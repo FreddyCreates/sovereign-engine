@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKYHI CLIENT | Sovereign OS Grid</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="ambient-glow primary"></div>
+    <div class="ambient-glow secondary"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Main Application UI -->
+    <div class="skyhi-container">
+        
+        <!-- Header -->
+        <header class="top-nav">
+            <div class="brand">
+                <div class="brand-icon">⬢</div>
+                <h1>SKYHI <span>MAINNET</span></h1>
+            </div>
+            <div class="status-pill">
+                <span class="pulse"></span>
+                <span>ENTERPRISE-OS LINKED</span>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Grid -->
+        <main class="dashboard">
+            
+            <!-- Apps Column -->
+            <section class="panel apps-panel">
+                <div class="panel-header">
+                    <h2>PRODUCTION APPS</h2>
+                    <span class="badge">3 ONLINE</span>
+                </div>
+                
+                <div class="app-card wyoming">
+                    <div class="card-icon">🏛</div>
+                    <div class="card-content">
+                        <h3>Wyoming AI</h3>
+                        <p>Regulatory & Compliance Node</p>
+                    </div>
+                    <button class="launch-btn">LAUNCH</button>
+                </div>
+
+                <div class="app-card phantom">
+                    <div class="card-icon">👻</div>
+                    <div class="card-content">
+                        <h3>Phantom Wallet</h3>
+                        <p>Sovereign Ring Vault</p>
+                    </div>
+                    <button class="launch-btn">CONNECT</button>
+                </div>
+
+                <div class="app-card education">
+                    <div class="card-icon">🧠</div>
+                    <div class="card-content">
+                        <h3>Educational Platform</h3>
+                        <p>Knowledge Synthesis Core</p>
+                    </div>
+                    <button class="launch-btn">LAUNCH</button>
+                </div>
+            </section>
+
+            <!-- Network Topology Visualization -->
+            <section class="panel network-panel">
+                <div class="panel-header">
+                    <h2>SOVEREIGN OS GRID</h2>
+                    <div class="connection-status">
+                        <span class="dot"></span>
+                        <span>873ms Heartbeat</span>
+                    </div>
+                </div>
+                
+                <div class="topology-container">
+                    <div class="center-node">
+                        <div class="core-ring"></div>
+                        <div class="core-text">TRADEX AGI</div>
+                    </div>
+                    <div class="orbit-path path-1">
+                        <div class="orbit-node node-voxis">VOXIS</div>
+                    </div>
+                    <div class="orbit-path path-2">
+                        <div class="orbit-node node-chrono">CHRONO</div>
+                    </div>
+                    <div class="orbit-path path-3">
+                        <div class="orbit-node node-hdi">HDI</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Virtual Chips Column -->
+            <section class="panel chips-panel">
+                <div class="panel-header">
+                    <h2>VIRTUAL CHIPS</h2>
+                    <span class="badge">ACTIVE</span>
+                </div>
+                
+                <div class="chip-item">
+                    <div class="chip-header">
+                        <h4>VOXIS</h4>
+                        <span class="chip-status">100%</span>
+                    </div>
+                    <div class="progress-bar"><div class="fill voxis-fill" style="width: 100%"></div></div>
+                    <p class="chip-desc">Voice & Audio Synthesis Matrix</p>
+                </div>
+
+                <div class="chip-item">
+                    <div class="chip-header">
+                        <h4>CHRONO</h4>
+                        <span class="chip-status">SYNCED</span>
+                    </div>
+                    <div class="progress-bar"><div class="fill chrono-fill" style="width: 100%"></div></div>
+                    <p class="chip-desc">Temporal State & Timeline Sync</p>
+                </div>
+
+                <div class="chip-item">
+                    <div class="chip-header">
+                        <h4>HDI</h4>
+                        <span class="chip-status">NOMINAL</span>
+                    </div>
+                    <div class="progress-bar"><div class="fill hdi-fill" style="width: 85%"></div></div>
+                    <p class="chip-desc">Human-Device Interaction Engine</p>
+                </div>
+
+                <div class="terminal-mini" id="bridge-terminal">
+                    <div class="term-header">Bridge Protocol (TRACE)</div>
+                    <div class="term-body">
+                        <div class="term-line">> Initializing ORO Governance...</div>
+                        <div class="term-line">> 4-Agent Council active.</div>
+                        <div class="term-line blink">_</div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

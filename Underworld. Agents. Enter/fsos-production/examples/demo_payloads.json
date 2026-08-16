@@ -1,0 +1,17 @@
+{
+  "carrier": {
+    "carrier_id": "carrier-montesa-001",
+    "legal_name": "Montesa Freight LLC",
+    "mc_number": "123456",
+    "dot_number": "DOT123456",
+    "equipment": ["dry_van", "reefer", "hazmat"]
+  },
+  "load": {
+    "load_id": "load-dfw-001",
+    "origin": "Dallas, TX",
+    "destination": "Fort Worth, TX",
+    "equipment_required": "dry_van",
+    "offered_rate_usd": "650"
+  }
+}
+
