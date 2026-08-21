@@ -408,10 +408,31 @@ class SovereignDashboardHandler(SimpleHTTPRequestHandler):
             self.send_json_response(mega11.stripe.process_payment(100.0, "USD"))
         elif path == "/api/v1/stripe/coupon":
             self.send_json_response(mega11.stripe.create_coupon("PRO20", 20.0))
+        elif path == "/api/v1/revenuecat/webhook":
+            params = self.parse_query_params()
+            event_type = params.get("event_type", "INITIAL_PURCHASE")
+            subscriber_id = params.get("subscriber_id", "sub_101")
+            product_id = params.get("product_id", "sovereign_pro_annual")
+            self.send_json_response(mega11.rc.process_webhooks(event_type, subscriber_id, product_id))
         elif path == "/api/v1/revenuecat/entitlements":
-            self.send_json_response(mega11.rc.get_entitlements("sub_101"))
+            params = self.parse_query_params()
+            subscriber_id = params.get("subscriber_id", params.get("user_id", "sub_101"))
+            self.send_json_response(mega11.rc.get_entitlements(subscriber_id))
+        elif path == "/api/v1/revenuecat/paywall":
+            params = self.parse_query_params()
+            offering_id = params.get("offering_id", "default")
+            subscriber_id = params.get("subscriber_id", "sub_101")
+            experiment_id = params.get("experiment_id")
+            self.send_json_response(mega11.rc.get_paywall(offering_id, subscriber_id, experiment_id))
+        elif path in ["/api/v1/revenuecat/usage", "/api/v1/revenuecat/longterm_usage"]:
+            params = self.parse_query_params()
+            subscriber_id = params.get("subscriber_id", "sub_101")
+            period = params.get("period", "longterm")
+            self.send_json_response(mega11.rc.get_usage(subscriber_id, period))
         elif path == "/api/v1/revenuecat/experiment":
-            self.send_json_response(mega11.rc.trigger_paywall_experiment("exp_paywall_v2"))
+            params = self.parse_query_params()
+            experiment_id = params.get("experiment_id", "exp_paywall_v2")
+            self.send_json_response(mega11.rc.trigger_paywall_experiment(experiment_id))
         elif path == "/api/v1/netsuite/asc606":
             self.send_json_response(mega11.netsuite.execute_asc606_revenue_recognition(120000.0))
         elif path == "/api/v1/xero/forecast":
@@ -849,9 +870,27 @@ class SovereignDashboardHandler(SimpleHTTPRequestHandler):
             code = body.get("code", "PRO20")
             percent_off = float(body.get("percent_off", 20.0))
             self.send_json_response(mega11.stripe.create_coupon(code, percent_off))
-        elif path == "/api/v1/revenuecat/entitlements":
+        elif path == "/api/v1/revenuecat/webhook":
+            event_type = body.get("event_type", "INITIAL_PURCHASE")
             subscriber_id = body.get("subscriber_id", "sub_101")
+            product_id = body.get("product_id", "sovereign_pro_annual")
+            self.send_json_response(mega11.rc.process_webhooks(event_type, subscriber_id, product_id))
+        elif path == "/api/v1/revenuecat/entitlements":
+            subscriber_id = body.get("subscriber_id", body.get("user_id", "sub_101"))
             self.send_json_response(mega11.rc.get_entitlements(subscriber_id))
+        elif path == "/api/v1/revenuecat/paywall":
+            offering_id = body.get("offering_id", "default")
+            subscriber_id = body.get("subscriber_id", "sub_101")
+            experiment_id = body.get("experiment_id")
+            self.send_json_response(mega11.rc.get_paywall(offering_id, subscriber_id, experiment_id))
+        elif path in ["/api/v1/revenuecat/usage", "/api/v1/revenuecat/longterm_usage"]:
+            subscriber_id = body.get("subscriber_id", "sub_101")
+            if "units" in body or body.get("action") == "record" or "feature_id" in body:
+                feature_id = body.get("feature_id", "api_calls")
+                units = int(body.get("units", 1))
+                mega11.rc.record_usage(subscriber_id, feature_id, units)
+            period = body.get("period", "longterm")
+            self.send_json_response(mega11.rc.get_usage(subscriber_id, period))
         elif path == "/api/v1/revenuecat/experiment":
             experiment_id = body.get("experiment_id", "exp_paywall_v2")
             self.send_json_response(mega11.rc.trigger_paywall_experiment(experiment_id))

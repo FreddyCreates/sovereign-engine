@@ -2502,7 +2502,7 @@ let selectedAppId = null;
 
 // UNIFIED COMMAND CENTER VIEW SWITCHER
 function switchCommandCenterView(viewName) {
-  const views = ['telemetry', 'apps', 'az', 'mcp', 'sandbox', 'radar', 'autonomic', 'office'];
+  const views = ['telemetry', 'apps', 'az', 'mcp', 'sandbox', 'radar', 'autonomic', 'office', 'analytics'];
   views.forEach(v => {
     const sec = document.getElementById(`sec-${v}-view`);
     const btn = document.getElementById(`view-btn-${v}`);
@@ -2523,6 +2523,7 @@ function switchCommandCenterView(viewName) {
   }
   if (viewName === 'sandbox' && typeof updateSandboxGauges === 'function') updateSandboxGauges();
   if (viewName === 'office' && typeof renderOfficeWorkspace === 'function') renderOfficeWorkspace();
+  if (viewName === 'analytics' && typeof renderAnalyticsDashboard === 'function') renderAnalyticsDashboard();
 }
 
 function switchMarketplaceView(viewName) {
@@ -5123,7 +5124,7 @@ function downloadArtifact(artId) {
 // 7. OFFICE WORKSPACE SUITE NAVIGATOR
 // --------------------------------------------------------------------------
 function switchOfficeTab(tabName) {
-  const tabs = ['grid', 'doc', 'slides', 'sign', 'drive', 'artifacts'];
+  const tabs = ['grid', 'doc', 'slides', 'sign', 'drive', 'artifacts', 'analytics'];
   tabs.forEach(t => {
     const sec = document.getElementById(`sec-office-${t}`);
     const btn = document.getElementById(`office-tab-btn-${t}`);
@@ -5140,6 +5141,7 @@ function switchOfficeTab(tabName) {
   if (tabName === 'sign') initSignatureCanvas();
   if (tabName === 'drive') initSovereignDrive();
   if (tabName === 'artifacts') openMultiArtifactDrawer();
+  if (tabName === 'analytics') renderAnalyticsDashboard();
 }
 
 function renderOfficeWorkspace() {
@@ -5150,6 +5152,358 @@ function renderOfficeWorkspace() {
   initSovereignDrive();
 }
 
+// ==========================================================================
+// 8. REVENUECAT PAYWALL, ENTITLEMENT BADGES, QUOTA METER & ANALYTICS MODULE
+// ==========================================================================
+
+let quotaState = {
+  used: 94,
+  max: 100,
+  period: 'Monthly',
+  resetsInDays: 6
+};
+
+let paywallBillingCycle = 'monthly';
+let selectedAnalyticsTimeframe = '12M';
+
+// 1. ENTITLEMENT BADGES MANAGER
+function updateEntitlementBadges() {
+  const tier = revenueCatState.tier || 'pro';
+  
+  const badgeConfig = {
+    free: { text: '⚡ STARTER', class: 'badge-pro', opacity: '0.7', sub: 'Starter Sovereign Tier' },
+    pro: { text: '⚡ PRO', class: 'badge-pro', opacity: '1', sub: 'PRO Substrate Tier' },
+    enterprise: { text: '💎 ENTERPRISE', class: 'badge-enterprise', opacity: '1', sub: 'Enterprise Quantum Tier' },
+    quantum: { text: '💎 ENTERPRISE', class: 'badge-enterprise', opacity: '1', sub: 'Enterprise Quantum Tier' },
+    unlimited: { text: '🚀 UNLIMITED AI', class: 'badge-unlimited', opacity: '1', sub: 'UNLIMITED AI Tier' }
+  };
+
+  const current = badgeConfig[tier] || badgeConfig.pro;
+
+  ['nav-entitlement-badge', 'overview-nav-entitlement-badge'].forEach(id => {
+    const badgeEl = document.getElementById(id);
+    if (badgeEl) {
+      badgeEl.className = `entitlement-badge ${current.class}`;
+      badgeEl.style.opacity = current.opacity;
+      badgeEl.innerHTML = current.text;
+    }
+  });
+
+  ['quota-badge-tier-tag', 'overview-quota-badge-tier-tag'].forEach(id => {
+    const tagEl = document.getElementById(id);
+    if (tagEl) {
+      tagEl.className = `entitlement-badge ${current.class}`;
+      tagEl.style.opacity = current.opacity;
+      tagEl.innerHTML = current.text;
+    }
+  });
+
+  ['rc-modal-active-tier-name', 'rc-modal-active-tier-name-overview'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = current.sub;
+  });
+
+  ['rc-modal-badge-slot', 'rc-modal-badge-slot-overview'].forEach(id => {
+    const slot = document.getElementById(id);
+    if (slot) {
+      slot.innerHTML = `<span class="entitlement-badge ${current.class}">${current.text} ACTIVE</span>`;
+    }
+  });
+}
+
+// 2. QUOTA USAGE METER MANAGER
+function updateQuotaMeterUI() {
+  const tier = revenueCatState.tier || 'pro';
+  
+  if (tier === 'free') quotaState.max = 100;
+  else if (tier === 'pro') quotaState.max = 500;
+  else if (tier === 'enterprise' || tier === 'quantum') quotaState.max = 2500;
+  else if (tier === 'unlimited') quotaState.max = Infinity;
+
+  const isUnlimited = quotaState.max === Infinity;
+  const pct = isUnlimited ? 100 : Math.min(100, Math.round((quotaState.used / quotaState.max) * 100));
+
+  const textStr = isUnlimited 
+    ? `${quotaState.used} / ∞ (UNLIMITED AI)` 
+    : `${quotaState.used} / ${quotaState.max} AI Generations (${pct}%)`;
+
+  ['quota-meter-text', 'overview-quota-meter-text'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = textStr;
+  });
+
+  ['quota-bar-fill-elem', 'overview-quota-bar-fill-elem'].forEach(id => {
+    const fillEl = document.getElementById(id);
+    if (fillEl) {
+      fillEl.style.width = `${pct}%`;
+      if (pct >= 90 && !isUnlimited) fillEl.classList.add('warning');
+      else fillEl.classList.remove('warning');
+    }
+  });
+
+  const remaining = isUnlimited ? '∞' : Math.max(0, quotaState.max - quotaState.used);
+  const subText = isUnlimited
+    ? `🚀 Unlimited AI generations active • No rate limits`
+    : `⚡ ${remaining} AI Generations left in cycle • Resets in ${quotaState.resetsInDays} Days`;
+
+  ['quota-sub-reset-text', 'overview-quota-sub-reset-text'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = subText;
+  });
+
+  ['rc-modal-active-tier-sub', 'rc-modal-active-tier-sub-overview'].forEach(id => {
+    const subEl = document.getElementById(id);
+    if (subEl) subEl.innerText = `Quota: ${textStr} • ZK Security Mesh Active`;
+  });
+}
+
+function testAIGenerationQuota() {
+  const isUnlimited = revenueCatState.tier === 'unlimited';
+  
+  if (isUnlimited) {
+    quotaState.used += 1;
+    updateQuotaMeterUI();
+    showToast('🚀 AI Generation executed! Unlimited AI tier active.');
+    return;
+  }
+
+  if (quotaState.used < quotaState.max) {
+    quotaState.used += 1;
+    updateQuotaMeterUI();
+    showToast(`✨ AI Content generated! (${quotaState.used}/${quotaState.max} used)`);
+  } else {
+    showToast(`⚠️ Quota Limit Exceeded (${quotaState.used}/${quotaState.max})! Please upgrade your plan.`);
+    openRevenueCatPaywallModal();
+  }
+}
+
+function resetQuotaUsage() {
+  quotaState.used = 0;
+  updateQuotaMeterUI();
+  showToast('🔄 AI Quota meter reset to 0');
+}
+
+// 3. REVENUECAT PAYWALL MODAL FUNCTIONS
+function openRevenueCatPaywallModal() {
+  updateEntitlementBadges();
+  updateQuotaMeterUI();
+
+  const modal = document.getElementById('revenuecat-paywall-modal');
+  if (modal) modal.style.display = 'flex';
+  
+  const drawer = document.getElementById('revenuecat-drawer');
+  if (drawer) drawer.classList.add('active');
+}
+
+function closeRevenueCatPaywallModal() {
+  const modal = document.getElementById('revenuecat-paywall-modal');
+  if (modal) modal.style.display = 'none';
+
+  const drawer = document.getElementById('revenuecat-drawer');
+  if (drawer) drawer.classList.remove('active');
+}
+
+function setPaywallBilling(cycle) {
+  paywallBillingCycle = cycle;
+  const isAnnual = cycle === 'annual';
+
+  ['billing-btn-monthly', 'billing-btn-monthly-overview'].forEach(id => {
+    const b = document.getElementById(id);
+    if (b) b.classList.toggle('active', !isAnnual);
+  });
+
+  ['billing-btn-annual', 'billing-btn-annual-overview'].forEach(id => {
+    const b = document.getElementById(id);
+    if (b) b.classList.toggle('active', isAnnual);
+  });
+
+  const proPrice = isAnnual ? '$23.00' : '$29.00';
+  const entPrice = isAnnual ? '$159.00' : '$199.00';
+  const unlPrice = isAnnual ? '$399.00' : '$499.00';
+
+  ['price-pro-val', 'price-pro-val-overview'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = `${proPrice} <span style="font-size: 0.75rem; color: var(--text-muted);">${isAnnual ? '/ mo (billed annually)' : '/ mo'}</span>`;
+  });
+
+  ['price-enterprise-val', 'price-enterprise-val-overview'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = `${entPrice} <span style="font-size: 0.75rem; color: var(--text-muted);">${isAnnual ? '/ mo (billed annually)' : '/ mo'}</span>`;
+  });
+
+  ['price-unlimited-val', 'price-unlimited-val-overview'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = `${unlPrice} <span style="font-size: 0.75rem; color: var(--text-muted);">${isAnnual ? '/ mo (billed annually)' : '/ mo'}</span>`;
+  });
+
+  showToast(`💳 Paywall Billing switched to ${cycle.toUpperCase()}`);
+}
+
+function simulateRevenueCatPurchase(tierKey) {
+  revenueCatState.tier = tierKey;
+
+  const payloadData = {
+    event: "PURCHASE_SUCCESS",
+    offering_id: `sov_${tierKey}_${paywallBillingCycle}`,
+    entitlement: `sov_${tierKey}_tier`,
+    subscriber_id: "user_sov_88492",
+    timestamp: new Date().toISOString(),
+    status: "active",
+    store: "STOREKIT_2",
+    receipt_id: "rc_rec_" + Math.random().toString(36).substring(2, 12).toUpperCase()
+  };
+
+  const payloadJsonStr = JSON.stringify(payloadData, null, 2);
+
+  ['rc-sandbox-payload-json', 'rc-sandbox-payload-json-overview'].forEach(id => {
+    const box = document.getElementById(id);
+    if (box) box.innerText = payloadJsonStr;
+  });
+
+  updateEntitlementBadges();
+  updateQuotaMeterUI();
+
+  const labels = {
+    free: 'Starter Sovereign (Free)',
+    pro: 'PRO Substrate ($29/mo)',
+    enterprise: 'ENTERPRISE Quantum ($199/mo)',
+    quantum: 'ENTERPRISE Quantum ($199/mo)',
+    unlimited: 'UNLIMITED AI ($499/mo)'
+  };
+
+  showToast(`🎉 RevenueCat Entitlement Updated: ${labels[tierKey] || tierKey.toUpperCase()} Activated!`);
+  
+  if (typeof applyFilters === 'function') applyFilters();
+}
+
+// 4. LONG-TERM ANALYTICS DASHBOARD FUNCTIONS
+const analyticsDatasets = {
+  '7D': {
+    mrr: '$148,920.00',
+    tokens: '4.8M Tokens/s',
+    conv: '16.2%',
+    nrr: '128.4%',
+    bars: [
+      { val: '$142k', h: '82%', label: 'Day 1' },
+      { val: '$143k', h: '85%', label: 'Day 2' },
+      { val: '$144k', h: '88%', label: 'Day 3' },
+      { val: '$145k', h: '90%', label: 'Day 4' },
+      { val: '$146k', h: '93%', label: 'Day 5' },
+      { val: '$147k', h: '96%', label: 'Day 6' },
+      { val: '$148k', h: '100%', label: 'Day 7' }
+    ]
+  },
+  '30D': {
+    mrr: '$148,920.00',
+    tokens: '4.5M Tokens/s',
+    conv: '15.4%',
+    nrr: '126.1%',
+    bars: [
+      { val: '$134k', h: '65%', label: 'Wk 1' },
+      { val: '$139k', h: '75%', label: 'Wk 2' },
+      { val: '$144k', h: '88%', label: 'Wk 3' },
+      { val: '$148k', h: '100%', label: 'Wk 4' }
+    ]
+  },
+  '90D': {
+    mrr: '$148,920.00',
+    tokens: '4.2M Tokens/s',
+    conv: '14.8%',
+    nrr: '124.6%',
+    bars: [
+      { val: '$122k', h: '55%', label: 'Jun' },
+      { val: '$135k', h: '72%', label: 'Jul' },
+      { val: '$148k', h: '100%', label: 'Aug' }
+    ]
+  },
+  '12M': {
+    mrr: '$148,920.00',
+    tokens: '4.2M Tokens/s',
+    conv: '14.8%',
+    nrr: '124.6%',
+    bars: [
+      { val: '$68k', h: '35%', label: 'Jan' },
+      { val: '$74k', h: '42%', label: 'Feb' },
+      { val: '$82k', h: '48%', label: 'Mar' },
+      { val: '$91k', h: '55%', label: 'Apr' },
+      { val: '$104k', h: '62%', label: 'May' },
+      { val: '$118k', h: '70%', label: 'Jun' },
+      { val: '$129k', h: '78%', label: 'Jul' },
+      { val: '$138k', h: '85%', label: 'Aug' },
+      { val: '$144k', h: '92%', label: 'Sep' },
+      { val: '$148k', h: '96%', label: 'Oct' },
+      { val: '$156k', h: '98%', label: 'Nov' },
+      { val: '$168k', h: '100%', label: 'Dec' }
+    ]
+  },
+  'ALL': {
+    mrr: '$148,920.00',
+    tokens: '4.2M Tokens/s',
+    conv: '14.8%',
+    nrr: '124.6%',
+    bars: [
+      { val: '$45k', h: '25%', label: 'Q1-25' },
+      { val: '$62k', h: '38%', label: 'Q2-25' },
+      { val: '$88k', h: '52%', label: 'Q3-25' },
+      { val: '$110k', h: '68%', label: 'Q4-25' },
+      { val: '$128k', h: '80%', label: 'Q1-26' },
+      { val: '$148k', h: '100%', label: 'Q2-26' }
+    ]
+  }
+};
+
+function selectAnalyticsTimeframe(period, btnElem) {
+  selectedAnalyticsTimeframe = period;
+
+  document.querySelectorAll('.timeframe-btn').forEach(btn => {
+    if (btn.innerText.trim() === period) btn.classList.add('active');
+    else btn.classList.remove('active');
+  });
+
+  renderAnalyticsDashboard();
+  showToast(`📊 Analytics Timeframe set to ${period}`);
+}
+
+function refreshAnalyticsData() {
+  renderAnalyticsDashboard();
+  showToast('🔄 Long-Term Analytics telemetry synced in real time');
+}
+
+function renderAnalyticsDashboard() {
+  const data = analyticsDatasets[selectedAnalyticsTimeframe] || analyticsDatasets['12M'];
+
+  ['office-analytics-mrr-val', 'overview-analytics-mrr-val'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = data.mrr;
+  });
+
+  ['office-analytics-tokens-val', 'overview-analytics-tokens-val'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = data.tokens;
+  });
+
+  ['office-analytics-conv-val', 'overview-analytics-conv-val'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = data.conv;
+  });
+
+  ['office-analytics-nrr-val', 'overview-analytics-nrr-val'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = data.nrr;
+  });
+
+  const chartHtml = data.bars.map(b => `
+    <div class="analytics-bar-col">
+      <div class="analytics-bar-fill" style="height: ${b.h};" data-value="${b.val}"></div>
+      <span class="analytics-bar-label">${b.label}</span>
+    </div>
+  `).join('');
+
+  ['office-analytics-chart-container', 'overview-analytics-chart-container'].forEach(id => {
+    const container = document.getElementById(id);
+    if (container) container.innerHTML = chartHtml;
+  });
+}
 
 // --------------------------------------------------------------------------
 // GLOBAL INITIALIZER FOR INTERACTIVE EXTENSIONS
@@ -5163,6 +5517,11 @@ function initSovereignInteractiveExtensions() {
   renderAutonomicStudio();
   renderOfficeWorkspace();
   setupKeyboardShortcuts();
+  
+  // Initialize RevenueCat Entitlements, Quota Meters, and Analytics
+  updateEntitlementBadges();
+  updateQuotaMeterUI();
+  renderAnalyticsDashboard();
 
   // Check URL parameters for view switching
   const urlParams = new URLSearchParams(window.location.search);
@@ -5177,6 +5536,7 @@ if (document.readyState === 'loading') {
 } else {
   initSovereignInteractiveExtensions();
 }
+
 
 
 

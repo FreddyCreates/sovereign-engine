@@ -22,6 +22,21 @@ except ImportError:
         ZKDilithiumProofGenerator
     )
 
+try:
+    from complete_enterprise_saas_ecosystem import (
+        RevenueCatSDKWebhookIngestionEngine,
+        RevenueCatEntitlementGatingEngine,
+        DynamicPaywallASTSynthesizer,
+        LongTermSaaSUsageMeteringEngine
+    )
+except ImportError:
+    from sovereign_infrastructure.nextgen_systems.complete_enterprise_saas_ecosystem import (
+        RevenueCatSDKWebhookIngestionEngine,
+        RevenueCatEntitlementGatingEngine,
+        DynamicPaywallASTSynthesizer,
+        LongTermSaaSUsageMeteringEngine
+    )
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("MegaOfficeBusinessSuite")
 
@@ -2271,6 +2286,96 @@ class SovereignCalendarModule:
         }
 
 # =============================================================================
+# 9. SOVEREIGN REVENUECAT SUITE ENGINE
+# =============================================================================
+class SovereignRevenueCatSuiteEngine:
+    """
+    RevenueCat SDK Webhook Ingestion, Entitlement Gating ('sovereign_office_pro', 'sovereign_office_enterprise'),
+    Dynamic Paywall AST Synthesis, and Long-Term SaaS Usage Metering & LTV Engine.
+    """
+    def __init__(self, webhook_secret: str = "rc_whsec_live_sovereign_2026"):
+        self.webhook_engine = RevenueCatSDKWebhookIngestionEngine(webhook_secret=webhook_secret)
+        self.gating_engine = RevenueCatEntitlementGatingEngine(webhook_engine=self.webhook_engine)
+        self.paywall_engine = DynamicPaywallASTSynthesizer()
+        self.metering_engine = LongTermSaaSUsageMeteringEngine(gating_engine=self.gating_engine)
+
+    def ingest_webhook(self, payload: Dict[str, Any], signature_header: Optional[str] = None) -> Dict[str, Any]:
+        return self.webhook_engine.ingest_webhook_event(payload, signature_header)
+
+    def grant_entitlement(self, subscriber_id: str, entitlement_id: str) -> Dict[str, Any]:
+        return self.gating_engine.grant_entitlement(subscriber_id, entitlement_id)
+
+    def revoke_entitlement(self, subscriber_id: str, entitlement_id: str) -> Dict[str, Any]:
+        return self.gating_engine.revoke_entitlement(subscriber_id, entitlement_id)
+
+    def check_entitlement(self, subscriber_id: str, required_entitlement: str) -> Dict[str, Any]:
+        return self.gating_engine.check_entitlement(subscriber_id, required_entitlement)
+
+    def evaluate_feature_access(self, subscriber_id: str, feature_key: str) -> Dict[str, Any]:
+        return self.gating_engine.evaluate_feature_access(subscriber_id, feature_key)
+
+    def synthesize_paywall_ast(
+        self,
+        target_entitlement: str = "sovereign_office_pro",
+        country_code: str = "US",
+        currency: str = "USD",
+        ppp_discount_rate: float = 0.0,
+        theme: str = "GLASSMORPHIC_DARK_MODE"
+    ) -> Dict[str, Any]:
+        return self.paywall_engine.synthesize_paywall_ast(
+            target_entitlement=target_entitlement,
+            country_code=country_code,
+            currency=currency,
+            ppp_discount_rate=ppp_discount_rate,
+            theme=theme
+        )
+
+    def mutate_paywall_variant(
+        self,
+        base_ast: Dict[str, Any],
+        scroll_velocity: float = 0.85,
+        engagement_score: float = 0.92,
+        churn_risk_score: float = 0.0
+    ) -> Dict[str, Any]:
+        return self.paywall_engine.mutate_paywall_variant(
+            base_ast=base_ast,
+            scroll_velocity=scroll_velocity,
+            engagement_score=engagement_score,
+            churn_risk_score=churn_risk_score
+        )
+
+    def record_user_activity(self, subscriber_id: str, timestamp: Optional[float] = None) -> Dict[str, Any]:
+        return self.metering_engine.record_user_activity(subscriber_id, timestamp)
+
+    def record_usage(self, subscriber_id: str, resource_type: str, quantity: int = 1) -> Dict[str, Any]:
+        return self.metering_engine.record_usage(subscriber_id, resource_type, quantity)
+
+    def check_quota_cap(self, subscriber_id: str, resource_type: str, requested_units: int = 1) -> Dict[str, Any]:
+        return self.metering_engine.check_quota_cap(subscriber_id, resource_type, requested_units)
+
+    def get_mau_analytics(self) -> Dict[str, Any]:
+        return self.metering_engine.get_mau_analytics()
+
+    def predict_subscriber_ltv(
+        self,
+        subscriber_id: str,
+        monthly_arpu: float,
+        active_months: int = 1,
+        churn_risk: float = 0.05,
+        discount_rate: float = 0.10,
+        horizon_months: int = 24
+    ) -> Dict[str, Any]:
+        return self.metering_engine.predict_subscriber_ltv(
+            subscriber_id=subscriber_id,
+            monthly_arpu=monthly_arpu,
+            active_months=active_months,
+            churn_risk=churn_risk,
+            discount_rate=discount_rate,
+            horizon_months=horizon_months
+        )
+
+
+# =============================================================================
 # MASTER MEGA OFFICE BUSINESS SUITE ORCHESTRATOR
 # =============================================================================
 class MegaOfficeBusinessSuite:
@@ -2284,14 +2389,72 @@ class MegaOfficeBusinessSuite:
         self.drive = SovereignDriveModule()
         self.forms = SovereignFormsModule()
         self.calendar = SovereignCalendarModule()
+        self.revenuecat = SovereignRevenueCatSuiteEngine()
         self.artifact_generator = AgenticMultiArtifactGenerator(gl_engine=gl_engine)
+
+    def ingest_revenuecat_webhook(self, payload: Dict[str, Any], signature_header: Optional[str] = None) -> Dict[str, Any]:
+        return self.revenuecat.ingest_webhook(payload, signature_header)
+
+    def grant_entitlement(self, subscriber_id: str, entitlement_id: str) -> Dict[str, Any]:
+        return self.revenuecat.grant_entitlement(subscriber_id, entitlement_id)
+
+    def check_entitlement(self, subscriber_id: str, required_entitlement: str) -> Dict[str, Any]:
+        return self.revenuecat.check_entitlement(subscriber_id, required_entitlement)
+
+    def evaluate_feature_access(self, subscriber_id: str, feature_key: str) -> Dict[str, Any]:
+        return self.revenuecat.evaluate_feature_access(subscriber_id, feature_key)
+
+    def synthesize_paywall_ast(
+        self,
+        target_entitlement: str = "sovereign_office_pro",
+        country_code: str = "US",
+        currency: str = "USD",
+        ppp_discount_rate: float = 0.0,
+        theme: str = "GLASSMORPHIC_DARK_MODE"
+    ) -> Dict[str, Any]:
+        return self.revenuecat.synthesize_paywall_ast(target_entitlement, country_code, currency, ppp_discount_rate, theme)
+
+    def mutate_paywall_variant(
+        self,
+        base_ast: Dict[str, Any],
+        scroll_velocity: float = 0.85,
+        engagement_score: float = 0.92,
+        churn_risk_score: float = 0.0
+    ) -> Dict[str, Any]:
+        return self.revenuecat.mutate_paywall_variant(base_ast, scroll_velocity, engagement_score, churn_risk_score)
+
+    def record_usage(self, subscriber_id: str, resource_type: str, quantity: int = 1) -> Dict[str, Any]:
+        return self.revenuecat.record_usage(subscriber_id, resource_type, quantity)
+
+    def check_quota_cap(self, subscriber_id: str, resource_type: str, requested_units: int = 1) -> Dict[str, Any]:
+        return self.revenuecat.check_quota_cap(subscriber_id, resource_type, requested_units)
+
+    def get_mau_analytics(self) -> Dict[str, Any]:
+        return self.revenuecat.get_mau_analytics()
+
+    def predict_subscriber_ltv(
+        self,
+        subscriber_id: str,
+        monthly_arpu: float,
+        active_months: int = 1,
+        churn_risk: float = 0.05,
+        horizon_months: int = 24
+    ) -> Dict[str, Any]:
+        return self.revenuecat.predict_subscriber_ltv(subscriber_id, monthly_arpu, active_months, churn_risk, 0.10, horizon_months)
 
     def create_business_package(
         self,
         company_name: str = "Apex Enterprise",
         client_name: str = "Acme Inc",
-        annual_contract_val: float = 150000.0
+        annual_contract_val: float = 150000.0,
+        subscriber_id: Optional[str] = None
     ) -> Dict[str, Any]:
+        sub_id = subscriber_id or f"sub_{int(time.time() * 1000)}"
+        self.revenuecat.record_user_activity(sub_id)
+        self.revenuecat.record_usage(sub_id, "api_calls", 10)
+        self.revenuecat.record_usage(sub_id, "documents", 1)
+        self.revenuecat.record_usage(sub_id, "sheets", 1)
+
         doc = self.docs.create_document(f"{company_name} Executive SLA")
         fin_model = self.sheets.create_financial_model(company_name, base_mrr=annual_contract_val / 12.0)
         pitch = self.slides.generate_pitch_deck(company_name)
@@ -2304,15 +2467,19 @@ class MegaOfficeBusinessSuite:
             "signed_contract": sig
         }
 
+        ltv_pred = self.revenuecat.predict_subscriber_ltv(sub_id, monthly_arpu=annual_contract_val / 12.0, active_months=12)
+
         return {
             "package_id": f"pkg_{int(time.time() * 1000)}",
             "company": company_name,
             "client": client_name,
             "annual_contract_val": annual_contract_val,
+            "subscriber_id": sub_id,
             "document": doc,
             "financial_model": fin_model,
             "pitch_deck": pitch,
             "signed_contract": sig,
+            "ltv_prediction": ltv_pred,
             "components": components,
             "status": "BUSINESS_PACKAGE_CREATED"
         }
@@ -2320,6 +2487,8 @@ class MegaOfficeBusinessSuite:
     def run_full_office_audit(self) -> Dict[str, Any]:
         drive_analytics = self.drive.get_storage_analytics()
         mail_triage = self.mail.perform_inbox_triage()
+        rc_analytics = self.revenuecat.get_mau_analytics()
+
         return {
             "suite_name": "SOVEREIGN OS Mega Office & Business Suite",
             "apps_included": [
@@ -2333,5 +2502,13 @@ class MegaOfficeBusinessSuite:
             "mail_inbox_total": mail_triage["inbox_total_count"],
             "mail_urgent_action_required": mail_triage["urgent_action_required_count"],
             "gl_engine_attached": self.gl_engine is not None,
+            "revenuecat_integration": {
+                "sdk_webhook_ingestion": True,
+                "entitlement_gating": ["sovereign_office_pro", "sovereign_office_enterprise"],
+                "paywall_ast_synthesis": True,
+                "usage_metering_and_ltv": True,
+                "mau_analytics": rc_analytics
+            },
             "status": "MEGA_OFFICE_SUITE_FULLY_OPERATIONAL"
         }
+

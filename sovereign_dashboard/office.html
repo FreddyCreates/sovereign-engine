@@ -20,9 +20,12 @@
       </div>
     </div>
     <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-      <button class="badge-revenuecat" onclick="openRevenueCatDrawer()" title="Configure RevenueCat Entitlements">
+      <button class="badge-revenuecat" onclick="openRevenueCatPaywallModal()" title="Configure RevenueCat Entitlements">
         ⚡ RevenueCat Substrate Active
       </button>
+      <span id="nav-entitlement-badge" class="entitlement-badge badge-enterprise" onclick="openRevenueCatPaywallModal()" title="Click to manage subscription entitlements">
+        💎 ENTERPRISE
+      </span>
       <div class="system-status-indicator">
         <div class="pulse-dot"></div>
         <span>6 Cores Entangled</span>
@@ -84,6 +87,29 @@
     </div>
   </section>
 
+  <!-- QUOTA USAGE METER CARD -->
+  <div style="max-width: 1400px; margin: 1rem auto 0 auto; padding: 0 1.5rem;">
+    <div class="quota-meter-card">
+      <div class="quota-header">
+        <div class="quota-title">
+          <span>🤖 AI Copilot Quota Usage Meter</span>
+          <span id="quota-badge-tier-tag" class="entitlement-badge badge-pro" style="font-size: 0.65rem; padding: 0.15rem 0.5rem;" onclick="openRevenueCatPaywallModal()">⚡ PRO</span>
+        </div>
+        <div class="quota-val-text" id="quota-meter-text">94 / 100 AI Generations (94%)</div>
+      </div>
+      <div class="quota-bar-track">
+        <div class="quota-bar-fill warning" id="quota-bar-fill-elem" style="width: 94%;"></div>
+      </div>
+      <div class="quota-sub-info">
+        <span id="quota-sub-reset-text">⚡ 6 AI Generations left in cycle • Resets in 6 Days</span>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="sheet-btn" onclick="testAIGenerationQuota()" style="padding: 0.25rem 0.6rem; font-size: 0.76rem;">✨ Test AI Generation (+1)</button>
+          <button class="sheet-btn sheet-btn-primary" onclick="openRevenueCatPaywallModal()" style="padding: 0.25rem 0.65rem; font-size: 0.76rem;">⚡ Upgrade Entitlement</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- MAIN CONTAINER -->
   <main class="main-container" style="margin-top: 1rem;">
     
@@ -94,6 +120,7 @@
       <button class="view-tab-btn" id="office-tab-btn-slides" onclick="switchOfficeTab('slides')">📽️ Sovereign Slides (Pitch Deck Studio)</button>
       <button class="view-tab-btn" id="office-tab-btn-sign" onclick="switchOfficeTab('sign')">✍️ SovereignSign (Digital Signature)</button>
       <button class="view-tab-btn" id="office-tab-btn-drive" onclick="switchOfficeTab('drive')">📁 SovereignDrive (File Vault)</button>
+      <button class="view-tab-btn" id="office-tab-btn-analytics" onclick="switchOfficeTab('analytics')">📈 Long-Term Analytics</button>
       <button class="view-tab-btn" id="office-tab-btn-artifacts" onclick="openMultiArtifactDrawer()">🤖 Multi-Artifact AI Drawer</button>
     </div>
 
@@ -458,6 +485,79 @@
           </div>
         </div>
       </div>
+    <!-- SECTION 6: LONG-TERM ANALYTICS & REVENUECAT TELEMETRY -->
+    <div id="sec-office-analytics" style="display: none;">
+      <section class="analytics-dashboard-panel">
+        <div class="analytics-header-bar">
+          <div>
+            <h2 style="font-family: var(--font-heading); color: #fff; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.25rem;">
+              📈 Long-Term Subscription & Telemetry Analytics
+            </h2>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">
+              Historical MRR retention, RevenueCat entitlement conversion velocity, and AI token telemetry trends.
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div class="timeframe-pill-selector">
+              <button class="timeframe-btn" onclick="selectAnalyticsTimeframe('7D', this)">7D</button>
+              <button class="timeframe-btn" onclick="selectAnalyticsTimeframe('30D', this)">30D</button>
+              <button class="timeframe-btn" onclick="selectAnalyticsTimeframe('90D', this)">90D</button>
+              <button class="timeframe-btn active" onclick="selectAnalyticsTimeframe('12M', this)">12M</button>
+              <button class="timeframe-btn" onclick="selectAnalyticsTimeframe('ALL', this)">ALL</button>
+            </div>
+            <button class="btn-card-action" onclick="refreshAnalyticsData()" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;">🔄 Sync Data</button>
+          </div>
+        </div>
+
+        <!-- KPI STAT CARDS -->
+        <div class="analytics-kpi-grid">
+          <div class="analytics-kpi-card">
+            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Monthly Recurring Revenue</div>
+            <div style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 800; color: #fff;" id="office-analytics-mrr-val">$148,920.00</div>
+            <div style="font-size: 0.76rem; color: var(--accent-green);">▲ +18.4% YoY • StoreKit 2 & Web</div>
+          </div>
+          <div class="analytics-kpi-card">
+            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">AI Generation Velocity</div>
+            <div style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 800; color: var(--accent-cyan);" id="office-analytics-tokens-val">4.2M Tokens/s</div>
+            <div style="font-size: 0.76rem; color: var(--accent-cyan);">▲ 94.2k Generations/mo</div>
+          </div>
+          <div class="analytics-kpi-card">
+            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Paywall Conversion Rate</div>
+            <div style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 800; color: var(--accent-violet);" id="office-analytics-conv-val">14.8%</div>
+            <div style="font-size: 0.76rem; color: var(--accent-green);">▲ +3.2% vs previous period</div>
+          </div>
+          <div class="analytics-kpi-card">
+            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Net Revenue Retention (NRR)</div>
+            <div style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 800; color: var(--accent-gold);" id="office-analytics-nrr-val">124.6%</div>
+            <div style="font-size: 0.76rem; color: var(--accent-green);">▲ Enterprise Cohort Retention</div>
+          </div>
+        </div>
+
+        <!-- 12-MONTH VISUAL CSS BAR GRAPH -->
+        <div style="margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700; color: #fff;">
+            📊 Historical MRR & RevenueCat Entitlement Growth Trajectory
+          </div>
+          <div style="font-size: 0.75rem; color: var(--text-muted);">
+            StoreKit 2 (46%) • Android Billing (36%) • Web Paywalls (18%)
+          </div>
+        </div>
+
+        <div class="analytics-chart-wrapper" id="office-analytics-chart-container">
+          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 35%;" data-value="$68k"></div><span class="analytics-bar-label">Jan</span></div>
+          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 42%;" data-value="$74k"></div><span class="analytics-bar-label">Feb</span></div>
+          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 48%;" data-value="$82k"></div><span class="analytics-bar-label">Mar</span></div>
+          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 55%;" data-value="$91k"></div><span class="analytics-bar-label">Apr</span></div>
+          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 62%;" data-value="$104k"></div><span class="analytics-bar-label">May</span></div>
+          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 70%;" data-value="$118k"></div><span class="analytics-bar-label">Jun</span></div>
+          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 78%;" data-value="$129k"></div><span class="analytics-bar-label">Jul</span></div>
+          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 85%;" data-value="$138k"></div><span class="analytics-bar-label">Aug</span></div>
+          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 92%;" data-value="$144k"></div><span class="analytics-bar-label">Sep</span></div>
+          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 96%;" data-value="$148k"></div><span class="analytics-bar-label">Oct</span></div>
+          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 98%;" data-value="$156k"></div><span class="analytics-bar-label">Nov</span></div>
+          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 100%;" data-value="$168k"></div><span class="analytics-bar-label">Dec</span></div>
+        </div>
+      </section>
     </div>
 
   </main>
@@ -600,6 +700,131 @@
       </div>
       <div class="modal-body" id="drive-preview-modal-body">
         <!-- Populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- REVENUECAT LIVE PAYWALL MODAL -->
+  <div id="revenuecat-paywall-modal" class="sovereign-modal-backdrop" style="display: none;">
+    <div class="sovereign-modal-card paywall-modal-card">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="font-size: 1.5rem;">⚡</span>
+          <div>
+            <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.15rem; margin: 0;">RevenueCat Substrate Paywall & Entitlements</h3>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">StoreKit 2, Google Play Billing & Stripe Web Checkout</div>
+          </div>
+        </div>
+        <button class="copilot-close-btn" onclick="closeRevenueCatPaywallModal()">✕</button>
+      </div>
+
+      <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+        <!-- CURRENT ENTITLEMENT STATUS -->
+        <div style="background: linear-gradient(135deg, rgba(121, 40, 202, 0.25), rgba(0, 242, 254, 0.15)); border: 1px solid var(--border-glow); border-radius: 18px; padding: 1.2rem; margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Active RevenueCat Entitlement</div>
+            <div style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; color: #fff;" id="rc-modal-active-tier-name">PRO Substrate Tier</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;" id="rc-modal-active-tier-sub">Quota: 94 / 500 AI Generations • Full Sovereign Office Unlocked</div>
+          </div>
+          <div id="rc-modal-badge-slot">
+            <span class="entitlement-badge badge-pro">⚡ PRO ACTIVE</span>
+          </div>
+        </div>
+
+        <!-- BILLING CYCLE TOGGLE -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+          <h4 style="color: #fff; font-size: 0.95rem; margin: 0; font-family: var(--font-heading);">💳 Select Entitlement Offering</h4>
+          <div class="paywall-billing-toggle">
+            <button class="paywall-billing-btn active" id="billing-btn-monthly" onclick="setPaywallBilling('monthly')">Monthly</button>
+            <button class="paywall-billing-btn" id="billing-btn-annual" onclick="setPaywallBilling('annual')">Annual (Save 20%)</button>
+          </div>
+        </div>
+
+        <!-- TIER GRID -->
+        <div class="paywall-tier-grid">
+          <!-- STARTER -->
+          <div class="paywall-tier-option">
+            <div>
+              <div style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #fff;">Starter Sovereign</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">Basic workspace & formula grid</div>
+              <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 800; color: var(--accent-cyan); margin: 0.8rem 0;">Free</div>
+              <ul style="list-style: none; font-size: 0.8rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem;">
+                <li>✓ 100 AI Generations / mo</li>
+                <li>✓ 10 GB SovereignDrive Storage</li>
+                <li>✓ Basic Formulas (=SUM, =AVG)</li>
+                <li>✕ ZK Security Vault</li>
+                <li>✕ Multi-Artifact Copilot</li>
+              </ul>
+            </div>
+            <button class="btn-card-action" onclick="simulateRevenueCatPurchase('free')">Downgrade Starter</button>
+          </div>
+
+          <!-- PRO -->
+          <div class="paywall-tier-option popular">
+            <div>
+              <div style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #fff;">PRO Substrate</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">Complete Office & Financial AI Suite</div>
+              <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 800; color: var(--accent-violet); margin: 0.8rem 0;" id="price-pro-val">$29.00 <span style="font-size: 0.75rem; color: var(--text-muted);">/ mo</span></div>
+              <ul style="list-style: none; font-size: 0.8rem; color: #e2e8f0; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem;">
+                <li>✓ 500 AI Generations / mo</li>
+                <li>✓ 100 GB SovereignDrive Vault</li>
+                <li>✓ All Advanced Formulas & NPV</li>
+                <li>✓ Multi-Artifact AI Drawer</li>
+                <li>✓ Priority Execution Speed</li>
+              </ul>
+            </div>
+            <button class="btn-card-action btn-card-primary" onclick="simulateRevenueCatPurchase('pro')">Upgrade PRO ($29)</button>
+          </div>
+
+          <!-- ENTERPRISE -->
+          <div class="paywall-tier-option">
+            <div>
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <span style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #fff;">ENTERPRISE</span>
+                <span class="entitlement-badge badge-enterprise" style="font-size: 0.6rem; padding: 0.1rem 0.4rem;">MAX POWER</span>
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">200 Apps & Quantum ZK Vault</div>
+              <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 800; color: var(--accent-green); margin: 0.8rem 0;" id="price-enterprise-val">$199.00 <span style="font-size: 0.75rem; color: var(--text-muted);">/ mo</span></div>
+              <ul style="list-style: none; font-size: 0.8rem; color: #e2e8f0; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem;">
+                <li>✓ 2,500 AI Generations / mo</li>
+                <li>✓ Unlimited ZK Drive Vault</li>
+                <li>✓ All 200 Marketplace Plugins</li>
+                <li>✓ 24/7 Priority SLA & Node Mesh</li>
+              </ul>
+            </div>
+            <button class="btn-card-action btn-card-primary" style="background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan)); color: #000; font-weight: 800;" onclick="simulateRevenueCatPurchase('enterprise')">Unlock Enterprise ($199)</button>
+          </div>
+
+          <!-- UNLIMITED AI -->
+          <div class="paywall-tier-option" style="background: linear-gradient(145deg, rgba(240,0,255,0.15), rgba(245,158,11,0.15)); border: 1px solid rgba(240,0,255,0.4);">
+            <div>
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <span style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #fff;">UNLIMITED AI</span>
+                <span class="entitlement-badge badge-unlimited" style="font-size: 0.6rem; padding: 0.1rem 0.4rem;">INFINITY</span>
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">Zero rate limits & Autonomic Mesh</div>
+              <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 800; color: var(--accent-magenta); margin: 0.8rem 0;" id="price-unlimited-val">$499.00 <span style="font-size: 0.75rem; color: var(--text-muted);">/ mo</span></div>
+              <ul style="list-style: none; font-size: 0.8rem; color: #fef08a; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem;">
+                <li>🚀 UNLIMITED AI Generations</li>
+                <li>⚡ Dedicated 6-Core Neural Mesh</li>
+                <li>💎 Custom SDK Integrations</li>
+                <li>🔒 Quantum Sovereign Cryptography</li>
+              </ul>
+            </div>
+            <button class="btn-card-action btn-card-primary" style="background: linear-gradient(135deg, var(--accent-magenta), var(--accent-gold)); color: #fff; font-weight: 800;" onclick="simulateRevenueCatPurchase('unlimited')">Activate Unlimited ($499)</button>
+          </div>
+        </div>
+
+        <!-- SANDBOX TEST PAYLOAD LOG -->
+        <div style="margin-top: 1rem;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: bold; margin-bottom: 0.4rem; display: flex; justify-content: space-between;">
+            <span>⚡ STOREKIT 2 / REVENUECAT SDK TELEMETRY LOG</span>
+            <span style="color: var(--accent-green);">● API Status: 200 OK</span>
+          </div>
+          <div class="rc-sandbox-payload-box" id="rc-sandbox-payload-json">
+            { "event": "ENTITLEMENT_SYNC_OK", "offering_id": "sov_pro_monthly", "entitlement": "sov_pro_tier", "subscriber_id": "user_sov_88492", "status": "active" }
+          </div>
+        </div>
       </div>
     </div>
   </div>

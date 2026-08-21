@@ -270,28 +270,54 @@ class RevenueCatMasterModule:
     """
     RevenueCat Master Module:
     In-App Purchase (IAP) Entitlements, Webhooks, Paywall A/B Experiments,
-    and App Store / Google Play Revenue Cut Calculations.
+    Usage Tracking, and App Store / Google Play Revenue Cut Calculations.
     """
 
     def __init__(self):
         self.subscribers: Dict[str, Dict[str, Any]] = {}
         self.experiments: List[Dict[str, Any]] = []
+        self.usage_records: Dict[str, List[Dict[str, Any]]] = {}
 
-    def get_entitlements(self, subscriber_id: str) -> Dict[str, Any]:
-        return {
-            "subscriber_id": subscriber_id,
-            "entitlements": {
+    def get_entitlements(self, subscriber_id: str = "sub_101") -> Dict[str, Any]:
+        subscriber_data = self.subscribers.get(subscriber_id, {})
+        entitlements = subscriber_data.get("entitlements")
+        if entitlements is None:
+            entitlements = {
                 "pro_access": {
                     "expires_date": "2027-08-16T00:00:00Z",
                     "product_identifier": "sovereign_pro_annual",
                     "purchase_date": "2026-08-16T00:00:00Z"
                 }
-            },
+            }
+        return {
+            "subscriber_id": subscriber_id,
+            "entitlements": entitlements,
             "status": "REVENUECAT_ENTITLED"
         }
 
-    def process_webhooks(self, event_type: str, subscriber_id: str, product_id: str) -> Dict[str, Any]:
+    def process_webhooks(self, event_type: str = "INITIAL_PURCHASE", subscriber_id: str = "sub_101", product_id: str = "sovereign_pro_annual") -> Dict[str, Any]:
         event_id = f"evt_{time.time_ns()}"
+        if subscriber_id not in self.subscribers:
+            self.subscribers[subscriber_id] = {"entitlements": {}, "events": []}
+        
+        self.subscribers[subscriber_id]["events"].append({
+            "event_id": event_id,
+            "event_type": event_type.upper(),
+            "product_id": product_id,
+            "timestamp": time.time()
+        })
+        
+        evt = event_type.upper()
+        if evt in ["INITIAL_PURCHASE", "RENEWAL", "UNCANCELLATION"]:
+            self.subscribers[subscriber_id]["entitlements"]["pro_access"] = {
+                "expires_date": "2027-08-16T00:00:00Z",
+                "product_identifier": product_id,
+                "purchase_date": "2026-08-16T00:00:00Z"
+            }
+        elif evt in ["CANCELLATION", "EXPIRATION"]:
+            if "pro_access" in self.subscribers[subscriber_id]["entitlements"]:
+                del self.subscribers[subscriber_id]["entitlements"]["pro_access"]
+
         return {
             "event_id": event_id,
             "event_type": event_type.upper(),
@@ -301,7 +327,28 @@ class RevenueCatMasterModule:
             "status": "REVENUECAT_WEBHOOK_PROCESSED"
         }
 
-    def trigger_paywall_experiment(self, experiment_id: str) -> Dict[str, Any]:
+    def process_webhook(self, event_type: str = "INITIAL_PURCHASE", subscriber_id: str = "sub_101", product_id: str = "sovereign_pro_annual") -> Dict[str, Any]:
+        return self.process_webhooks(event_type, subscriber_id, product_id)
+
+    def get_paywall(self, offering_id: str = "default", subscriber_id: str = "sub_101", experiment_id: Optional[str] = None) -> Dict[str, Any]:
+        experiment_data = None
+        if experiment_id:
+            experiment_data = self.trigger_paywall_experiment(experiment_id)
+        return {
+            "offering_id": offering_id,
+            "subscriber_id": subscriber_id,
+            "headline": "Unlock Sovereign Enterprise Pro",
+            "theme": "NEON_CYAN",
+            "packages": [
+                {"identifier": "sovereign_pro_monthly", "price": 19.99, "currency": "USD", "period": "P1M"},
+                {"identifier": "sovereign_pro_annual", "price": 149.99, "currency": "USD", "period": "P1Y"},
+                {"identifier": "sovereign_enterprise_annual", "price": 999.99, "currency": "USD", "period": "P1Y"}
+            ],
+            "experiment": experiment_data,
+            "status": "REVENUECAT_PAYWALL_ACTIVE"
+        }
+
+    def trigger_paywall_experiment(self, experiment_id: str = "exp_paywall_v2") -> Dict[str, Any]:
         return {
             "experiment_id": experiment_id,
             "variant_a_conversion": 0.182,
@@ -324,6 +371,57 @@ class RevenueCatMasterModule:
             "net_proceeds": net_proceeds,
             "status": "REVENUECAT_PROCEEDS_CALCULATED"
         }
+
+    def record_usage(self, subscriber_id: str = "sub_101", feature_id: str = "api_calls", units: int = 1) -> Dict[str, Any]:
+        if not hasattr(self, "usage_records"):
+            self.usage_records = {}
+        if subscriber_id not in self.usage_records:
+            self.usage_records[subscriber_id] = []
+        
+        record = {
+            "feature_id": feature_id,
+            "units": units,
+            "timestamp": time.time()
+        }
+        self.usage_records[subscriber_id].append(record)
+        return {
+            "subscriber_id": subscriber_id,
+            "recorded": record,
+            "status": "REVENUECAT_USAGE_RECORDED"
+        }
+
+    def get_usage(self, subscriber_id: str = "sub_101", period: str = "longterm") -> Dict[str, Any]:
+        if not hasattr(self, "usage_records"):
+            self.usage_records = {}
+        records = self.usage_records.get(subscriber_id, [])
+        total_units = sum(r.get("units", 1) for r in records)
+        feature_breakdown = {}
+        for r in records:
+            fid = r.get("feature_id", "api_calls")
+            feature_breakdown[fid] = feature_breakdown.get(fid, 0) + r.get("units", 1)
+        
+        base_api_calls = 12450 if subscriber_id == "sub_101" else 1500
+        total_api_calls = base_api_calls + feature_breakdown.get("api_calls", 0)
+        
+        return {
+            "subscriber_id": subscriber_id,
+            "period": period,
+            "total_units_consumed": total_units,
+            "total_api_calls": total_api_calls,
+            "compute_credits_used": feature_breakdown.get("compute_credits", 420.5),
+            "storage_gb_used": feature_breakdown.get("storage_gb", 18.4),
+            "feature_breakdown": feature_breakdown if feature_breakdown else {"api_calls": total_api_calls},
+            "historical_months": [
+                {"month": "2026-05", "api_calls": 3100, "overage_charge": 0.0},
+                {"month": "2026-06", "api_calls": 4200, "overage_charge": 0.0},
+                {"month": "2026-07", "api_calls": 5150, "overage_charge": 15.0},
+            ],
+            "longterm_retention_score": 0.965,
+            "status": "REVENUECAT_USAGE_RETRIEVED"
+        }
+
+    def get_longterm_usage(self, subscriber_id: str = "sub_101") -> Dict[str, Any]:
+        return self.get_usage(subscriber_id, period="longterm")
 
 
 # =============================================================================
