@@ -2,12 +2,13 @@
 SYSTEM 6: NEXS — Neural Dynamic App Synthesis & Paywall Optimization Engine
 Model: Multi-Armed Bandit (UCB1) & Dynamic Purchasing Power Parity (PPP) Price Elasticity Model
 Synthesizes real-time paywall variants, optimizes price elasticity per region,
-tracks paywall conversion rates, and unlocks dynamic AI feature entitlements via RevenueCat.
+tracks paywall conversion rates, generates Jetpack Compose UI & Neural App Architectures,
+and posts double-entry revenue & tax transactions to General Ledger, Bank Reconciliation & Payroll/Tax engines.
 """
 
 import math
 import logging
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("NEXS_Engine")
@@ -22,10 +23,13 @@ PPP_FACTORS = {
 }
 
 class NEXSEngine:
-    """NEXS System: Neural Paywall Synthesis & Dynamic Pricing Engine"""
+    """NEXS System: Neural Paywall Synthesis & Dynamic Pricing Engine integrated with Full SaaS Accounting"""
 
-    def __init__(self, exploration_factor: float = 1.414):
+    def __init__(self, exploration_factor: float = 1.414, gl: Optional[Any] = None, payroll: Optional[Any] = None, bank: Optional[Any] = None):
         self.exploration_factor = exploration_factor
+        self.gl = gl
+        self.payroll = payroll
+        self.bank = bank
         self.paywall_variants = {
             "var_A_minimal": {"trials": 0, "conversions": 0, "revenue": 0.0},
             "var_B_feature_list": {"trials": 0, "conversions": 0, "revenue": 0.0},
@@ -34,6 +38,12 @@ class NEXSEngine:
         }
         self.total_trials = 0
         logger.info("[NEXS System] Initialized Neural Dynamic Paywall Synthesis Engine.")
+
+    def set_accounting_suite(self, gl: Any = None, payroll: Any = None, bank: Any = None):
+        """Inject General Ledger, Payroll/Tax, and Bank Reconciliation engines."""
+        self.gl = gl
+        self.payroll = payroll
+        self.bank = bank
 
     def select_optimal_paywall_variant(self, user_id: str, user_segment: str = "DEFAULT") -> str:
         """
@@ -62,13 +72,43 @@ class NEXSEngine:
         logger.info(f"[NEXS] Variant Selected for {user_id} ({user_segment}): {best_variant} (UCB: {best_ucb:.4f})")
         return best_variant
 
-    def record_paywall_conversion(self, variant_id: str, converted: bool, revenue_usd: float = 0.0):
-        """Records conversion outcome and updates bandit statistics."""
+    def record_paywall_conversion(self, variant_id: str, converted: bool, revenue_usd: float = 0.0) -> Dict[str, Any]:
+        """
+        Records conversion outcome and updates bandit statistics.
+        Posts double-entry revenue and App Store fee COGS in General Ledger.
+        """
+        gl_entry_id = None
         if variant_id in self.paywall_variants:
             if converted:
                 self.paywall_variants[variant_id]["conversions"] += 1
                 self.paywall_variants[variant_id]["revenue"] += revenue_usd
+
+                if self.gl and revenue_usd > 0:
+                    try:
+                        cogs_fee = round(revenue_usd * 0.15, 2)  # 15% App Store / Processor COGS Fee
+                        net_revenue = round(revenue_usd - cogs_fee, 2)
+
+                        # Record double entry: Debit Cash 1010, Credit Revenue 4010, Debit COGS 5010
+                        entry = self.gl.record_journal_entry(
+                            description=f"NEXS Paywall Conversion Revenue ({variant_id})",
+                            debits={"1010": revenue_usd, "5010": cogs_fee},
+                            credits={"4010": revenue_usd, "1010": cogs_fee},
+                            entry_type="NEXS_PAYWALL_REVENUE",
+                            reference=f"NEXS-{variant_id}"
+                        )
+                        gl_entry_id = entry.get("entry_id")
+                    except Exception as e:
+                        logger.warning(f"[NEXS] GL revenue recording warning: {e}")
+
             logger.info(f"[NEXS] Recorded outcome for {variant_id}: Converted={converted}, Revenue=${revenue_usd:.2f}")
+
+        return {
+            "variant_id": variant_id,
+            "converted": converted,
+            "revenue_usd": revenue_usd,
+            "gl_entry_id": gl_entry_id,
+            "status": "CONVERSION_RECORDED"
+        }
 
     def synthesize_dynamic_offering(self, user_id: str, region_code: str, base_usd_price: float = 19.99) -> Dict[str, Any]:
         """
@@ -85,6 +125,8 @@ class NEXSEngine:
             "base_usd_price": base_usd_price,
             "ppp_factor": ppp_factor,
             "adapted_usd_price": adapted_price,
+            "localized_price": adapted_price,
+            "offering_id": "pro_access_annual",
             "selected_variant": variant,
             "ai_entitlements_unlocked": ["neural_copilot", "predictive_signals", "hyper_automation"]
         }
@@ -121,3 +163,32 @@ class NEXSEngine:
             "total_trials": self.total_trials,
             "variants": summary
         }
+
+    def synthesize_app_architecture(self, prompt: str) -> Dict[str, Any]:
+        """Synthesizes high-level neural app architecture from prompt."""
+        clean_name = prompt.replace("App", "").replace("OS", "").strip() or "Sovereign AI"
+        app_name = f"{clean_name} App" if not clean_name.endswith("App") else clean_name
+        return {
+            "app_name": app_name,
+            "prompt": prompt,
+            "architecture": "Clean Architecture Kotlin Multiplatform + Jetpack Compose UI",
+            "modules": ["ui", "domain", "data", "fintech_substrate"],
+            "status": "SYNTHESIZED"
+        }
+
+    def generate_jetpack_compose_ui(self, app_name: str) -> str:
+        """Generates declarative Jetpack Compose UI code snippet for synthesized app."""
+        composable_name = app_name.replace(" ", "").replace("-", "")
+        return f"""
+package com.antigravity.sovereign.ui
+
+import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+
+@Composable
+fun {composable_name}Screen() {{
+    Surface(color = MaterialTheme.colorScheme.background) {{
+        Text(text = "Welcome to {app_name} Powered by RevenueCat Substrate")
+    }}
+}}
+""".strip()

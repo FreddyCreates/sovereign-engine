@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Command Center — Sovereign Engine OS</title>
+  <title>App Marketplace — Sovereign Engine OS</title>
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -13,7 +13,7 @@
       <div class="brand-icon">S</div>
       <div>
         <div class="brand-title">Sovereign Engine OS</div>
-        <div style="font-size: 0.75rem; color: var(--text-muted);">C-Suite Enterprise Command Center Workspace</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">C-Suite Executive Telemetry & App Ecosystem</div>
       </div>
     </div>
     <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
@@ -33,192 +33,71 @@
   <!-- NAVIGATION TABS -->
   <div class="nav-tabs-container">
     <div class="nav-tabs">
-      <a href="overview.html" class="tab-btn active">⚡ Command Center</a>
+      <a href="overview.html" class="tab-btn">📊 C-Suite Overview</a>
       <a href="office.html" class="tab-btn">🏢 Sovereign Office</a>
       <a href="quickbooks.html" class="tab-btn">💼 QuickBooks Replacement</a>
       <a href="stripe.html" class="tab-btn">💳 Stripe Replacement</a>
       <a href="tokenomics.html" class="tab-btn">🪙 Tokenomics & Treasury</a>
       <a href="iot.html" class="tab-btn">⌚ Wear OS & IoT Mesh</a>
       <a href="nexs.html" class="tab-btn">⚡ Neural Synthesizer</a>
-      <a href="marketplace.html" class="tab-btn">🛍️ App Marketplace</a>
+      <a href="marketplace.html" class="tab-btn active">🛍️ App Marketplace</a>
     </div>
   </div>
 
   <!-- PAGE HEADER TITLE -->
   <div class="page-header-title">
     <div>
-      <h1>⚡ Sovereign OS Command Center Workspace</h1>
-      <div class="page-header-sub">Unified enterprise workspace integrating real-time telemetry, 200 apps, 26 A-Z workflows, MCP console, and container sandboxes.</div>
+      <h1>🛍️ Sovereign App Marketplace & Plugin Ecosystem</h1>
+      <div class="page-header-sub">Deploy enterprise AI agents, zero-knowledge financial engines, and cross-chain hardware connectors with 1-click RevenueCat entitlements.</div>
     </div>
-    <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
-      <button class="btn-card-action" onclick="openSandboxDrawer(1)">🧪 Container Sandbox</button>
-      <button class="btn-card-action" onclick="openRevenueCatDrawer()">⚙️ RevenueCat Paywalls</button>
-      <button class="btn-primary" onclick="refreshOverview()">🔄 Sync Substrate Telemetry</button>
+    <div style="display: flex; gap: 0.75rem; align-items: center;">
+      <button class="btn-primary" onclick="openRevenueCatDrawer()">⚙️ RevenueCat Paywalls</button>
+      <button class="btn-card-action" onclick="resetMarketplaceFilters()">🔄 Reset Filters</button>
     </div>
   </div>
 
-  <!-- EXECUTIVE METRICS BAR -->
+  <!-- EXECUTIVE TELEMETRY METRICS BAR -->
   <section class="metrics-bar">
     <div class="metric-card">
-      <div class="metric-label">Monthly Recurring Revenue (MRR)</div>
-      <div class="metric-value" id="mrr-val">$148,920.00</div>
-      <div class="metric-change positive">▲ +18.4% vs last month</div>
+      <div class="metric-label">Total Scalable Catalog</div>
+      <div class="metric-value" id="metric-total-apps">200 Apps</div>
+      <div class="metric-change positive">▲ 7 Core Tech Domains</div>
     </div>
     <div class="metric-card">
-      <div class="metric-label">Annual Run Rate (ARR)</div>
-      <div class="metric-value" id="arr-val">$1,787,040.00</div>
-      <div class="metric-change positive">▲ +22.1% YoY</div>
+      <div class="metric-label">Active Node Plugins</div>
+      <div class="metric-value" id="metric-installed-apps">38 Installed</div>
+      <div class="metric-change positive">▲ 100% Core Entangled</div>
     </div>
     <div class="metric-card">
-      <div class="metric-label">LTV / CAC Efficiency Ratio</div>
-      <div class="metric-value">8.4x</div>
-      <div class="metric-change positive">▲ Top 1% SaaS Efficiency</div>
+      <div class="metric-label">RevenueCat Substrate MRR</div>
+      <div class="metric-value">$148,920.00</div>
+      <div class="metric-change positive">▲ +18.4% StoreKit & Play Billing</div>
     </div>
     <div class="metric-card">
-      <div class="metric-label">Autonomic Net Profit Margin</div>
-      <div class="metric-value">74.2%</div>
-      <div class="metric-change positive">▲ QuickBooks Autonomically Calculated</div>
+      <div class="metric-label">Entitlement Tier</div>
+      <div class="metric-value" id="metric-entitlement-tier" style="color: var(--accent-cyan);">Enterprise Quantum</div>
+      <div class="metric-change positive">▲ All 200 Apps Unlocked</div>
     </div>
   </section>
 
-  <!-- MAIN COMMAND CENTER CONTAINER -->
+  <!-- MAIN CONTAINER -->
   <main class="main-container" style="margin-top: 1rem;">
     
-    <!-- COMMAND CENTER WORKSPACE VIEW TABS -->
+    <!-- VIEW MODE SWITCHER TABS -->
     <div class="view-mode-tabs">
-      <button class="view-tab-btn active" id="view-btn-telemetry" onclick="switchCommandCenterView('telemetry')">📊 Executive Telemetry & Substrate</button>
-      <button class="view-tab-btn" id="view-btn-office" onclick="switchCommandCenterView('office')">🏢 Sovereign Office & Suite</button>
-      <button class="view-tab-btn" id="view-btn-apps" onclick="switchCommandCenterView('apps')">🛍️ 200 Ecosystem Apps Catalog</button>
+      <button class="view-tab-btn active" id="view-btn-apps" onclick="switchCommandCenterView('apps')">🛍️ Ecosystem Apps (200)</button>
       <button class="view-tab-btn" id="view-btn-az" onclick="switchCommandCenterView('az')">⚡ 26 A-to-Z Workflows Studio</button>
       <button class="view-tab-btn" id="view-btn-mcp" onclick="switchCommandCenterView('mcp')">🛠️ MCP Tool Console</button>
+      <button class="view-tab-btn" id="view-btn-radar" onclick="switchCommandCenterView('radar')">📡 Ingestion Telemetry Radar</button>
       <button class="view-tab-btn" id="view-btn-sandbox" onclick="switchCommandCenterView('sandbox')">🧪 Container Sandboxes</button>
       <button class="view-tab-btn" id="view-btn-autonomic" onclick="switchCommandCenterView('autonomic')">🤖 Alpha Autonomic Work Studio</button>
     </div>
 
-    <!-- VIEW 1: EXECUTIVE TELEMETRY & SUBSTRATE RADAR -->
-    <div id="sec-telemetry-view">
-      <div class="grid-2">
-        <!-- STORE MRR TELEMETRY PANEL -->
-        <div class="glass-panel">
-          <div class="panel-header">
-            <h3 class="panel-title">📈 Multi-Store Subscription Telemetry</h3>
-            <span class="status-pill cyan">Live RevenueCat SDK</span>
-          </div>
-          <div style="margin-bottom: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
-              <span style="display: flex; align-items: center; gap: 0.4rem;">🍎 Apple App Store (StoreKit 2)</span>
-              <strong style="color: var(--accent-cyan); font-family: var(--font-mono);">$68,500.00 (46%)</strong>
-            </div>
-            <div style="background: rgba(255,255,255,0.06); height: 10px; border-radius: 6px; overflow: hidden; padding: 2px;">
-              <div style="background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple)); width: 46%; height: 100%; border-radius: 4px; box-shadow: 0 0 10px var(--accent-cyan);"></div>
-            </div>
-          </div>
-
-          <div style="margin-bottom: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
-              <span style="display: flex; align-items: center; gap: 0.4rem;">🤖 Google Play Store (Android Billing)</span>
-              <strong style="color: var(--accent-violet); font-family: var(--font-mono);">$54,200.00 (36%)</strong>
-            </div>
-            <div style="background: rgba(255,255,255,0.06); height: 10px; border-radius: 6px; overflow: hidden; padding: 2px;">
-              <div style="background: linear-gradient(90deg, var(--accent-violet), var(--accent-magenta)); width: 36%; height: 100%; border-radius: 4px; box-shadow: 0 0 10px var(--accent-violet);"></div>
-            </div>
-          </div>
-
-          <div style="margin-bottom: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
-              <span style="display: flex; align-items: center; gap: 0.4rem;">📱 Samsung Galaxy Store (Foldables)</span>
-              <strong style="color: var(--accent-green); font-family: var(--font-mono);">$16,400.00 (11%)</strong>
-            </div>
-            <div style="background: rgba(255,255,255,0.06); height: 10px; border-radius: 6px; overflow: hidden; padding: 2px;">
-              <div style="background: linear-gradient(90deg, var(--accent-green), #34d399); width: 11%; height: 100%; border-radius: 4px; box-shadow: 0 0 10px var(--accent-green);"></div>
-            </div>
-          </div>
-
-          <div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
-              <span style="display: flex; align-items: center; gap: 0.4rem;">💳 Stripe Web Paywalls (RevenueCat Web)</span>
-              <strong style="color: var(--accent-gold); font-family: var(--font-mono);">$9,820.00 (7%)</strong>
-            </div>
-            <div style="background: rgba(255,255,255,0.06); height: 10px; border-radius: 6px; overflow: hidden; padding: 2px;">
-              <div style="background: linear-gradient(90deg, var(--accent-gold), #fbbf24); width: 7%; height: 100%; border-radius: 4px; box-shadow: 0 0 10px var(--accent-gold);"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- LIVE SUBSTRATE STREAM TERMINAL -->
-        <div class="glass-panel">
-          <div class="panel-header">
-            <h3 class="panel-title">⚡ Live Protocol Substrate Stream</h3>
-            <span class="status-pill success">● Stream Connected</span>
-          </div>
-
-          <div class="terminal-wrapper">
-            <div class="terminal-header">
-              <div class="terminal-dots">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
-              </div>
-              <span class="terminal-title">substrate_daemon.log — 6 Cores Entangled</span>
-            </div>
-            <div id="live-stream-box" class="code-preview-box" style="height: 240px;">
-[00:01.02] XFIN: FX Micro-Settlement BRL 4,950 -> $1,000.00 USD Settled to Treasury
-[00:01.45] AURA: Credit Underwriting usr_981 -> APPROVED ($500 Micro-Line, Score: 780)
-[00:02.10] PULSE: Churn Intercept Triggered -> Customer Center 50% Winback Offer Accepted
-[00:02.89] MINT: 5,000 FORMA Burned on Subscription Renewal Event (Golden Ratio Yield)
-[00:03.14] GRID: Wear OS Watch Hardware Unlocked for Subscriber usr_981 (Heart Rate: 72 BPM)
-[00:03.95] NEXS: UCB1 Paywall Variant B Converted (+24% Conversion Rate Increase)
-[00:04.22] REVENUECAT: Webhook Received — Subscribed 'pro_access_annual' $99.99
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- INGESTION TELEMETRY RADAR PANEL -->
-      <div class="glass-panel" style="margin-top: 1.5rem;">
-        <div class="panel-header">
-          <div>
-            <h3 class="panel-title">📡 Executive Data Ingestion Telemetry Radar</h3>
-            <div style="font-size: 0.8rem; color: var(--text-muted);">Real-time multi-node ingestion radar across StoreKit 2, Android Billing, Stripe, Wear OS, Kafka, and ZK Gate</div>
-          </div>
-          <span class="status-pill success">● 85.2k Events/sec Active</span>
-        </div>
-
-        <div class="radar-grid">
-          <div class="radar-screen-wrapper">
-            <div class="radar-canvas-container" id="radar-canvas-container">
-              <div class="radar-ring radar-ring-1"></div>
-              <div class="radar-ring radar-ring-2"></div>
-              <div class="radar-ring radar-ring-3"></div>
-              <div class="radar-axis-h"></div>
-              <div class="radar-axis-v"></div>
-              <div class="radar-sweep-line"></div>
-            </div>
-            <div style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 600; text-transform: uppercase;">Ingestion Sweep Active</div>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 1rem;">
-            <div style="background: rgba(10, 15, 26, 0.8); border: 1px solid var(--border-glow); border-radius: 14px; padding: 1rem;">
-              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Selected Ingestion Node</div>
-              <h4 id="radar-selected-node-name" style="font-family: var(--font-heading); color: #fff; font-size: 1.15rem; margin: 0.2rem 0;">Apache Kafka Stream</h4>
-              <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.88rem;">
-                <div>Rate: <span id="radar-selected-node-rate" style="color: var(--accent-cyan); font-weight: 700;">45,000 ev/s</span></div>
-                <div>Latency: <span id="radar-selected-node-latency" style="color: var(--accent-green); font-weight: 700;">0.4 ms</span></div>
-              </div>
-            </div>
-
-            <div style="display: flex; gap: 1rem;">
-              <button onclick="switchCommandCenterView('mcp')" class="btn-card-action" style="flex: 1; justify-content: center;">🛠️ Launch MCP Tool Console</button>
-              <button onclick="switchCommandCenterView('az')" class="btn-card-action btn-card-primary" style="flex: 1; justify-content: center;">⚡ Open 26 Workflows Studio</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 2: 200 ECOSYSTEM APPS CATALOG -->
-    <div id="sec-apps-view" style="display: none;">
+    <!-- VIEW 1: APP MARKETPLACE CATALOG -->
+    <div id="sec-apps-view">
+      <!-- SEARCH & FILTER SECTION -->
       <section class="search-filter-section">
+        <!-- SEARCH BAR ROW -->
         <div class="search-bar-row">
           <div class="search-input-wrapper">
             <span class="search-input-icon">🔍</span>
@@ -234,10 +113,12 @@
           <div class="shortcut-badge">Ctrl + /</div>
         </div>
 
+        <!-- CATEGORY TABS ROW -->
         <div class="category-tabs-wrapper" id="category-tabs-container">
           <!-- Rendered by JS -->
         </div>
 
+        <!-- FILTER CONTROLS BAR -->
         <div class="filter-controls-bar">
           <div class="filter-selects">
             <select id="filter-tier" class="select-custom" onchange="applyFilters()">
@@ -270,10 +151,12 @@
         </div>
       </section>
 
+      <!-- APP CARDS GRID -->
       <div id="app-grid" class="app-grid">
         <!-- 200 App cards dynamically rendered here -->
       </div>
 
+      <!-- PAGINATION CONTROLS BAR -->
       <div class="pagination-container">
         <div style="font-size: 0.84rem; color: var(--text-muted);" id="pagination-info">
           Page 1 of 9 (Showing 24 apps per page)
@@ -295,165 +178,7 @@
       </div>
     </div>
 
-    <!-- VIEW 3: ALPHA AUTONOMIC WORK STUDIO (200 APPS TASK GENERATOR) -->
-    <div id="sec-autonomic-view" style="display: none;" class="glass-panel autonomic-studio-panel">
-      <div class="panel-header">
-        <div>
-          <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.25rem;">
-            <h3 class="panel-title">🤖 Alpha Autonomic Work Studio</h3>
-            <span class="status-pill cyan">● 200 Apps Real-Time Task Mesh</span>
-            <span id="autonomic-loop-badge" class="status-pill success glow-pulse">● Live Stream Active</span>
-          </div>
-          <div style="font-size: 0.82rem; color: var(--text-muted);">
-            SOVEREIGN OS autonomic multi-agent task synthesizer continuously generating, scheduling, and executing tasks for all 200 apps across 6 entangled core modules.
-          </div>
-        </div>
-        <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
-          <button class="btn-primary" onclick="triggerBatchTaskGeneration()">⚡ Generate Tasks for 200 Apps</button>
-          <button id="btn-toggle-autonomic-loop" class="btn-card-action btn-card-primary" onclick="toggleAutonomicLiveLoop()">⏸ Pause Live Loop</button>
-          <button class="btn-card-action" onclick="clearAutonomicTaskQueue()">🧹 Clear Queue</button>
-        </div>
-      </div>
-
-      <!-- AUTONOMIC WORK STUDIO METRICS BAR -->
-      <div class="autonomic-metrics-bar">
-        <div class="autonomic-metric-card">
-          <div class="autonomic-metric-icon" style="background: rgba(0, 242, 254, 0.12); color: var(--accent-cyan);">⚡</div>
-          <div>
-            <div class="autonomic-metric-label">Real-Time Tasks Generated</div>
-            <div class="autonomic-metric-value" id="metric-tasks-generated">1,482</div>
-            <div class="autonomic-metric-sub">▲ All 200 Apps Entangled</div>
-          </div>
-        </div>
-        <div class="autonomic-metric-card">
-          <div class="autonomic-metric-icon" style="background: rgba(121, 40, 202, 0.15); color: #c084fc;">🤖</div>
-          <div>
-            <div class="autonomic-metric-label">Active App Agents</div>
-            <div class="autonomic-metric-value" id="metric-apps-active">200 / 200</div>
-            <div class="autonomic-metric-sub">▲ 100% Autonomic Coverage</div>
-          </div>
-        </div>
-        <div class="autonomic-metric-card">
-          <div class="autonomic-metric-icon" style="background: rgba(16, 185, 129, 0.12); color: var(--accent-green);">🚀</div>
-          <div>
-            <div class="autonomic-metric-label">Task Synthesizer Rate</div>
-            <div class="autonomic-metric-value" id="metric-task-speed">48.5 / sec</div>
-            <div class="autonomic-metric-sub">⚡ Sub-millisecond Execution</div>
-          </div>
-        </div>
-        <div class="autonomic-metric-card">
-          <div class="autonomic-metric-icon" style="background: rgba(245, 158, 11, 0.12); color: var(--accent-gold);">🪙</div>
-          <div>
-            <div class="autonomic-metric-label">Autonomic Cost Efficiency</div>
-            <div class="autonomic-metric-value" id="metric-cost-saved">$54,920 / mo</div>
-            <div class="autonomic-metric-sub">▲ Zero Human Touchpoint</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- MAIN STUDIO 3-COLUMN / GRID LAYOUT -->
-      <div class="autonomic-studio-grid" style="margin-top: 1.25rem;">
-        
-        <!-- COLUMN 1: APP SELECTOR & DOMAIN FILTERS & 26 A-Z WORKFLOWS -->
-        <div class="autonomic-panel-box">
-          <div class="panel-header-sub">
-            <h4 style="font-family: var(--font-heading); color: #fff; font-size: 1.05rem; margin: 0;">🎯 Target App & Domain Filter</h4>
-            <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.15rem;">Select any of the 200 apps to generate targeted autonomic tasks</div>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 0.85rem;">
-            <div>
-              <label style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 0.4rem;">Select App (200 Ecosystem Apps)</label>
-              <select id="autonomic-app-selector" class="select-custom" style="width: 100%; font-size: 0.85rem;" onchange="handleAutonomicAppSelect(this.value)">
-                <option value="all">⚡ ALL 200 APPS (Global Ecosystem Mesh)</option>
-                <!-- Dynamically populated with all 200 apps by JS -->
-              </select>
-            </div>
-
-            <div>
-              <label style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 0.4rem;">Domain Filter</label>
-              <div class="autonomic-domain-pills" id="autonomic-domain-pills">
-                <button class="domain-pill active" onclick="filterStudioByDomain('all')">All (200)</button>
-                <button class="domain-pill" onclick="filterStudioByDomain('ai')">🤖 AI (35)</button>
-                <button class="domain-pill" onclick="filterStudioByDomain('finance')">💼 Finance (30)</button>
-                <button class="domain-pill" onclick="filterStudioByDomain('payments')">💳 Pay (25)</button>
-                <button class="domain-pill" onclick="filterStudioByDomain('web3')">🪙 Web3 (30)</button>
-                <button class="domain-pill" onclick="filterStudioByDomain('iot')">⌚ IoT (25)</button>
-                <button class="domain-pill" onclick="filterStudioByDomain('zk')">🔒 ZK (25)</button>
-                <button class="domain-pill" onclick="filterStudioByDomain('workflow')">⚡ Workflows (30)</button>
-              </div>
-            </div>
-
-            <button class="btn-primary" style="width: 100%; justify-content: center; padding: 0.65rem; margin-top: 0.25rem;" onclick="generateTaskForSelectedApp()">
-              ⚡ Synthesize Task for Selected App
-            </button>
-          </div>
-
-          <div style="margin-top: 1.25rem; border-top: 1px solid var(--border-glass); padding-top: 1rem;">
-            <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center;">
-              <span>📜 26 A-to-Z Workflows</span>
-              <span style="color: var(--accent-cyan); font-family: var(--font-mono); font-size: 0.72rem;">Ready</span>
-            </div>
-            <div class="az-workflow-catalog" id="az-workflows-grid" style="max-height: 260px; overflow-y: auto;">
-              <!-- Rendered by JS -->
-            </div>
-          </div>
-        </div>
-
-        <!-- COLUMN 2: LIVE GENERATED TASKS FEED -->
-        <div class="autonomic-panel-box">
-          <div class="panel-header-sub" style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <h4 style="font-family: var(--font-heading); color: #fff; font-size: 1.05rem; margin: 0;">⚡ Real-Time Generated Tasks</h4>
-              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.15rem;">Live task generation feed across all 200 apps</div>
-            </div>
-            <span class="status-pill success" style="font-size: 0.7rem;" id="task-feed-count-badge">Active Feed</span>
-          </div>
-
-          <div id="autonomic-tasks-feed-container" class="autonomic-task-feed">
-            <!-- Rendered dynamically by JS -->
-          </div>
-        </div>
-
-        <!-- COLUMN 3: PIPELINE EXECUTION & TERMINAL LOGS -->
-        <div class="autonomic-panel-box">
-          <div class="panel-header-sub">
-            <h4 style="font-family: var(--font-heading); color: #fff; font-size: 1.05rem; margin: 0;">⚙️ Pipeline Runner & Terminal</h4>
-            <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.15rem;">Substrate Core execution telemetry stream</div>
-          </div>
-
-          <div style="background: rgba(6, 9, 18, 0.85); border: 1px solid var(--border-glow); border-radius: 14px; padding: 1rem; margin-bottom: 1rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-              <div style="display: flex; align-items: center; gap: 0.65rem;">
-                <div class="az-badge" id="az-selected-badge">A</div>
-                <div>
-                  <h4 id="az-selected-title" style="font-family: var(--font-heading); color: #fff; font-size: 0.98rem; margin: 0;">Automated Financial Audit</h4>
-                  <div id="az-selected-desc" style="font-size: 0.76rem; color: var(--text-muted); margin-top: 0.1rem;">Scans double-entry transactions and reconciles bank deposits vs ACH payouts.</div>
-                </div>
-              </div>
-              <button id="az-run-btn" class="btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="runAZWorkflow()">▶ Execute Pipeline</button>
-            </div>
-
-            <div class="pipeline-flow-container" id="pipeline-flow-container" style="margin-top: 0.85rem; padding: 0.75rem 0.5rem;">
-              <!-- Pipeline steps rendered by JS -->
-            </div>
-          </div>
-
-          <div style="background: #04060c; border: 1px solid var(--border-glass); border-radius: 14px; padding: 1rem; flex: 1; display: flex; flex-direction: column;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">🖥️ Substrate Task Telemetry Terminal</div>
-              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-cyan);" id="autonomic-terminal-rate">48.5 ev/s</span>
-            </div>
-            <div id="az-terminal-output" style="font-family: var(--font-mono); font-size: 0.78rem; color: #a7f3d0; height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.25rem;">
-              <div>[INFO] Alpha Autonomic Work Studio connected. Real-time task generator active for all 200 apps.</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- VIEW 4: INTERACTIVE MCP TOOL CONSOLE -->
+    <!-- VIEW 2: INTERACTIVE MCP TOOL CONSOLE -->
     <div id="sec-mcp-view" style="display: none;" class="glass-panel">
       <div class="panel-header">
         <div>
@@ -464,6 +189,7 @@
       </div>
 
       <div class="mcp-console-grid">
+        <!-- LEFT: TOOL SELECTOR -->
         <div>
           <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.6rem;">Available Substrate MCP Tools</div>
           <div class="mcp-tool-list" id="mcp-tool-list-container">
@@ -471,6 +197,7 @@
           </div>
         </div>
 
+        <!-- RIGHT: EXECUTION PANEL -->
         <div class="mcp-execution-panel">
           <div style="background: rgba(10, 15, 26, 0.8); border: 1px solid var(--border-glass); border-radius: 14px; padding: 1.25rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
@@ -487,6 +214,7 @@
             </div>
           </div>
 
+          <!-- RESPONSE OUTPUT TERMINAL -->
           <div style="background: #04060c; border: 1px solid var(--border-glass-bright); border-radius: 14px; padding: 1.25rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
               <div style="display: flex; align-items: center; gap: 0.6rem;">
@@ -498,6 +226,7 @@
             <pre id="mcp-json-output" class="mcp-json-output">{ "jsonrpc": "2.0", "result": "Ready for MCP tool execution." }</pre>
           </div>
 
+          <!-- RECENT HISTORY -->
           <div>
             <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem;">Recent Execution Log</div>
             <div id="mcp-history-list" style="display: flex; flex-direction: column; gap: 0.4rem;">
@@ -508,71 +237,122 @@
       </div>
     </div>
 
-    <!-- VIEW 5: CONTAINER SANDBOX WORKSPACE -->
-    <div id="sec-sandbox-view" style="display: none;" class="glass-panel">
+    <!-- VIEW 3: DATA INGESTION TELEMETRY RADAR -->
+    <div id="sec-radar-view" style="display: none;" class="glass-panel">
       <div class="panel-header">
         <div>
-          <h3 class="panel-title">🧪 Real-Time Container Sandbox Workspace</h3>
-          <div style="font-size: 0.8rem; color: var(--text-muted);">Monitor and debug container execution, memory limits, and socket channels in zero-trust isolation</div>
+          <h3 class="panel-title">📡 Real-Time Data Ingestion Telemetry Radar</h3>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Monitor live multi-node telemetry ingestion rates, buffer throughput, packet health, and sub-millisecond latencies</div>
         </div>
-        <span class="status-pill success">● 38 Containers Active</span>
+        <span class="status-pill success">● 85.2k Events/sec Streamed</span>
       </div>
 
-      <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-        <div style="background: rgba(13, 19, 33, 0.8); border: 1px solid var(--border-glass); border-radius: 14px; padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-          <div style="display: flex; align-items: center; gap: 1rem;">
-            <span style="font-size: 2rem;">🤖</span>
-            <div>
-              <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin: 0;">QuantAlpha Neural Predictor Sandbox</h3>
-              <div style="font-size: 0.8rem; color: var(--text-muted);">Status: <span id="sandbox-status-pill-view" style="color: var(--accent-green); font-weight: 700;">● RUNNING</span></div>
-            </div>
+      <div class="radar-grid">
+        <!-- RADAR VISUALIZER CANVAS -->
+        <div class="radar-screen-wrapper">
+          <div class="radar-canvas-container" id="radar-canvas-container">
+            <div class="radar-ring radar-ring-1"></div>
+            <div class="radar-ring radar-ring-2"></div>
+            <div class="radar-ring radar-ring-3"></div>
+            <div class="radar-axis-h"></div>
+            <div class="radar-axis-v"></div>
+            <div class="radar-sweep-line"></div>
+            <!-- Radar node pings rendered by JS -->
           </div>
-
-          <div style="display: flex; gap: 0.75rem;">
-            <button class="btn-card-action btn-card-primary" onclick="startSandboxSimulation()">▶ Start Sandbox</button>
-            <button class="btn-card-action" onclick="pauseSandboxSimulation()">⏸ Pause</button>
-            <button class="btn-card-action" onclick="clearSandboxLogs()">🧹 Clear Stream</button>
-          </div>
+          <div style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Ingestion Sweep Radar Active</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem;">Click any radar node blip to inspect live metrics</div>
         </div>
 
-        <div class="sandbox-gauges-grid">
-          <div class="sandbox-gauge-card">
-            <div class="sandbox-gauge-header">
-              <span>CPU Utilization</span>
-              <span>2 Cores</span>
+        <!-- NODE DETAILS & GLOBAL METRICS -->
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <!-- SELECTED NODE INSPECTOR CARD -->
+          <div style="background: rgba(10, 15, 26, 0.8); border: 1px solid var(--border-glow); border-radius: 16px; padding: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Selected Ingestion Node</div>
+                <h4 id="radar-selected-node-name" style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin: 0.1rem 0;">Apache Kafka Stream</h4>
+              </div>
+              <span id="radar-selected-node-status" class="status-pill cyan">Ultra High-Freq</span>
             </div>
-            <div class="sandbox-gauge-value" id="sandbox-cpu-val-view">24%</div>
-            <div class="sandbox-progress-bg">
-              <div class="sandbox-progress-bar" id="sandbox-cpu-bar-view" style="width: 24%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));"></div>
+
+            <div class="grid-2" style="gap: 0.85rem;">
+              <div style="background: rgba(13, 19, 33, 0.8); padding: 0.85rem; border-radius: 12px; border: 1px solid var(--border-glass);">
+                <div style="font-size: 0.72rem; color: var(--text-muted);">Ingestion Rate</div>
+                <div id="radar-selected-node-rate" style="font-family: var(--font-mono); font-size: 1.1rem; color: var(--accent-cyan); font-weight: 700;">45,000 ev/s</div>
+              </div>
+              <div style="background: rgba(13, 19, 33, 0.8); padding: 0.85rem; border-radius: 12px; border: 1px solid var(--border-glass);">
+                <div style="font-size: 0.72rem; color: var(--text-muted);">Mesh Latency</div>
+                <div id="radar-selected-node-latency" style="font-family: var(--font-mono); font-size: 1.1rem; color: var(--accent-green); font-weight: 700;">0.4 ms</div>
+              </div>
             </div>
           </div>
 
-          <div class="sandbox-gauge-card">
-            <div class="sandbox-gauge-header">
-              <span>RAM Memory</span>
-              <span>Allocated</span>
+          <!-- GLOBAL INGESTION METRICS BAR -->
+          <div class="grid-2" style="gap: 1rem;">
+            <div class="metric-card" style="padding: 1rem;">
+              <div class="metric-label">Aggregate Ingestion Speed</div>
+              <div class="metric-value" style="font-size: 1.4rem; color: var(--accent-cyan);">85,200 ev/sec</div>
+              <div class="metric-change positive">▲ 4.8 GB / hour Throughput</div>
             </div>
-            <div class="sandbox-gauge-value" id="sandbox-ram-val-view">184 MB / 512 MB</div>
-            <div class="sandbox-progress-bg">
-              <div class="sandbox-progress-bar" id="sandbox-ram-bar-view" style="width: 36%; background: linear-gradient(90deg, var(--accent-violet), var(--accent-magenta));"></div>
+            <div class="metric-card" style="padding: 1rem;">
+              <div class="metric-label">Ring Buffer Capacity</div>
+              <div class="metric-value" style="font-size: 1.4rem; color: var(--accent-green);">99.9%</div>
+              <div class="metric-change positive">▲ Zero Packet Drops Detected</div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
-        <div style="background: rgba(10, 15, 26, 0.7); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem;">
-          <span style="color: var(--text-muted);">Network I/O Throughput:</span>
-          <span id="sandbox-net-val-view" style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 600;">3.8 MB/s IN | 1.2 MB/s OUT</span>
+    <!-- VIEW 4: 20+ A-TO-Z WORKFLOW EXECUTION STUDIO -->
+    <div id="sec-az-view" style="display: none;" class="glass-panel">
+      <div class="panel-header">
+        <div>
+          <h3 class="panel-title">⚡ 20+ A-to-Z Enterprise Workflow Execution Studio</h3>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Select from 26 pre-built A-to-Z enterprise workflows, configure pipeline arguments, and execute multi-core operations in real time</div>
         </div>
+        <span class="status-pill cyan">26 Workflows Ready</span>
+      </div>
 
-        <div style="background: #04060c; border: 1px solid var(--border-glass); border-radius: 14px; padding: 1.25rem;">
-          <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.75rem;">Live Sandbox Runtime Console Stream</div>
-          <div id="sandbox-terminal-stream-view" class="sandbox-terminal-stream" style="height: 260px;">
+      <div class="mcp-console-grid">
+        <!-- LEFT: A-Z WORKFLOW CATALOG -->
+        <div>
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.6rem;">A-to-Z Workflows Directory</div>
+          <div class="az-workflow-catalog" id="az-workflows-grid">
             <!-- Rendered by JS -->
           </div>
         </div>
-    </div>
 
-    <!-- VIEW 6: ALPHA AUTONOMIC WORK STUDIO -->
+        <!-- RIGHT: WORKFLOW PIPELINE RUNNER -->
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <div style="background: rgba(10, 15, 26, 0.8); border: 1px solid var(--border-glow); border-radius: 16px; padding: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 0.85rem;">
+                <div class="az-badge" id="az-selected-badge">A</div>
+                <div>
+                  <h4 id="az-selected-title" style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin: 0;">Automated Financial Audit</h4>
+                  <div id="az-selected-desc" style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">Scans double-entry transactions and reconciles bank deposits vs ACH payouts.</div>
+                </div>
+              </div>
+              <button id="az-run-btn" class="btn-primary" onclick="runAZWorkflow()">▶ Execute Workflow Pipeline</button>
+            </div>
+
+            <!-- PIPELINE FLOW VISUALIZER -->
+            <div class="pipeline-flow-container" id="pipeline-flow-container">
+              <!-- Pipeline steps rendered by JS -->
+            </div>
+          </div>
+
+          <!-- EXECUTION TERMINAL OUTPUT -->
+          <div style="background: #04060c; border: 1px solid var(--border-glass); border-radius: 14px; padding: 1rem;">
+            <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem;">Pipeline Execution Terminal</div>
+            <div id="az-terminal-output" style="font-family: var(--font-mono); font-size: 0.8rem; color: #a7f3d0; height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.3rem;">
+              <div>[INFO] Select a workflow and click 'Execute Workflow Pipeline' to run.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- VIEW: ALPHA AUTONOMIC WORK STUDIO -->
     <div id="sec-autonomic-view" style="display: none;" class="glass-panel autonomic-studio-panel">
       <div class="panel-header" style="flex-wrap: wrap; gap: 1rem;">
         <div>
@@ -734,54 +514,6 @@
 
         </div>
 
-    <!-- VIEW 7: SOVEREIGN OFFICE & BUSINESS PRODUCTIVITY SUITE -->
-    <div id="sec-office-view" style="display: none;" class="glass-panel">
-      <div class="panel-header" style="flex-wrap: wrap; gap: 1rem;">
-        <div>
-          <div style="display: flex; align-items: center; gap: 0.6rem;">
-            <h3 class="panel-title" style="font-size: 1.35rem;">🏢 Sovereign Office & Business Productivity Suite</h3>
-            <span class="status-pill cyan">Live Spreadsheets & Docs</span>
-            <span class="status-pill success">● Co-Pilot Entangled</span>
-          </div>
-          <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">
-            Glassmorphic productivity workspace with real-time financial spreadsheet formulas, executive document editors, pitch deck presentation engines, and multi-artifact AI drawers.
-          </div>
-        </div>
-        <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
-          <a href="office.html" class="btn-card-action btn-card-primary" style="text-decoration: none;">🚀 Launch Full Office Suite</a>
-          <button class="btn-card-action" onclick="openMultiArtifactDrawer()">🤖 Multi-Artifact AI Drawer</button>
-        </div>
-      </div>
-
-      <div class="grid-2" style="margin-top: 1rem;">
-        <!-- MINI SPREADSHEET PREVIEW -->
-        <div style="background: rgba(4,7,14,0.85); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.25rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-            <h4 style="font-family: var(--font-heading); font-size: 0.95rem; color: #fff;">📊 Sovereign Financial Grid Snapshot</h4>
-            <button class="sheet-btn" onclick="aiAutofillGrid()">✨ AI Autofill</button>
-          </div>
-          <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan); margin-bottom: 0.5rem;">
-            [Formula Engine =SUM(B2:E2)] • MRR Total: $148,920.00
-          </div>
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4rem; font-family: var(--font-mono); font-size: 0.76rem; background: rgba(0,0,0,0.4); padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-glass);">
-            <div style="color: var(--text-muted);">Channel</div><div style="color: var(--text-muted);">Q1 26</div><div style="color: var(--text-muted);">Q2 26</div><div style="color: var(--text-muted);">Q3 26</div>
-            <div>StoreKit 2</div><div>$42.5k</div><div>$51.0k</div><div style="color: var(--accent-green); font-weight:bold;">$68.5k</div>
-            <div>Play Billing</div><div>$38.0k</div><div>$44.2k</div><div style="color: var(--accent-green); font-weight:bold;">$54.2k</div>
-            <div>Galaxy Store</div><div>$11.0k</div><div>$13.5k</div><div style="color: var(--accent-green); font-weight:bold;">$16.4k</div>
-          </div>
-        </div>
-
-        <!-- MINI DOCUMENT PREVIEW -->
-        <div style="background: rgba(4,7,14,0.85); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.25rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-            <h4 style="font-family: var(--font-heading); font-size: 0.95rem; color: #fff;">📝 Sovereign Executive Document</h4>
-            <button class="sheet-btn" onclick="aiPolishDoc()">✨ AI Polish</button>
-          </div>
-          <div style="background: rgba(0,0,0,0.4); padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-glass); font-size: 0.8rem; line-height: 1.5; color: #cbd5e1; max-height: 120px; overflow-y: auto;">
-            <strong style="color: var(--accent-purple);"># Series A Executive Memorandum</strong><br/>
-            Sovereign Engine OS has reached $1.78M ARR with 74.2% Autonomic Net Profit Margin by unifying zero-knowledge accounting with RevenueCat multi-store billing.
-          </div>
-        </div>
       </div>
     </div>
 
@@ -816,6 +548,7 @@
           <p id="modal-app-desc" style="color: var(--text-main); font-size: 0.95rem; line-height: 1.6;"></p>
         </div>
 
+        <!-- SPECIFICATIONS GRID -->
         <div class="grid-2" style="margin-bottom: 1.5rem; gap: 1rem;">
           <div style="background: rgba(10, 15, 26, 0.7); border: 1px solid var(--border-glass); padding: 1rem; border-radius: 14px;">
             <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Node Memory Requirement</div>
@@ -835,6 +568,7 @@
           </div>
         </div>
 
+        <!-- PERMISSIONS & ENDPOINTS -->
         <div style="background: rgba(13, 19, 33, 0.8); border: 1px solid var(--border-glass); border-radius: 16px; padding: 1.25rem; margin-bottom: 1.5rem;">
           <h4 style="color: #fff; font-size: 0.9rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem;">
             <span>🛡️ Enterprise Security & Permissions</span>
@@ -847,6 +581,7 @@
           </div>
         </div>
 
+        <!-- LIVE INSTALLATION SIMULATION TERMINAL -->
         <div id="modal-install-terminal" style="display: none; background: #04060c; border: 1px solid var(--border-glow); border-radius: 14px; padding: 1rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan); margin-bottom: 1rem; max-height: 120px; overflow-y: auto;">
           <div>[INFO] Initializing plugin installer for node deployment...</div>
           <div id="terminal-log-content"></div>
@@ -879,6 +614,7 @@
     </div>
 
     <div style="padding: 1.5rem; flex: 1; overflow-y: auto;">
+      <!-- ACTIVE SUBSCRIPTION STATUS -->
       <div style="background: linear-gradient(135deg, rgba(121, 40, 202, 0.2), rgba(0, 242, 254, 0.15)); border: 1px solid var(--border-glow); border-radius: 18px; padding: 1.25rem; margin-bottom: 1.5rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
           <span style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Active Account Entitlement</span>
@@ -890,6 +626,7 @@
         </div>
       </div>
 
+      <!-- ENTITLEMENT FLAGS -->
       <h4 style="color: #fff; font-size: 0.9rem; margin-bottom: 0.85rem; font-family: var(--font-heading);">🔑 RevenueCat Entitlement Keys</h4>
       <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem;">
         <div style="display: flex; justify-content: space-between; background: rgba(13, 19, 33, 0.7); border: 1px solid var(--border-glass); padding: 0.75rem 1rem; border-radius: 12px; font-size: 0.84rem;">
@@ -910,8 +647,11 @@
         </div>
       </div>
 
+      <!-- PAYWALL OFFERINGS -->
       <h4 style="color: #fff; font-size: 0.9rem; margin-bottom: 0.85rem; font-family: var(--font-heading);">💳 Paywall Offering Tiers</h4>
       <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+        
+        <!-- STARTER TIER -->
         <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 16px; padding: 1.1rem; display: flex; justify-content: space-between; align-items: center;">
           <div>
             <div style="font-family: var(--font-heading); font-weight: 700; color: #fff;">Starter Sovereign</div>
@@ -921,6 +661,7 @@
           <button class="btn-card-action" onclick="simulateRevenueCatPurchase('free')">Select Tier</button>
         </div>
 
+        <!-- PRO TIER -->
         <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 16px; padding: 1.1rem; display: flex; justify-content: space-between; align-items: center;">
           <div>
             <div style="font-family: var(--font-heading); font-weight: 700; color: #fff;">Pro Substrate</div>
@@ -930,6 +671,7 @@
           <button class="btn-card-action btn-card-primary" onclick="simulateRevenueCatPurchase('pro')">Upgrade Pro</button>
         </div>
 
+        <!-- ENTERPRISE QUANTUM TIER -->
         <div style="background: linear-gradient(135deg, rgba(0, 242, 254, 0.1), rgba(121, 40, 202, 0.15)); border: 1px solid var(--border-glow); border-radius: 16px; padding: 1.1rem; display: flex; justify-content: space-between; align-items: center;">
           <div>
             <div style="display: flex; align-items: center; gap: 0.4rem;">
@@ -943,6 +685,7 @@
         </div>
       </div>
 
+      <!-- SANDBOX SIMULATION BUTTON -->
       <div style="background: rgba(10, 15, 26, 0.8); border: 1px solid var(--border-glass); border-radius: 14px; padding: 1rem; text-align: center;">
         <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.6rem;">StoreKit 2 / Google Play Billing Sandbox Testing</div>
         <button class="btn-primary" style="width: 100%; justify-content: center;" onclick="simulateRevenueCatPurchase('quantum')">
@@ -966,6 +709,7 @@
     </div>
 
     <div style="padding: 1.5rem; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 1.25rem;">
+      <!-- RUNTIME STATUS & CONTROLS TOOLBAR -->
       <div style="background: rgba(13, 19, 33, 0.8); border: 1px solid var(--border-glass); border-radius: 14px; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; align-items: center; gap: 0.6rem;">
           <span style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Sandbox State:</span>
@@ -978,6 +722,7 @@
         </div>
       </div>
 
+      <!-- LIVE METRIC GAUGES -->
       <div class="sandbox-gauges-grid">
         <div class="sandbox-gauge-card">
           <div class="sandbox-gauge-header">
@@ -1002,19 +747,26 @@
         </div>
       </div>
 
+      <!-- NETWORK & LATENCY CARD -->
       <div style="background: rgba(10, 15, 26, 0.7); border: 1px solid var(--border-glass); border-radius: 12px; padding: 0.85rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem;">
         <span style="color: var(--text-muted);">Network I/O Throughput:</span>
         <span id="sandbox-net-val" style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 600;">3.8 MB/s IN | 1.2 MB/s OUT</span>
       </div>
 
+      <!-- LIVE STREAM TERMINAL -->
       <div>
         <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem;">Live Sandbox Runtime Console Stream</div>
-        <div id="sandbox-terminal-stream" class="sandbox-terminal-stream"></div>
+        <div id="sandbox-terminal-stream" class="sandbox-terminal-stream">
+          <!-- Log lines auto-streamed by JS -->
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="toast-container" class="toast-container"></div>
+
+  <!-- INCLUDES DASHBOARD APP JS -->
   <script src="app.js"></script>
 </body>
 </html>

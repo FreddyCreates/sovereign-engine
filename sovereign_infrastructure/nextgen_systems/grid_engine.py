@@ -2,36 +2,78 @@
 SYSTEM 5: GRID — Global Regional Hardware Telemetry & Mesh Entitlement System
 Model: Spatio-Temporal Hardware Telemetry Consensus & Mesh Entitlement Distribution
 Validates hardware device telemetry (Wear OS, Mobile, Edge Nodes), geofence rules,
-and dynamic mesh hardware entitlement synchronization for RevenueCat multi-store access.
+and dynamic mesh hardware entitlement synchronization for RevenueCat multi-store access,
+integrated with General Ledger equipment capitalization & Accounts Payable vendor bills.
 """
 
 import math
 import logging
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("GRID_Engine")
 
 class GRIDEngine:
-    """GRID System: IoT Hardware Telemetry & Mesh Entitlement Engine"""
+    """GRID System: IoT Hardware Telemetry & Mesh Entitlement Engine integrated with Full SaaS Accounting"""
 
-    def __init__(self):
+    def __init__(self, gl: Optional[Any] = None, ap: Optional[Any] = None):
+        self.gl = gl
+        self.ap = ap
         self.registered_devices: Dict[str, Dict[str, Any]] = {}
         self.active_mesh_nodes: Dict[str, List[str]] = {}
         logger.info("[GRID System] Initialized IoT Hardware & Mesh Entitlement Core.")
 
-    def register_device(self, device_id: str, device_type: str, region: str) -> Dict[str, Any]:
-        """Registers an IoT or mobile hardware device to the substrate."""
+    def set_accounting_suite(self, gl: Any = None, ap: Any = None):
+        """Inject General Ledger and Accounts Payable engines."""
+        self.gl = gl
+        self.ap = ap
+
+    def register_device(self, device_id: str, device_type: str, region: str, hardware_cost_usd: float = 1200.0) -> Dict[str, Any]:
+        """
+        Registers an IoT or mobile hardware device to the substrate.
+        Capitalizes edge hardware into Equipment & Hardware (Account 1500) in General Ledger.
+        """
         device = {
             "device_id": device_id,
             "device_type": device_type,
             "region": region,
+            "hardware_cost_usd": hardware_cost_usd,
             "status": "ONLINE",
             "health_score": 1.0
         }
         self.registered_devices[device_id] = device
+
+        gl_entry_id = None
+        if self.gl:
+            try:
+                # Debit Equipment 1500, Credit Accounts Payable 2010
+                entry = self.gl.record_journal_entry(
+                    description=f"GRID Device Capitalization ({device_id} - {device_type})",
+                    debits={"1500": round(hardware_cost_usd, 2)},
+                    credits={"2010": round(hardware_cost_usd, 2)},
+                    entry_type="GRID_DEVICE_CAPEX",
+                    reference=f"GRID-{device_id}"
+                )
+                gl_entry_id = entry.get("entry_id")
+            except Exception as e:
+                logger.warning(f"[GRID] GL device capitalization warning: {e}")
+
+        if self.ap:
+            try:
+                self.ap.create_vendor_bill(
+                    vendor=f"GRID IoT Hardware Vendor ({region})",
+                    amount=hardware_cost_usd,
+                    due_days=30,
+                    account_code="5030"
+                )
+            except Exception as e:
+                logger.warning(f"[GRID] AP bill creation warning: {e}")
+
         logger.info(f"[GRID] Registered Device: {device_id} ({device_type}, Region: {region})")
-        return device
+        return {
+            **device,
+            "gl_entry_id": gl_entry_id
+        }
 
     def evaluate_device_telemetry(self, device_id: str, cpu_usage_pct: float, mem_usage_pct: float, latency_ms: float) -> float:
         """

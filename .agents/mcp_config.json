@@ -1,0 +1,96 @@
+{
+  "mcpServers": {
+    "sovereign-mcp-server": {
+      "command": "python",
+      "args": [
+        "-m",
+        "sovereign_infrastructure.nextgen_systems.sovereign_mcp_server"
+      ],
+      "env": {
+        "SOVEREIGN_ENV": "production",
+        "MCP_SERVER_NAME": "Sovereign OS Master MCP Server",
+        "PYTHONPATH": "."
+      },
+      "description": "Master MCP Server providing full tool access to all 200+ SaaS integrations, App Sandbox Spin-Up Engine, Data Ingestion Engine, and 20+ A-to-Z automated business workflows for SOVEREIGN OS.",
+      "capabilities": {
+        "tools": {
+          "integrations_hub": {
+            "total_integrations": 200,
+            "categories_count": 10,
+            "categories": [
+              "Accounting & Tax",
+              "Payment Gateways & Subscriptions",
+              "CRM & Sales Automation",
+              "E-Commerce & Retail",
+              "HR, Payroll & Benefits",
+              "Expense & Accounts Payable",
+              "Developer Tools & Cloud Infra",
+              "Productivity & Operations",
+              "AI & Neural Engines",
+              "Data Analytics & BI"
+            ],
+            "features": [
+              "Bi-Directional Sync Engine",
+              "RevenueCat StoreKit 2 & Google Play Billing Bridge",
+              "Neural AI Marketplace Recommendation Engine"
+            ]
+          },
+          "app_sandbox_engine": {
+            "features": [
+              "Dynamic Microservice Sandbox Spin-Up",
+              "Isolated Mock Container Runtimes",
+              "Tenant Environment Scoping",
+              "Telemetry & Resource Usage Monitoring",
+              "Mock Database & Webhook Infrastructure",
+              "Clean Teardown & Execution Isolation"
+            ]
+          },
+          "data_ingestion_engine": {
+            "supported_formats": [
+              "CSV",
+              "JSON",
+              "JSONL",
+              "XML",
+              "PARQUET",
+              "SQL_DUMP",
+              "PDF_OCR",
+              "WEBHOOK"
+            ],
+            "features": [
+              "Automated Schema Inference & Parsing",
+              "Double-Entry General Ledger Posting",
+              "SHA-256 Cryptographic Audit Hash Verification",
+              "Batch & Continuous Event Stream Processing"
+            ]
+          },
+          "automated_business_workflows": {
+            "total_workflows": 21,
+            "workflows": [
+              "workflow_end_to_end_subscriber_lifecycle",
+              "workflow_revenue_recognition_asc606",
+              "workflow_cross_border_fx_hedging",
+              "workflow_b2b_invoice_underwriting_bnpl",
+              "workflow_multi_entity_consolidation",
+              "workflow_fifo_inventory_valuation",
+              "workflow_fixed_assets_macrs_depreciation",
+              "workflow_expense_ocr_3way_po_reconciliation",
+              "workflow_global_vat_gst_tax_compliance",
+              "workflow_payroll_pto_accrual_escrow",
+              "workflow_smart_dunning_payment_recovery",
+              "workflow_metered_usage_billing",
+              "workflow_iot_hardware_entitlement_depreciation",
+              "workflow_deflationary_tokenomics_bonding_curve",
+              "workflow_neural_marketplace_stack_provisioning",
+              "workflow_tax_audit_trail_export",
+              "workflow_realtime_pnl_balance_sheet_cashflow",
+              "workflow_dynamic_paywall_ppp_pricing",
+              "workflow_subscriber_churn_retention_campaign",
+              "workflow_bank_feed_algorithmic_reconciliation",
+              "workflow_sovereign_ecosystem_health_audit"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sovereign Office Suite — Sovereign Engine OS</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Sacramento&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- TOP NAVBAR -->
+  <nav class="navbar">
+    <div class="brand">
+      <div class="brand-icon">S</div>
+      <div>
+        <div class="brand-title">Sovereign Engine OS</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">Sovereign Office & Business Productivity Suite</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+      <button class="badge-revenuecat" onclick="openRevenueCatDrawer()" title="Configure RevenueCat Entitlements">
+        ⚡ RevenueCat Substrate Active
+      </button>
+      <div class="system-status-indicator">
+        <div class="pulse-dot"></div>
+        <span>6 Cores Entangled</span>
+      </div>
+      <button class="btn-primary" onclick="toggleGeminiCopilot()" style="padding: 0.4rem 0.9rem; font-size: 0.82rem;">
+        🤖 Gemini Copilot
+      </button>
+    </div>
+  </nav>
+
+  <!-- NAVIGATION TABS -->
+  <div class="nav-tabs-container">
+    <div class="nav-tabs">
+      <a href="overview.html" class="tab-btn">⚡ Command Center</a>
+      <a href="office.html" class="tab-btn active">🏢 Sovereign Office</a>
+      <a href="quickbooks.html" class="tab-btn">💼 QuickBooks Replacement</a>
+      <a href="stripe.html" class="tab-btn">💳 Stripe Replacement</a>
+      <a href="tokenomics.html" class="tab-btn">🪙 Tokenomics & Treasury</a>
+      <a href="iot.html" class="tab-btn">⌚ Wear OS & IoT Mesh</a>
+      <a href="nexs.html" class="tab-btn">⚡ Neural Synthesizer</a>
+      <a href="marketplace.html" class="tab-btn">🛍️ App Marketplace</a>
+    </div>
+  </div>
+
+  <!-- PAGE HEADER TITLE -->
+  <div class="page-header-title">
+    <div>
+      <h1>🏢 Sovereign Office & Business Productivity Suite</h1>
+      <div class="page-header-sub">Glassmorphic AI-powered enterprise workspace featuring live formula spreadsheets, WYSIWYG & Markdown docs, pitch deck presenter studio, SovereignSign canvas, and SovereignDrive file manager.</div>
+    </div>
+    <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+      <button class="btn-card-action" onclick="openMultiArtifactDrawer()">🤖 Multi-Artifact AI Drawer</button>
+      <button class="btn-primary" onclick="aiAutofillGrid()">✨ AI Financial Co-Pilot</button>
+      <button class="btn-card-action" onclick="exportGridCSV()">📥 Export Suite</button>
+    </div>
+  </div>
+
+  <!-- EXECUTIVE METRICS BAR -->
+  <section class="metrics-bar">
+    <div class="metric-card">
+      <div class="metric-label">Active Sovereign Docs</div>
+      <div class="metric-value">14 Executive Memos</div>
+      <div class="metric-change positive">▲ Real-Time WYSIWYG & Markdown</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Financial Spreadsheet Models</div>
+      <div class="metric-value">8 Active Grids</div>
+      <div class="metric-change positive">▲ Live Interactive Formula Engine</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Investor Pitch Decks</div>
+      <div class="metric-value">6 Decks (30 Slides)</div>
+      <div class="metric-change positive">▲ Presenter View & Speaker Notes</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">SovereignDrive Storage</div>
+      <div class="metric-value" style="color: var(--accent-cyan);" id="metrics-drive-val">4.2 GB / 10.0 GB</div>
+      <div class="metric-change positive">▲ ZK-Encrypted Sovereign Vault</div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main-container" style="margin-top: 1rem;">
+    
+    <!-- OFFICE SUITE VIEW SWITCHER TABS -->
+    <div class="view-mode-tabs">
+      <button class="view-tab-btn active" id="office-tab-btn-grid" onclick="switchOfficeTab('grid')">📊 Sovereign Grid (Spreadsheet)</button>
+      <button class="view-tab-btn" id="office-tab-btn-doc" onclick="switchOfficeTab('doc')">📝 Sovereign Doc (WYSIWYG & MD)</button>
+      <button class="view-tab-btn" id="office-tab-btn-slides" onclick="switchOfficeTab('slides')">📽️ Sovereign Slides (Pitch Deck Studio)</button>
+      <button class="view-tab-btn" id="office-tab-btn-sign" onclick="switchOfficeTab('sign')">✍️ SovereignSign (Digital Signature)</button>
+      <button class="view-tab-btn" id="office-tab-btn-drive" onclick="switchOfficeTab('drive')">📁 SovereignDrive (File Vault)</button>
+      <button class="view-tab-btn" id="office-tab-btn-artifacts" onclick="openMultiArtifactDrawer()">🤖 Multi-Artifact AI Drawer</button>
+    </div>
+
+    <!-- SECTION 1: SOVEREIGN GRID (SPREADSHEET & FORMULA SOLVER) -->
+    <div id="sec-office-grid">
+      <div class="sovereign-spreadsheet-container">
+        <!-- SHEET TOOLBAR -->
+        <div class="sheet-toolbar">
+          <div class="sheet-toolbar-group">
+            <span class="office-tab-badge">📊 Financial Model 2026.xlsx</span>
+            <button class="sheet-btn" onclick="addGridRow()">➕ Add Row</button>
+            <button class="sheet-btn" onclick="addGridCol()">➕ Add Column</button>
+            <button class="sheet-btn" onclick="loadSampleFinancialModel()">🔄 Reset Model</button>
+            <button class="sheet-btn" onclick="toggleFormulaHelperModal()" title="View Supported Formulas">❓ Formula Reference</button>
+          </div>
+          <div class="sheet-toolbar-group">
+            <button class="sheet-btn sheet-btn-primary" onclick="aiAutofillGrid()">✨ AI Cell Autofill</button>
+            <button class="sheet-btn" onclick="exportGridCSV()">📥 Export CSV</button>
+          </div>
+        </div>
+
+        <!-- FORMULA BAR -->
+        <div class="sheet-formula-bar">
+          <div class="cell-address-pill" id="sheet-active-address">A1</div>
+          <span class="formula-symbol">fx</span>
+          <div style="position: relative; flex: 1;">
+            <input type="text" id="sheet-formula-input" class="formula-input" placeholder="Enter formula or cell value (e.g. =SUM(B2:B5), =AVG(B2:B5), =MIN(B2:B5), =MAX(B2:B5), =IF(B6>100000, 0.15, 0.1), =NPV(0.1, B6, C6, D6))..." oninput="onFormulaInputChange(this.value)" onchange="applyFormulaBarInput()" />
+            <div id="formula-autocomplete-list" class="formula-autocomplete-dropdown" style="display: none;"></div>
+          </div>
+          <button class="sheet-btn" onclick="applyFormulaBarInput()" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">Apply</button>
+        </div>
+
+        <!-- FORMULA QUICK REFERENCE BAR -->
+        <div class="formula-quick-chips">
+          <span style="font-size: 0.76rem; color: var(--text-muted); font-weight: 600;">Supported Formulas:</span>
+          <button class="formula-chip" onclick="insertFormulaTemplate('=SUM(')">SUM</button>
+          <button class="formula-chip" onclick="insertFormulaTemplate('=AVG(')">AVG</button>
+          <button class="formula-chip" onclick="insertFormulaTemplate('=MIN(')">MIN</button>
+          <button class="formula-chip" onclick="insertFormulaTemplate('=MAX(')">MAX</button>
+          <button class="formula-chip" onclick="insertFormulaTemplate('=COUNT(')">COUNT</button>
+          <button class="formula-chip" onclick="insertFormulaTemplate('=PRODUCT(')">PRODUCT</button>
+          <button class="formula-chip" onclick="insertFormulaTemplate('=IF(')">IF</button>
+          <button class="formula-chip" onclick="insertFormulaTemplate('=ROUND(')">ROUND</button>
+          <button class="formula-chip" onclick="insertFormulaTemplate('=ABS(')">ABS</button>
+          <button class="formula-chip" onclick="insertFormulaTemplate('=SQRT(')">SQRT</button>
+          <button class="formula-chip" onclick="insertFormulaTemplate('=POWER(')">POWER</button>
+          <button class="formula-chip" onclick="insertFormulaTemplate('=NPV(')">NPV</button>
+          <button class="formula-chip" onclick="insertFormulaTemplate('=IRR(')">IRR</button>
+          <button class="formula-chip" onclick="insertFormulaTemplate('=PMT(')">PMT</button>
+        </div>
+
+        <!-- SPREADSHEET TABLE GRID CONTAINER -->
+        <div class="sheet-grid-wrapper" id="spreadsheet-table-container">
+          <!-- Dynamically initialized by initSpreadsheetGrid() -->
+        </div>
+
+        <!-- SHEET FOOTER SUMMARY BAR -->
+        <div class="sheet-summary-bar">
+          <div>
+            <span>Status: </span>
+            <strong style="color: var(--accent-green);">● JS Live Formula Engine Active</strong>
+          </div>
+          <div>
+            <span>RevenueCat Telemetry Hooked: </span>
+            <strong style="color: var(--accent-cyan); font-family: var(--font-mono);">$148,920.00 MRR</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: SOVEREIGN DOC (DOCUMENT EDITOR & WYSIWYG) -->
+    <div id="sec-office-doc" style="display: none;">
+      <div class="sovereign-doc-container">
+        <!-- DOC METADATA & TITLE BAR -->
+        <div class="doc-meta-bar">
+          <input type="text" id="doc-title-input" class="doc-title-input" value="Sovereign Engine Series A Executive Memo.md" onchange="docState.title = this.value" />
+          <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+            <span class="office-tab-badge" id="doc-word-count">342 Words</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted);" id="doc-char-count">2,150 Chars</span>
+            <span style="font-size: 0.8rem; color: var(--accent-cyan);" id="doc-read-time">~2 min read</span>
+          </div>
+        </div>
+
+        <!-- DOC TOOLBAR -->
+        <div class="doc-toolbar">
+          <div class="sheet-toolbar-group" style="flex-wrap: wrap;">
+            <!-- RICH TEXT FORMATTING BUTTONS -->
+            <button class="doc-tool-btn" onclick="execWysiwygCommand('bold')" title="Bold (Ctrl+B)"><b>B</b></button>
+            <button class="doc-tool-btn" onclick="execWysiwygCommand('italic')" title="Italic (Ctrl+I)"><i>I</i></button>
+            <button class="doc-tool-btn" onclick="execWysiwygCommand('underline')" title="Underline (Ctrl+U)"><u>U</u></button>
+            <button class="doc-tool-btn" onclick="execWysiwygCommand('strikeThrough')" title="Strikethrough"><s>S</s></button>
+            <div style="border-left: 1px solid var(--border-glass); height: 20px; margin: 0 0.2rem;"></div>
+            <button class="doc-tool-btn" onclick="execWysiwygCommand('formatBlock', '<h1>')" title="Heading 1">H1</button>
+            <button class="doc-tool-btn" onclick="execWysiwygCommand('formatBlock', '<h2>')" title="Heading 2">H2</button>
+            <button class="doc-tool-btn" onclick="execWysiwygCommand('formatBlock', '<h3>')" title="Heading 3">H3</button>
+            <div style="border-left: 1px solid var(--border-glass); height: 20px; margin: 0 0.2rem;"></div>
+            <button class="doc-tool-btn" onclick="execWysiwygCommand('insertUnorderedList')" title="Bullet List">• List</button>
+            <button class="doc-tool-btn" onclick="execWysiwygCommand('insertOrderedList')" title="Numbered List">1. List</button>
+            <button class="doc-tool-btn" onclick="execWysiwygCommand('formatBlock', '<blockquote>')" title="Blockquote">” Quote</button>
+            <button class="doc-tool-btn" onclick="execWysiwygCommand('formatBlock', '<pre>')" title="Code Block">&lt;/&gt;</button>
+            <div style="border-left: 1px solid var(--border-glass); height: 20px; margin: 0 0.2rem;"></div>
+            <button class="doc-tool-btn" onclick="promptInsertLink()" title="Insert Hyperlink">🔗 Link</button>
+            <button class="doc-tool-btn" onclick="promptInsertImage()" title="Insert Image">🖼️ Image</button>
+            <button class="doc-tool-btn" onclick="execWysiwygCommand('removeFormat')" title="Clear Formatting">🧹 Clear</button>
+          </div>
+          <div class="sheet-toolbar-group">
+            <button class="sheet-btn" onclick="aiPolishDoc()">✨ AI Polish</button>
+            <button class="sheet-btn" onclick="aiSummarizeDoc()">🪄 AI Summarize</button>
+            <button class="sheet-btn" onclick="aiExpandDocSection()">🚀 AI Expand</button>
+            <div style="border-left: 1px solid var(--border-glass); height: 20px; margin: 0 0.25rem;"></div>
+            <button class="doc-tool-btn doc-view-btn active" id="doc-view-btn-wysiwyg" onclick="switchDocViewMode('wysiwyg')">🎨 Rich WYSIWYG</button>
+            <button class="doc-tool-btn doc-view-btn" id="doc-view-btn-split" onclick="switchDocViewMode('split')">Split View</button>
+            <button class="doc-tool-btn doc-view-btn" id="doc-view-btn-edit" onclick="switchDocViewMode('edit')">Markdown Source</button>
+            <button class="doc-tool-btn doc-view-btn" id="doc-view-btn-preview" onclick="switchDocViewMode('preview')">Live Preview</button>
+            <button class="sheet-btn sheet-btn-primary" onclick="exportDocMD()">📥 Export .md</button>
+          </div>
+        </div>
+
+        <!-- DOC WORKSPACE GRID -->
+        <div class="doc-editor-workspace" id="doc-workspace-grid">
+          <!-- WYSIWYG VISUAL CANVAS PANE -->
+          <div id="doc-wysiwyg-pane" class="doc-wysiwyg-pane">
+            <div id="doc-wysiwyg-canvas" class="wysiwyg-editable-canvas" contenteditable="true" oninput="onWysiwygCanvasInput()">
+              <!-- Initialized by initDocEditor() -->
+            </div>
+          </div>
+          <!-- MARKDOWN TEXTAREA PANE -->
+          <div id="doc-editor-pane" style="display: none;">
+            <textarea id="doc-textarea-input" class="doc-textarea" oninput="updateDocContent(this.value)" placeholder="Type document markdown content..."></textarea>
+          </div>
+          <!-- LIVE PREVIEW PANE -->
+          <div class="doc-preview-pane" id="doc-preview-pane-container" style="display: none;">
+            <!-- Dynamically rendered markdown -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: SOVEREIGN SLIDES (PITCH DECK STUDIO) -->
+    <div id="sec-office-slides" style="display: none;">
+      <div class="sovereign-deck-container">
+        <!-- DECK HEADER TOOLBAR -->
+        <div class="sheet-toolbar">
+          <div class="sheet-toolbar-group">
+            <span class="office-tab-badge">📽️ Series A Investor Pitch Deck.deck</span>
+            <span class="office-tab-badge" id="slide-counter-badge" style="background: rgba(121,40,202,0.15); color: var(--accent-purple);">Slide 1 of 5</span>
+          </div>
+          <div class="sheet-toolbar-group">
+            <button class="sheet-btn" onclick="prevSlide()">◀ Prev Slide</button>
+            <button class="sheet-btn" onclick="nextSlide()">Next Slide ▶</button>
+            <button class="sheet-btn" onclick="togglePresenterNotesPane()" id="btn-toggle-presenter-notes">🎙️ Speaker Notes</button>
+            <button class="sheet-btn sheet-btn-primary" onclick="openPresenterModeWindow()">📺 Live Presenter Mode</button>
+            <button class="sheet-btn" onclick="toggleDeckFullscreen()">⛶ Fullscreen</button>
+            <button class="sheet-btn" onclick="aiGenerateNewSlide()">✨ AI Generate Slide</button>
+          </div>
+        </div>
+
+        <!-- DECK WORKSPACE LAYOUT -->
+        <div class="deck-workspace-layout">
+          <!-- SLIDE THUMBNAILS SIDEBAR -->
+          <div class="slide-thumbnails-sidebar" id="slide-thumbnails-sidebar-container">
+            <!-- Dynamically rendered by initPitchDeck() -->
+          </div>
+
+          <!-- PRESENTATION STAGE VIEWPORT & PRESENTER NOTES -->
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 1rem;">
+            <div class="slide-stage-viewport" id="slide-stage-viewport-container">
+              <!-- Dynamically rendered active slide -->
+            </div>
+
+            <!-- PRESENTER NOTES PANE -->
+            <div id="presenter-notes-container" class="presenter-notes-box">
+              <div class="presenter-notes-header">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span>🎙️ Speaker Presenter Notes</span>
+                  <span class="office-tab-badge" style="font-size: 0.72rem;">Hotkey: Press 'N' to toggle</span>
+                </div>
+                <button class="sheet-btn" onclick="aiGeneratePresenterNotes()" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">✨ AI Speaker Notes</button>
+              </div>
+              <textarea id="presenter-notes-input" class="presenter-notes-textarea" placeholder="Type speaker cues, talking points, key stats, and Q&A references for this slide..." oninput="updateCurrentPresenterNotes(this.value)"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: SOVEREIGN SIGN (DIGITAL SIGNATURE CANVAS) -->
+    <div id="sec-office-sign" style="display: none;">
+      <div class="sovereign-doc-container">
+        <!-- SIGNATURE HEADER TOOLBAR -->
+        <div class="sheet-toolbar">
+          <div class="sheet-toolbar-group">
+            <span class="office-tab-badge" style="background: rgba(16,185,129,0.15); color: var(--accent-green);">✍️ SovereignSign Cryptographic Suite</span>
+            <span class="office-tab-badge">SHA-256 ZK-Proof Verified</span>
+          </div>
+          <div class="sheet-toolbar-group">
+            <button class="sheet-btn" onclick="clearSignatureCanvas()">🧹 Clear Canvas</button>
+            <button class="sheet-btn" onclick="undoSignatureStroke()">↩ Undo</button>
+            <button class="sheet-btn" onclick="attachSignatureToDoc()">📄 Attach to Sovereign Doc</button>
+            <button class="sheet-btn sheet-btn-primary" onclick="exportSignaturePNG()">📥 Download PNG</button>
+          </div>
+        </div>
+
+        <!-- SIGNATURE CANVAS WORKSPACE -->
+        <div class="signature-workspace">
+          <div class="signature-main-card">
+            <!-- TAB SWITCHER: FREEHAND / TYPED SIGNATURE -->
+            <div class="sign-mode-tabs">
+              <button class="sign-mode-btn active" id="sign-mode-draw-btn" onclick="switchSignatureMode('draw')">✍️ Freehand Ink Drawing</button>
+              <button class="sign-mode-btn" id="sign-mode-type-btn" onclick="switchSignatureMode('type')">⌨️ Typed Digital Signature</button>
+            </div>
+
+            <!-- DRAW MODE CONTAINER -->
+            <div id="sign-draw-container">
+              <!-- CANVAS TOOLBAR -->
+              <div class="signature-tool-controls">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Ink Color:</span>
+                  <div class="pen-color-options">
+                    <div class="pen-color-dot active" style="background: #00f2fe;" onclick="setSignaturePenColor('#00f2fe', this)" title="Neon Cyan"></div>
+                    <div class="pen-color-dot" style="background: #f59e0b;" onclick="setSignaturePenColor('#f59e0b', this)" title="Gold"></div>
+                    <div class="pen-color-dot" style="background: #10b981;" onclick="setSignaturePenColor('#10b981', this)" title="Emerald"></div>
+                    <div class="pen-color-dot" style="background: #7928ca;" onclick="setSignaturePenColor('#7928ca', this)" title="Royal Violet"></div>
+                    <div class="pen-color-dot" style="background: #ffffff;" onclick="setSignaturePenColor('#ffffff', this)" title="Pure White"></div>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Stroke Width:</span>
+                  <input type="range" id="sig-stroke-width" min="1" max="8" value="3" oninput="setSignatureStrokeWidth(this.value)" style="width: 100px; accent-color: var(--accent-cyan);" />
+                  <span id="sig-stroke-val" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan);">3px</span>
+                </div>
+              </div>
+
+              <!-- CANVAS ELEMENT CONTAINER -->
+              <div class="signature-canvas-wrapper">
+                <canvas id="sovereign-signature-canvas" width="800" height="240"></canvas>
+                <div class="signature-guideline">Sign Above Line</div>
+              </div>
+            </div>
+
+            <!-- TYPE MODE CONTAINER -->
+            <div id="sign-type-container" style="display: none; padding: 1.5rem;">
+              <div style="margin-bottom: 1rem;">
+                <label style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600; display: block; margin-bottom: 0.4rem;">Type Full Legal Name:</label>
+                <input type="text" id="typed-sig-input" class="search-input" value="Dr. Medin Sovereign, CEO" oninput="updateTypedSignaturePreview(this.value)" style="font-size: 1rem;" />
+              </div>
+              <div style="margin-bottom: 1rem;">
+                <label style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600; display: block; margin-bottom: 0.4rem;">Select Calligraphic Font Style:</label>
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                  <button class="sheet-btn" onclick="setTypedSigFont('Dancing Script', this)">Dancing Script</button>
+                  <button class="sheet-btn" onclick="setTypedSigFont('Great Vibes', this)">Great Vibes</button>
+                  <button class="sheet-btn" onclick="setTypedSigFont('Sacramento', this)">Sacramento</button>
+                </div>
+              </div>
+              <div class="typed-sig-preview-card" id="typed-sig-preview-box">
+                Dr. Medin Sovereign, CEO
+              </div>
+              <button class="sheet-btn sheet-btn-primary" onclick="convertTypedSignatureToCanvas()" style="margin-top: 1rem;">Render Typed Signature to Canvas</button>
+            </div>
+
+            <!-- SIGNER CREDENTIALS & AUDIT TRAIL CARD -->
+            <div class="digital-cert-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <div style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; color: #fff;">
+                  🔒 Cryptographic Certificate Audit Fingerprint
+                </div>
+                <span class="status-pill success" id="sig-status-badge">SIGNATURE READY</span>
+              </div>
+              <div class="cert-grid">
+                <div>
+                  <div class="cert-lbl">Signer Identity:</div>
+                  <input type="text" id="signer-name-input" class="doc-title-input" value="Medin Sovereign (Chief Executive Officer)" onchange="recalculateSigCertificate()" style="font-size: 0.85rem;" />
+                </div>
+                <div>
+                  <div class="cert-lbl">Timestamp & UTC:</div>
+                  <div class="cert-val" id="sig-cert-time">2026-08-20 19:45:14 UTC</div>
+                </div>
+                <div>
+                  <div class="cert-lbl">Verification Hash (SHA-256):</div>
+                  <div class="cert-val audit-hash" id="sig-cert-hash">0x9f8b7a6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a</div>
+                </div>
+                <div>
+                  <div class="cert-lbl">Zero-Knowledge Proof:</div>
+                  <div class="cert-val" style="color: var(--accent-cyan);">ZK-SNARK Proof #48291 Verified</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: SOVEREIGN DRIVE (FILE STORAGE & VAULT MANAGER) -->
+    <div id="sec-office-drive" style="display: none;">
+      <div class="sovereign-doc-container">
+        <!-- DRIVE HEADER & STORAGE METER -->
+        <div class="drive-header-bar">
+          <div>
+            <h2 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem;">📁 SovereignDrive ZK Vault Manager</h2>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Encrypted cloud & local workspace storage with real-time versioning.</div>
+          </div>
+          <div class="drive-storage-quota">
+            <div style="display: flex; justify-content: space-between; font-size: 0.78rem; font-weight: 600; margin-bottom: 0.3rem;">
+              <span>Storage Used: 4.2 GB of 10.0 GB</span>
+              <span style="color: var(--accent-cyan);">42% Used</span>
+            </div>
+            <div class="quota-bar-track">
+              <div class="quota-bar-fill" style="width: 42%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DRIVE TOOLBAR -->
+        <div class="sheet-toolbar">
+          <div class="sheet-toolbar-group">
+            <input type="text" id="drive-search-input" class="search-input" placeholder="🔍 Search SovereignDrive files..." oninput="filterDriveFiles(this.value)" style="width: 260px;" />
+            <select id="drive-type-filter" class="search-input" onchange="filterDriveFiles()" style="width: 160px; padding: 0.35rem;">
+              <option value="ALL">All File Types</option>
+              <option value="doc">Documents (.md, .docx)</option>
+              <option value="sheet">Spreadsheets (.xlsx, .csv)</option>
+              <option value="deck">Pitch Decks (.deck, .pptx)</option>
+              <option value="sign">Signatures (.sig, .pdf)</option>
+              <option value="code">Smart Contracts (.sol)</option>
+            </select>
+          </div>
+          <div class="sheet-toolbar-group">
+            <button class="sheet-btn" onclick="triggerDriveFileUpload()">📤 Upload File</button>
+            <button class="sheet-btn" onclick="createDriveFolder()">📁 New Folder</button>
+            <button class="doc-tool-btn active" id="drive-view-grid-btn" onclick="setDriveViewMode('grid')">▦ Grid</button>
+            <button class="doc-tool-btn" id="drive-view-list-btn" onclick="setDriveViewMode('list')">☰ List</button>
+          </div>
+        </div>
+
+        <!-- DRIVE MAIN WORKSPACE -->
+        <div class="drive-workspace-layout">
+          <!-- FOLDER NAVIGATION SIDEBAR -->
+          <div class="drive-folder-sidebar">
+            <div class="drive-folder-item active" onclick="selectDriveFolder('all', this)">
+              <span>📁</span> <span>All Vault Files</span>
+            </div>
+            <div class="drive-folder-item" onclick="selectDriveFolder('models', this)">
+              <span>📊</span> <span>Financial Models</span>
+            </div>
+            <div class="drive-folder-item" onclick="selectDriveFolder('memos', this)">
+              <span>📝</span> <span>Executive Memos</span>
+            </div>
+            <div class="drive-folder-item" onclick="selectDriveFolder('decks', this)">
+              <span>📽️</span> <span>Investor Decks</span>
+            </div>
+            <div class="drive-folder-item" onclick="selectDriveFolder('signatures', this)">
+              <span>✍️</span> <span>Signed Contracts</span>
+            </div>
+            <div class="drive-folder-item" onclick="selectDriveFolder('contracts', this)">
+              <span>⚡</span> <span>Smart Contracts</span>
+            </div>
+          </div>
+
+          <!-- FILE GRID / LIST CONTAINER -->
+          <div class="drive-files-container" id="drive-files-container">
+            <!-- Dynamically populated by renderSovereignDrive() -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FORMULA REFERENCE MODAL -->
+  <div id="formula-reference-modal" class="sovereign-modal-backdrop" style="display: none;">
+    <div class="sovereign-modal-card">
+      <div class="modal-header">
+        <h3 style="font-family: var(--font-heading); color: #fff;">📊 Sovereign Grid Live Formula Solver Reference</h3>
+        <button class="copilot-close-btn" onclick="toggleFormulaHelperModal()">✕</button>
+      </div>
+      <div class="modal-body" style="max-height: 440px; overflow-y: auto;">
+        <table class="sheet-table" style="font-size: 0.85rem;">
+          <thead>
+            <tr>
+              <th class="sheet-th">Formula Syntax</th>
+              <th class="sheet-th">Description & Function</th>
+              <th class="sheet-th">Example Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>=SUM(range)</code></td>
+              <td>Calculates the total sum of numerical cells in range.</td>
+              <td><code>=SUM(B2:B8)</code></td>
+            </tr>
+            <tr>
+              <td><code>=AVG(range)</code></td>
+              <td>Computes arithmetic average of cell range.</td>
+              <td><code>=AVG(C2:C10)</code></td>
+            </tr>
+            <tr>
+              <td><code>=MIN(range) / =MAX(range)</code></td>
+              <td>Finds minimum or maximum value in range.</td>
+              <td><code>=MIN(D2:D12)</code></td>
+            </tr>
+            <tr>
+              <td><code>=COUNT(range)</code></td>
+              <td>Counts numeric cells in range.</td>
+              <td><code>=COUNT(B2:B20)</code></td>
+            </tr>
+            <tr>
+              <td><code>=PRODUCT(range)</code></td>
+              <td>Multiplies all numbers in range together.</td>
+              <td><code>=PRODUCT(B2:B4)</code></td>
+            </tr>
+            <tr>
+              <td><code>=IF(cond, val_true, val_false)</code></td>
+              <td>Evaluates condition and returns corresponding value.</td>
+              <td><code>=IF(F6>100000, 0.15, 0.05)</code></td>
+            </tr>
+            <tr>
+              <td><code>=ROUND(val, decimals)</code></td>
+              <td>Rounds number to specified decimal places.</td>
+              <td><code>=ROUND(B6*0.19, 2)</code></td>
+            </tr>
+            <tr>
+              <td><code>=ABS(val) / =SQRT(val)</code></td>
+              <td>Calculates absolute value or square root.</td>
+              <td><code>=SQRT(B6)</code></td>
+            </tr>
+            <tr>
+              <td><code>=POWER(base, exp)</code></td>
+              <td>Raises base number to exponent power.</td>
+              <td><code>=POWER(1.08, 5)</code></td>
+            </tr>
+            <tr>
+              <td><code>=NPV(rate, v1, v2, ...)</code></td>
+              <td>Net Present Value for cash flow stream at discount rate.</td>
+              <td><code>=NPV(0.10, B6, C6, D6)</code></td>
+            </tr>
+            <tr>
+              <td><code>=IRR(v1, v2, v3, ...)</code></td>
+              <td>Internal Rate of Return for cash flows.</td>
+              <td><code>=IRR(-1000, 300, 500, 800)</code></td>
+            </tr>
+            <tr>
+              <td><code>=PMT(rate, nper, pv)</code></td>
+              <td>Calculates periodic payment for loan at fixed interest rate.</td>
+              <td><code>=PMT(0.06/12, 60, 50000)</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIVE PRESENTER VIEW WINDOW / MODAL -->
+  <div id="presenter-view-modal" class="sovereign-modal-backdrop" style="display: none;">
+    <div class="presenter-view-card">
+      <div class="presenter-header">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <span style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #fff;">📺 Sovereign Pitch Deck Presenter Studio</span>
+          <span class="office-tab-badge" id="presenter-timer-badge">⏱ Elapsed: 00:00</span>
+        </div>
+        <button class="copilot-close-btn" onclick="closePresenterModeWindow()">✕ Exit Presenter Mode</button>
+      </div>
+
+      <div class="presenter-body-grid">
+        <!-- CURRENT ACTIVE SLIDE PREVIEW -->
+        <div class="presenter-main-slide-container">
+          <div style="font-size: 0.76rem; color: var(--text-muted); font-weight: bold; margin-bottom: 0.5rem;">CURRENT AUDIENCE VIEWPORT</div>
+          <div id="presenter-current-slide-viewport" class="slide-stage-viewport" style="height: 380px;"></div>
+        </div>
+
+        <!-- RIGHT SIDEBAR: NEXT SLIDE PREVIEW & SPEAKER CUES -->
+        <div class="presenter-sidebar-cues">
+          <!-- NEXT SLIDE PREVIEW -->
+          <div class="next-slide-box">
+            <div style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: bold; margin-bottom: 0.4rem;">UP NEXT (SLIDE PREVIEW)</div>
+            <div id="presenter-next-slide-preview" style="font-size: 0.85rem; color: #e2e8f0; border: 1px solid var(--border-glass); padding: 0.75rem; border-radius: 8px; background: rgba(5,8,16,0.6);">
+              Loading next slide...
+            </div>
+          </div>
+
+          <!-- SPEAKER NOTES DISPLAY -->
+          <div class="presenter-notes-display">
+            <div style="font-size: 0.78rem; color: var(--accent-gold); font-weight: bold; margin-bottom: 0.4rem;">🎙️ SPEAKER NOTES & TALKING POINTS</div>
+            <div id="presenter-notes-text-box" class="notes-text-content">
+              No notes for this slide.
+            </div>
+          </div>
+
+          <!-- PRESENTER CONTROLS -->
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="sheet-btn" onclick="prevSlide()" style="flex: 1;">◀ Prev</button>
+            <button class="sheet-btn sheet-btn-primary" onclick="nextSlide()" style="flex: 1;">Next ▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRIVE FILE PREVIEW MODAL -->
+  <div id="drive-file-preview-modal" class="sovereign-modal-backdrop" style="display: none;">
+    <div class="sovereign-modal-card">
+      <div class="modal-header">
+        <h3 id="drive-preview-modal-title" style="font-family: var(--font-heading); color: #fff;">File Preview</h3>
+        <button class="copilot-close-btn" onclick="closeDriveFilePreview()">✕</button>
+      </div>
+      <div class="modal-body" id="drive-preview-modal-body">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="app.js"></script>
+</body>
+</html>
