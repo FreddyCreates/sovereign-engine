@@ -1334,6 +1334,10 @@ class SovereignDashboardHandler(SimpleHTTPRequestHandler):
             self.send_json_response(mega11.expensify.audit_expense_report("EMP-01", [{"merchant": "AWS", "amount": 250.0, "receipt_ocr": True}]))
         elif path == "/api/v1/plaid/balance":
             self.send_json_response(mega11.plaid.get_realtime_auth_balance("acc_101"))
+        elif path in ["/api/v1/plaid/link_token", "/api/v1/banking/plaid/link_token"]:
+            self.send_json_response(mega11.plaid.create_link_token())
+        elif path in ["/api/v1/plaid/exchange_token", "/api/v1/banking/plaid/exchange_token"]:
+            self.send_json_response(mega11.plaid.exchange_public_token("public-sandbox-token-12345"))
         elif path == "/api/v1/avalara/tax_nexus":
             self.send_json_response(mega11.avalara.calculate_global_tax_nexus(1000.0, "US_CA"))
         elif path == "/api/v1/freshbooks/time_invoice":

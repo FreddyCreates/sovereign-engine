@@ -960,6 +960,22 @@ class PlaidMasterModule:
     and 3-Way Bank Reconciliation Verification.
     """
 
+    def create_link_token(self, client_user_id: str = "user_good") -> Dict[str, Any]:
+        return {
+            "link_token": f"link-sandbox-{uuid.uuid4().hex[:16]}",
+            "expiration": "2026-09-03T20:30:00Z",
+            "request_id": f"req_{uuid.uuid4().hex[:12]}",
+            "status_code": 200
+        }
+
+    def exchange_public_token(self, public_token: str) -> Dict[str, Any]:
+        return {
+            "access_token": f"access-sandbox-{uuid.uuid4().hex[:16]}",
+            "item_id": f"item_{uuid.uuid4().hex[:12]}",
+            "request_id": f"req_{uuid.uuid4().hex[:12]}",
+            "status": "ITEM_CONNECTED"
+        }
+
     def get_realtime_auth_balance(self, account_id: str) -> Dict[str, Any]:
         return {
             "account_id": account_id,
