@@ -1,0 +1,46 @@
+[
+  {
+    "id": "g1",
+    "title": "App Growth Catalyst",
+    "amount": "$25k–$50k",
+    "type": "Grant",
+    "deadline": "Rolling",
+    "fit": "High",
+    "summary": "Non-dilutive capital for subscription apps with live store listings and RevenueCat instrumentation.",
+    "eligibility": ["App Store or Play listing", "RevenueCat integrated", "Measurable MRR"],
+    "source": "catalog"
+  },
+  {
+    "id": "g2",
+    "title": "Shipaton Builder Fund",
+    "amount": "$10k",
+    "type": "Prize / stipend",
+    "deadline": "2026-09-30",
+    "fit": "Medium",
+    "summary": "Aligned with RevenueCat Shipaton shipping milestones — store release and first purchase.",
+    "eligibility": ["Published during Shipaton window", "RevenueCat purchase event"],
+    "source": "catalog"
+  },
+  {
+    "id": "g3",
+    "title": "R&D Tax Credit Offset",
+    "amount": "Variable",
+    "type": "Tax credit",
+    "deadline": "Annual",
+    "fit": "Medium",
+    "summary": "Section 41 style R&D credit framing for AI and infrastructure spend — accountant required.",
+    "eligibility": ["Qualified research expenses", "US tax filing"],
+    "source": "catalog"
+  },
+  {
+    "id": "g4",
+    "title": "SMB Bookkeeping Modernization Grant",
+    "amount": "$5k–$15k",
+    "type": "Grant",
+    "deadline": "Quarterly",
+    "fit": "High",
+    "summary": "Supports tools that replace fragmented QuickBooks workflows with reliable bank feeds and owner-facing cash clarity.",
+    "eligibility": ["Bank aggregation product", "SMB focus"],
+    "source": "catalog"
+  }
+]

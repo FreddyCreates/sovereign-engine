@@ -20,6 +20,8 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.venv/
+/data/
 *.db
 *.sqlite3
 

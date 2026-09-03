@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sovereign Books — Connect Bank</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+  <style>
+    .books-shell {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 4rem;
+    }
+    .books-hero { margin-bottom: 1.75rem; }
+    .books-hero h1 {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      margin: 0 0 0.35rem;
+      color: var(--text-main);
+    }
+    .books-hero p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 40rem;
+    }
+    .books-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    @media (max-width: 720px) {
+      .books-grid { grid-template-columns: 1fr; }
+    }
+    .books-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      padding: 1.1rem 1.2rem;
+    }
+    .books-panel h2 {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      margin: 0 0 0.85rem;
+      color: var(--text-main);
+    }
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid var(--border-glass);
+      font-size: 0.9rem;
+    }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-label { color: var(--text-muted); }
+    .stat-value {
+      font-family: var(--font-mono);
+      color: var(--text-main);
+      font-weight: 600;
+    }
+    .stat-value.good { color: var(--accent-green); }
+    .stat-value.warn { color: var(--accent-gold); }
+    .bank-list, .txn-list { list-style: none; margin: 0; padding: 0; }
+    .bank-list li, .txn-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border-glass);
+      font-size: 0.86rem;
+    }
+    .bank-list li:last-child, .txn-list li:last-child { border-bottom: none; }
+    .txn-meta { color: var(--text-muted); font-size: 0.78rem; }
+    .txn-amt { font-family: var(--font-mono); white-space: nowrap; }
+    .txn-amt.out { color: var(--accent-rose); }
+    .txn-amt.in { color: var(--accent-green); }
+    .books-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1rem;
+    }
+    .mode-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-gold);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+    .mode-pill.live {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-green);
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+    .empty { color: var(--text-dim); font-size: 0.88rem; padding: 0.5rem 0; }
+    .status-line {
+      margin-top: 0.75rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      min-height: 1.2rem;
+    }
+    .sandbox-hint {
+      margin-top: 0.75rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-glass);
+      background: var(--bg-input);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .sandbox-hint code {
+      font-family: var(--font-mono);
+      color: var(--accent-cyan);
+      font-size: 0.78rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">
+      <div class="brand-icon">S</div>
+      <div>
+        <div class="brand-title">Sovereign Books</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">MVP Phase 0 — Connect Bank</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <a href="overview.html" class="btn-card-action" style="text-decoration:none;">Demo dashboard</a>
+    </div>
+  </nav>
+
+  <div class="nav-tabs-container">
+    <div class="nav-tabs">
+      <a href="books.html" class="tab-btn active">Sovereign Books</a>
+      <a href="overview.html" class="tab-btn">Infrastructure Demo</a>
+      <a href="quickbooks.html" class="tab-btn">Legacy QB Demo</a>
+    </div>
+  </div>
+
+  <div class="books-shell">
+    <div class="books-hero">
+      <h1>
+        Connect your bank
+        <span id="mode-pill" class="mode-pill">…</span>
+      </h1>
+      <p>
+        Opens real Plaid Link. In sandbox, pick any US bank and sign in with the credentials below.
+        Accounts and transactions are stored in your local Sovereign Books ledger.
+      </p>
+    </div>
+
+    <div class="books-grid">
+      <div class="books-panel">
+        <h2>Home</h2>
+        <div class="stat-row">
+          <span class="stat-label">Business</span>
+          <span class="stat-value" id="biz-name">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Cash on hand</span>
+          <span class="stat-value" id="cash-bal">$0.00</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Needs review</span>
+          <span class="stat-value warn" id="inbox-count">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Bank status</span>
+          <span class="stat-value" id="bank-status">Not connected</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Ledger balanced</span>
+          <span class="stat-value" id="tb-ok">—</span>
+        </div>
+      </div>
+
+      <div class="books-panel">
+        <h2>Plaid Link</h2>
+        <p style="margin:0; color: var(--text-muted); font-size: 0.85rem;">
+          This uses your Plaid sandbox credentials — not invented Chase buttons.
+        </p>
+        <div class="books-actions">
+          <button class="btn-primary" id="btn-connect" onclick="openPlaidLink()">Connect with Plaid</button>
+          <button class="btn-card-action" onclick="syncBank()">Sync transactions</button>
+          <button class="btn-card-action" onclick="refreshHome()">Refresh</button>
+        </div>
+        <div class="sandbox-hint" id="sandbox-hint">
+          Sandbox login: username <code>user_good</code> · password <code>pass_good</code>
+          (any institution). MFA when asked: <code>1234</code>
+        </div>
+        <div class="status-line" id="status-line"></div>
+      </div>
+    </div>
+
+    <div class="books-grid">
+      <div class="books-panel">
+        <h2>Linked accounts</h2>
+        <ul class="bank-list" id="account-list">
+          <li class="empty">No accounts yet.</li>
+        </ul>
+      </div>
+      <div class="books-panel">
+        <h2>Review inbox</h2>
+        <ul class="txn-list" id="txn-list">
+          <li class="empty">Connect a bank to import transactions.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API = "http://localhost:8090";
+    let plaidHandler = null;
+
+    function money(n) {
+      return Number(n || 0).toLocaleString("en-US", { style: "currency", currency: "USD" });
+    }
+
+    function setStatus(msg) {
+      document.getElementById("status-line").textContent = msg || "";
+    }
+
+    async function refreshHome() {
+      const res = await fetch(`${API}/api/v1/books/home`);
+      const data = await res.json();
+      const pill = document.getElementById("mode-pill");
+      pill.textContent = data.mode || "mock";
+      pill.className = "mode-pill" + (data.mode === "live" ? " live" : "");
+      document.getElementById("sandbox-hint").style.display =
+        data.mode === "live" ? "block" : "none";
+
+      document.getElementById("biz-name").textContent = data.business_name || "—";
+      document.getElementById("cash-bal").textContent = money(data.cash_balance);
+      document.getElementById("inbox-count").textContent = data.inbox_count || 0;
+      document.getElementById("bank-status").textContent = data.bank_connected ? "Connected" : "Not connected";
+      document.getElementById("bank-status").className =
+        "stat-value" + (data.bank_connected ? " good" : "");
+      document.getElementById("tb-ok").textContent = data.trial_balance_ok ? "Yes" : "No";
+      document.getElementById("tb-ok").className =
+        "stat-value" + (data.trial_balance_ok ? " good" : " warn");
+
+      const alist = document.getElementById("account-list");
+      if (!data.accounts || !data.accounts.length) {
+        alist.innerHTML = '<li class="empty">No accounts yet.</li>';
+      } else {
+        alist.innerHTML = data.accounts
+          .map(
+            (a) =>
+              `<li><span>${a.name}${a.mask ? " ••••" + a.mask : ""}<div class="txn-meta">${a.type || ""} / ${a.subtype || ""}</div></span><span class="stat-value">${money(a.current_balance)}</span></li>`
+          )
+          .join("");
+      }
+
+      const inbox = await fetch(`${API}/api/v1/books/inbox`).then((r) => r.json());
+      const tlist = document.getElementById("txn-list");
+      if (!inbox.transactions || !inbox.transactions.length) {
+        tlist.innerHTML = '<li class="empty">Inbox empty — sync after connecting.</li>';
+      } else {
+        tlist.innerHTML = inbox.transactions
+          .map((t) => {
+            const outflow = t.amount > 0;
+            return `<li>
+              <span>${t.name}<div class="txn-meta">${t.date} · ${t.category_suggested || "Uncategorized"}${t.pending ? " · pending" : ""}</div></span>
+              <span class="txn-amt ${outflow ? "out" : "in"}">${outflow ? "-" : "+"}${money(Math.abs(t.amount))}</span>
+            </li>`;
+          })
+          .join("");
+      }
+    }
+
+    async function exchangePublicToken(publicToken, metadata) {
+      setStatus("Exchanging token and syncing accounts…");
+      const res = await fetch(`${API}/api/v1/books/connect`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          public_token: publicToken,
+          institution_name: metadata && metadata.institution ? metadata.institution.name : null,
+          post_to_ledger: true,
+        }),
+      });
+      const data = await res.json();
+      if (data.status !== "CONNECTED") {
+        setStatus(data.error || "Connect failed");
+        return;
+      }
+      const sync = data.sync || {};
+      setStatus(
+        `Connected ${data.institution_name || "bank"} (${data.mode}). Imported ${sync.imported || 0} transactions.`
+      );
+      await refreshHome();
+    }
+
+    async function openPlaidLink() {
+      const btn = document.getElementById("btn-connect");
+      btn.disabled = true;
+      setStatus("Creating Plaid link token…");
+      try {
+        const link = await fetch(`${API}/api/v1/books/link_token`).then((r) => r.json());
+        if (link.mode !== "live") {
+          setStatus("Server is still in mock mode — check PLAID_* in .env and restart.");
+          btn.disabled = false;
+          return;
+        }
+        if (!window.Plaid) {
+          setStatus("Plaid Link script failed to load.");
+          btn.disabled = false;
+          return;
+        }
+        plaidHandler = Plaid.create({
+          token: link.link_token,
+          onSuccess: async (public_token, metadata) => {
+            try {
+              await exchangePublicToken(public_token, metadata);
+            } catch (e) {
+              setStatus("Exchange failed: " + (e.message || e));
+            } finally {
+              btn.disabled = false;
+            }
+          },
+          onExit: (err) => {
+            btn.disabled = false;
+            if (err) setStatus("Link exited: " + (err.display_message || err.error_message || err.error_code));
+            else setStatus("Link closed.");
+          },
+        });
+        plaidHandler.open();
+        setStatus("Plaid Link open — use sandbox credentials below.");
+      } catch (err) {
+        setStatus("Could not start Link — is the server running?");
+        btn.disabled = false;
+      }
+    }
+
+    async function syncBank() {
+      setStatus("Syncing…");
+      try {
+        const res = await fetch(`${API}/api/v1/books/sync`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ post_to_ledger: true }),
+        });
+        const data = await res.json();
+        if (data.status === "ERROR") {
+          setStatus(data.error || "Sync failed");
+          return;
+        }
+        setStatus(`Synced (${data.mode}). Imported ${data.imported}, skipped ${data.skipped_duplicates}.`);
+        await refreshHome();
+      } catch (err) {
+        setStatus("Sync failed — is the server running?");
+      }
+    }
+
+    refreshHome().catch(() => setStatus("Server offline — start with .venv and .env loaded"));
+  </script>
+</body>
+</html>
