@@ -110,80 +110,8 @@
 
   <!-- MAIN COMMAND CENTER CONTAINER -->
   <main class="main-container" style="margin-top: 1rem;">
-
-    <!-- MOBILE-FIRST GLASSMORPHIC MASTER SUBSTRATE CARDS GRID -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem;">
-
-      <!-- CARD 1: VIRTUAL SOVEREIGN BANK PASS (METALLIC DARK VIOLET CARD) -->
-      <div class="glass-panel" style="background: linear-gradient(135deg, rgba(30, 27, 75, 0.85), rgba(15, 23, 42, 0.95)); border: 1px solid rgba(129, 140, 248, 0.35); box-shadow: 0 20px 50px rgba(99, 102, 241, 0.25); border-radius: 18px; padding: 1.25rem; position: relative; overflow: hidden;">
-        <div style="position: absolute; top: -40px; right: -40px; width: 140px; height: 140px; background: radial-gradient(circle, rgba(129, 140, 248, 0.4), transparent 70%); border-radius: 50%; pointer-events: none;"></div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-          <div style="display: flex; align-items: center; gap: 0.5rem;">
-            <div style="background: linear-gradient(135deg, #6366f1, #a855f7); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #fff; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);">S</div>
-            <div>
-              <div style="font-family: var(--font-heading); font-weight: 700; font-size: 1rem; color: #fff;">Virtual Sovereign Bank Pass</div>
-              <div style="font-size: 0.72rem; color: #a5b4fc;">Mastercard World Elite Commercial</div>
-            </div>
-          </div>
-          <span style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #34d399; font-size: 0.68rem; padding: 0.2rem 0.6rem; border-radius: 99px; font-weight: 600;">2.65% REBATE</span>
-        </div>
-        <div style="font-family: var(--font-mono); font-size: 1.15rem; letter-spacing: 2px; color: #f8fafc; margin: 0.75rem 0;">US89 SOVR 4191 A83F 4889 48</div>
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 1rem;">
-          <div>
-            <div style="font-size: 0.68rem; color: #94a3b8; text-transform: uppercase;">Credit Line Limit</div>
-            <div style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: #38bdf8;">$250,000.00 USD</div>
-          </div>
-          <button class="sheet-btn sheet-btn-primary" onclick="openRevenueCatPaywallModal()" style="padding: 0.35rem 0.8rem; font-size: 0.78rem;">💳 Manage Pass</button>
-        </div>
-      </div>
-
-      <!-- CARD 2: MONAD 10,000+ TPS EVM HFT CLEARING WIDGET -->
-      <div class="glass-panel" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(6, 182, 212, 0.15)); border: 1px solid rgba(6, 182, 212, 0.35); box-shadow: 0 20px 50px rgba(6, 182, 212, 0.2); border-radius: 18px; padding: 1.25rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-          <div style="display: flex; align-items: center; gap: 0.5rem;">
-            <span style="font-size: 1.2rem;">⚡</span>
-            <div>
-              <div style="font-family: var(--font-heading); font-weight: 700; font-size: 1rem; color: #fff;">Monad Web3 HFT Engine</div>
-              <div style="font-size: 0.72rem; color: #67e8f9;">10,000+ TPS • 1s EVM Block Finality</div>
-            </div>
-          </div>
-          <span style="background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.4); color: #22d3ee; font-size: 0.68rem; padding: 0.2rem 0.6rem; border-radius: 99px; font-weight: 600;">CHAIN 10143</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.08); padding: 0.6rem 0.8rem; border-radius: 10px; margin: 0.5rem 0; font-family: var(--font-mono); font-size: 0.82rem;">
-          <span style="color: #94a3b8;">MON / USD Spot Rate:</span>
-          <strong style="color: #38bdf8;">$42.50 MON</strong>
-        </div>
-        <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
-          <button class="sheet-btn" onclick="executeMonadHFTSwapFromUI()" style="flex: 1; justify-content: center; font-size: 0.78rem;">🔄 Execute Swap</button>
-          <button class="sheet-btn sheet-btn-primary" onclick="dispatchInterbankWireFromUI()" style="flex: 1; justify-content: center; font-size: 0.78rem;">🌐 ISO Wire Bridge</button>
-        </div>
-      </div>
-
-      <!-- CARD 3: REVENUECAT MOBILE SDK V8.2+ PAYWALLS V2 & ADS UNIT -->
-      <div class="glass-panel" style="background: linear-gradient(135deg, rgba(24, 24, 27, 0.9), rgba(244, 63, 94, 0.15)); border: 1px solid rgba(244, 63, 94, 0.35); box-shadow: 0 20px 50px rgba(244, 63, 94, 0.2); border-radius: 18px; padding: 1.25rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-          <div style="display: flex; align-items: center; gap: 0.5rem;">
-            <span style="font-size: 1.2rem;">📱</span>
-            <div>
-              <div style="font-family: var(--font-heading); font-weight: 700; font-size: 1rem; color: #fff;">RevenueCat Mobile SDK v8.2+</div>
-              <div style="font-size: 0.72rem; color: #fda4af;">StoreKit 2 & Play Billing v7 Paywalls v2</div>
-            </div>
-          </div>
-          <span style="background: rgba(244, 63, 94, 0.15); border: 1px solid rgba(244, 63, 94, 0.4); color: #fb7185; font-size: 0.68rem; padding: 0.2rem 0.6rem; border-radius: 99px; font-weight: 600;">PAYWALLS V2</span>
-        </div>
-        <div style="background: rgba(244, 63, 94, 0.08); border: 1px dashed rgba(244, 63, 94, 0.3); padding: 0.5rem 0.8rem; border-radius: 10px; margin: 0.5rem 0; font-size: 0.76rem; color: #fecdd3;">
-          📢 <strong>RevenueCat Sponsored Ad:</strong> Monad HFT Arbitrage ($15.00 eCPM with $0.15 direct user rebate)
-        </div>
-        <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
-          <button class="sheet-btn" onclick="openRevenueCatPaywallModal()" style="flex: 1; justify-content: center; font-size: 0.78rem;">⚡ Dynamic Paywalls</button>
-          <button class="sheet-btn sheet-btn-primary" onclick="triggerCustomerCenterRetention()" style="flex: 1; justify-content: center; font-size: 0.78rem;">🛡️ AI Retention</button>
-        </div>
-      </div>
-
-    </div>
-
+    
     <!-- COMMAND CENTER WORKSPACE VIEW TABS -->
-    <div class="view-mode-tabs">
       <button class="view-tab-btn active" id="view-btn-telemetry" onclick="switchCommandCenterView('telemetry')">📊 Executive Telemetry & Substrate</button>
       <button class="view-tab-btn" id="view-btn-office" onclick="switchCommandCenterView('office')">🏢 Sovereign Office & Suite</button>
       <button class="view-tab-btn" id="view-btn-apps" onclick="switchCommandCenterView('apps')">🛍️ 200 Ecosystem Apps Catalog</button>
