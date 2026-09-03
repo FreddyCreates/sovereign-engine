@@ -1,7 +1,0 @@
-{
-  "title": "CAPSULA-I Runtime Seed",
-  "series": "CAPSULA",
-  "manifestHash": "b7a7f8d4c2b2a19d36f8aa40f12d2b64c74f4c7b6d4ed78a3b8cf2c6c34c90a",
-  "chainId": "CHAIN-20260616-NERVUS-c7f4338d",
-  "summary": "Memory-book runtime seed with dashboard, database, protocol, and package lineage."
-}

@@ -1,8 +1,0 @@
----
-interface Props { label?: string; }
-const { label = 'alive' } = Astro.props;
----
-<span class="heartbeat-wrap" aria-label="organism heartbeat">
-  <span class="heartbeat" aria-hidden="true"></span>
-  <span class="small muted">{label}</span>
-</span>

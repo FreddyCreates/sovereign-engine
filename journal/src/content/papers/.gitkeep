@@ -1,2 +1,0 @@
-# Papers are synced here at build time by scripts/sync-papers.mjs.
-# This directory is gitignored — the canonical source lives in /papers/.

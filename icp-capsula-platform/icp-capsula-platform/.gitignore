@@ -1,7 +1,0 @@
-node_modules/
-dist/
-.mops/
-.icp/cache/
-.DS_Store
-*.log
-src/frontend/src/bindings/
