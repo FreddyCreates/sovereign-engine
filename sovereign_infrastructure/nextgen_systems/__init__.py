@@ -192,5 +192,25 @@ __all__.extend([
     "GeminiEmbeddedEnterpriseSuite"
 ])
 
+from sovereign_infrastructure.nextgen_systems.agentic_quickbooks_engine import (
+    AgenticQuickBooksEngine,
+    RevenueCatSubscriptionTierManager,
+    ComplianceAndTaxCreditsResearchEngine,
+)
+from sovereign_infrastructure.nextgen_systems.live_connectors import (
+    RevenueCatLiveClient,
+    LiveStatutoryComplianceFetcher,
+    LiveThirdPartyIntegrationRegistry,
+)
+
+__all__.extend([
+    "AgenticQuickBooksEngine",
+    "RevenueCatSubscriptionTierManager",
+    "ComplianceAndTaxCreditsResearchEngine",
+    "RevenueCatLiveClient",
+    "LiveStatutoryComplianceFetcher",
+    "LiveThirdPartyIntegrationRegistry",
+])
+
 
 

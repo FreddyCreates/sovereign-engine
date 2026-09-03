@@ -70,6 +70,7 @@ from embedded_marketplace_integrations_hub import EmbeddedMarketplaceHub
 from sovereign_mcp_server import SovereignMCPServer
 from alpha_unlimited_work_engine import AlphaUnlimitedWorkEngine, AlphaAppWorkGenerator
 from mega_office_business_suite import MegaOfficeBusinessSuite
+from agentic_quickbooks_engine import AgenticQuickBooksEngine
 
 # Phase 0 MVP — Sovereign Books (persistent bank connect)
 from sovereign_books import BankService
@@ -126,6 +127,9 @@ mcp_server = SovereignMCPServer()
 
 # Initialize Sovereign OS Alpha Unlimited Work Engine
 alpha_work_engine = AlphaUnlimitedWorkEngine(gl_engine=gl, orchestrator=orchestrator)
+
+# Initialize Agentic QuickBooks Bookkeeping Engine (from agentic branch)
+agentic_qb_engine = AgenticQuickBooksEngine(gl=gl)
 
 WORKFLOW_SHORTHAND_MAP = {
     "wf_01": "workflow_end_to_end_subscriber_lifecycle",
@@ -668,6 +672,23 @@ class SovereignDashboardHandler(SimpleHTTPRequestHandler):
                 default_vm = mcp_server.vm_engine.provision_instance(instance_name="auto_vm", instance_type="vc.standard")
                 inst_id = default_vm["instance_id"]
             self.send_json_response(mcp_server.vm_engine.execute_command(instance_id=inst_id, command=cmd))
+        # Agentic QuickBooks & RevenueCat bookkeeper (merged from agentic branch)
+        elif path in ["/api/v1/agentic_qb/audit", "/api/v1/bookkeeping/audit"]:
+            self.send_json_response(agentic_qb_engine.run_comprehensive_bookkeeping_audit())
+        elif path in ["/api/v1/agentic_qb/tax_credits", "/api/v1/compliance/tax_credits"]:
+            params = self.parse_query_params()
+            state = params.get("state", "CA")
+            self.send_json_response(agentic_qb_engine.research_and_calculate_tax_credits(state=state))
+        elif path in ["/api/v1/agentic_qb/subscriber_billing", "/api/v1/revenuecat/subscriber_billing"]:
+            params = self.parse_query_params()
+            user_id = params.get("user_id", params.get("subscriber_id", "sub_101"))
+            self.send_json_response(
+                agentic_qb_engine.subscription_manager.get_subscriber_billing_summary(user_id)
+            )
+        elif path in ["/api/v1/agentic_qb/live_integrations", "/api/v1/integrations/status"]:
+            self.send_json_response(
+                agentic_qb_engine.integration_registry.get_all_integration_statuses()
+            )
         else:
             super().do_GET()
 
@@ -1366,6 +1387,68 @@ class SovereignDashboardHandler(SimpleHTTPRequestHandler):
                 "compose_code": compose_code,
                 "status": "SYNTHESIZED"
             })
+        # Agentic QuickBooks Bookkeeping Engine POST (merged from agentic branch)
+        elif path in ["/api/v1/agentic_qb/event", "/api/v1/revenuecat/billing_event"]:
+            user_id = body.get("user_id", body.get("subscriber_id", "usr_sub_101"))
+            event_type = body.get("event_type", "INITIAL_PURCHASE")
+            product_id = body.get("product_id", "sovereign_pro_monthly")
+            price_usd = float(body["price_usd"]) if "price_usd" in body else None
+            store = body.get("store", "APP_STORE_STOREKIT_2")
+            self.send_json_response(
+                agentic_qb_engine.process_revenuecat_subscription_event(
+                    user_id=user_id,
+                    event_type=event_type,
+                    product_id=product_id,
+                    price_usd=price_usd,
+                    store=store,
+                )
+            )
+        elif path in ["/api/v1/agentic_qb/meter_usage", "/api/v1/revenuecat/meter_usage"]:
+            user_id = body.get("user_id", body.get("subscriber_id", "usr_sub_101"))
+            feature = body.get("feature", body.get("feature_id", "ai_bookkeeping_queries"))
+            units = int(body.get("units", 1))
+            self.send_json_response(
+                agentic_qb_engine.record_metered_usage_and_bill(
+                    user_id=user_id, feature=feature, units=units
+                )
+            )
+        elif path in ["/api/v1/agentic_qb/asc606_recognize", "/api/v1/gaap/asc606"]:
+            contract_id = body.get("contract_id", "CONTRACT_ANNUAL_001")
+            total_val = float(body.get("total_contract_value", 120000.0))
+            month = int(body.get("current_month", 1))
+            duration = int(body.get("duration_months", 12))
+            self.send_json_response(
+                agentic_qb_engine.run_monthly_asc606_revenue_recognition(
+                    contract_id=contract_id,
+                    total_contract_value=total_val,
+                    current_month=month,
+                    duration_months=duration,
+                )
+            )
+        elif path in ["/api/v1/agentic_qb/payroll", "/api/v1/payroll/execute"]:
+            gross = float(body.get("gross_payroll", 148500.0))
+            state = body.get("state", "CA")
+            rd_ratio = float(body.get("engineering_rd_ratio", 0.80))
+            self.send_json_response(
+                agentic_qb_engine.execute_agentic_payroll(
+                    gross_payroll=gross, state=state, engineering_rd_ratio=rd_ratio
+                )
+            )
+        elif path in ["/api/v1/agentic_qb/tax_credits", "/api/v1/compliance/tax_credits"]:
+            state = body.get("state", "CA")
+            cloud = float(body["cloud_compute_spend"]) if "cloud_compute_spend" in body else None
+            rd_pay = float(body["rd_payroll_spend"]) if "rd_payroll_spend" in body else None
+            self.send_json_response(
+                agentic_qb_engine.research_and_calculate_tax_credits(
+                    state=state, cloud_compute_spend=cloud, rd_payroll_spend=rd_pay
+                )
+            )
+        elif path in ["/api/v1/agentic_qb/audit", "/api/v1/bookkeeping/audit"]:
+            self.send_json_response(agentic_qb_engine.run_comprehensive_bookkeeping_audit())
+        elif path in ["/api/v1/agentic_qb/live_integrations", "/api/v1/integrations/status"]:
+            self.send_json_response(
+                agentic_qb_engine.integration_registry.get_all_integration_statuses()
+            )
         else:
             self.send_error(404, "Endpoint not found")
 
