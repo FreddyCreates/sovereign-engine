@@ -1338,6 +1338,15 @@ class SovereignDashboardHandler(SimpleHTTPRequestHandler):
             self.send_json_response(mega11.plaid.create_link_token())
         elif path in ["/api/v1/plaid/exchange_token", "/api/v1/banking/plaid/exchange_token"]:
             self.send_json_response(mega11.plaid.exchange_public_token("public-sandbox-token-12345"))
+        elif path in ["/api/v1/gemini/app_generate", "/api/v1/gemini/generate_app"]:
+            params = self.parse_query_params()
+            app_name = params.get("app_name", "Sovereign AI App")
+            self.send_json_response(gemini_engine.app_node.synthesize_app_code(app_name))
+        elif path in ["/api/v1/passport/mpc_derive", "/api/v1/passport/derive"]:
+            params = self.parse_query_params()
+            token = params.get("oauth_token", "apple_oauth_token_12345")
+            provider = params.get("provider", "apple")
+            self.send_json_response(gemini_engine.derive_mpc_wallet(token, provider))
         elif path == "/api/v1/avalara/tax_nexus":
             self.send_json_response(mega11.avalara.calculate_global_tax_nexus(1000.0, "US_CA"))
         elif path == "/api/v1/freshbooks/time_invoice":
