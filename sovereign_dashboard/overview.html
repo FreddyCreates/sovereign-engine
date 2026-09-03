@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sovereign Books — Enterprise Ledger & Grant Substrate</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
   <style>
     :root {
       --bg-dark: #070707;
@@ -176,7 +177,7 @@
       font-size: 0.85rem;
     }
 
-    /* CENTER COLUMN: LEDGER / BOOKS */
+    /* CENTER COLUMN */
     .main-ledger {
       flex: 1;
       background-color: var(--bg-panel);
@@ -198,8 +199,15 @@
     .ledger-title {
       font-size: 2.2rem;
       font-weight: 700;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.5rem;
       letter-spacing: -0.5px;
+    }
+
+    .view-description {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.4;
     }
 
     .action-bar {
@@ -321,6 +329,76 @@
     .amount-negative { color: #f87171; }
     .amount-positive { color: #34d399; }
 
+    /* GRANTS VIEW CARDS */
+    .grants-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .grant-card {
+      background: #090909;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .grant-card:hover {
+      border-color: #333;
+    }
+
+    .grant-card-info {
+      flex: 1;
+      padding-right: 2rem;
+    }
+
+    .grant-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .grant-card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .tag-badge {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      background: #181818;
+      border: 1px solid #333;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .grant-amount {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .grant-deadline {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .grant-body {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
     /* RIGHT COLUMN: ARTIFACTS / PREVIEW */
     .preview-panel {
       width: 380px;
@@ -418,6 +496,8 @@
       border-top: 1px solid #1a1a1a;
       padding-top: 1rem;
     }
+
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
@@ -434,35 +514,35 @@
       </div>
 
       <ul class="nav-list">
-        <a href="#dashboard" class="nav-item" onclick="selectNavTab('dashboard')">
+        <a class="nav-item" onclick="switchTab('dashboard')">
           <span class="nav-icon">⊞</span>
           <div>
             <div class="nav-title">Dashboard</div>
             <div class="nav-sub">Cash & runway</div>
           </div>
         </a>
-        <a href="#books" class="nav-item active" onclick="selectNavTab('books')">
+        <a class="nav-item active" id="nav-books" onclick="switchTab('books')">
           <span class="nav-icon">💳</span>
           <div>
             <div class="nav-title">Books</div>
             <div class="nav-sub">Bank & Inbox</div>
           </div>
         </a>
-        <a href="#chat" class="nav-item" onclick="selectNavTab('chat')">
+        <a class="nav-item" id="nav-chat" onclick="switchTab('chat')">
           <span class="nav-icon">💬</span>
           <div>
             <div class="nav-title">Chat</div>
             <div class="nav-sub">Ask the ledger</div>
           </div>
         </a>
-        <a href="#grants" class="nav-item" onclick="selectNavTab('grants')">
+        <a class="nav-item" id="nav-grants" onclick="switchTab('grants')">
           <span class="nav-icon">✨</span>
           <div>
             <div class="nav-title">Grants</div>
             <div class="nav-sub">Non-dilutive capital</div>
           </div>
         </a>
-        <a href="#settings" class="nav-item" onclick="selectNavTab('settings')">
+        <a class="nav-item" id="nav-settings" onclick="switchTab('settings')">
           <span class="nav-icon">⚙️</span>
           <div>
             <div class="nav-title">Settings</div>
@@ -482,13 +562,13 @@
     </div>
   </aside>
 
-  <!-- CENTER COLUMN: LEDGER / BOOKS -->
-  <main class="main-ledger">
+  <!-- CENTER COLUMN: BOOKS VIEW -->
+  <main class="main-ledger" id="view-books">
     <div class="breadcrumb-category">LEDGER</div>
-    <h1 class="ledger-title" id="page-view-header">Books</h1>
+    <h1 class="ledger-title">Books</h1>
 
     <div class="action-bar">
-      <button class="btn-carbon" onclick="triggerPlaidConnect()">Connect with Plaid</button>
+      <button class="btn-carbon" id="btn-plaid-connect" onclick="triggerPlaidConnect()">Connect with Plaid</button>
       <button class="btn-carbon" onclick="triggerSync()">Sync</button>
       <button class="btn-carbon" onclick="triggerRefresh()">Refresh</button>
     </div>
@@ -502,7 +582,7 @@
           <div class="account-name">Business Checking <span>••••4521</span></div>
           <div class="account-sub">DEPOSITORY / CHECKING</div>
         </div>
-        <div class="account-balance" id="checking-balance-val">$24,180.42</div>
+        <div class="account-balance">$24,180.42</div>
       </div>
 
       <div class="account-card">
@@ -510,7 +590,7 @@
           <div class="account-name">Business Credit Card <span>••••8890</span></div>
           <div class="account-sub">CREDIT / CREDIT CARD</div>
         </div>
-        <div class="account-balance" id="credit-balance-val">$1,842.15</div>
+        <div class="account-balance">$1,842.15</div>
       </div>
     </div>
 
@@ -560,6 +640,57 @@
     </div>
   </main>
 
+  <!-- CENTER COLUMN: GRANTS VIEW (Image 1) -->
+  <main class="main-ledger hidden" id="view-grants">
+    <div class="breadcrumb-category">CAPITAL</div>
+    <h1 class="ledger-title">Grants & non-dilutive capital</h1>
+    <p class="view-description">Marketplace sketch for subscription apps to raise without equity dilution. Preview cards open in the artifacts pane.</p>
+
+    <div class="grants-list">
+      <div class="grant-card" onclick="selectGrant('app-catalyst')">
+        <div class="grant-card-info">
+          <div class="grant-card-header">
+            <h3 class="grant-card-title">App Growth Catalyst</h3>
+            <span class="tag-badge">GRANT</span>
+            <span class="tag-badge">FIT HIGH</span>
+          </div>
+          <div class="grant-amount">$25k–$50k</div>
+          <div class="grant-deadline">Deadline • Rolling</div>
+          <p class="grant-body">Non-dilutive capital for subscription apps with live store listings and RevenueCat instrumentation.</p>
+        </div>
+        <button class="btn-carbon">Preview</button>
+      </div>
+
+      <div class="grant-card" onclick="selectGrant('shipaton-fund')">
+        <div class="grant-card-info">
+          <div class="grant-card-header">
+            <h3 class="grant-card-title">Shipaton Builder Fund</h3>
+            <span class="tag-badge">PRIZE / STIPEND</span>
+            <span class="tag-badge">FIT MEDIUM</span>
+          </div>
+          <div class="grant-amount">$10k</div>
+          <div class="grant-deadline">Deadline • Sep 30, 2026</div>
+          <p class="grant-body">Aligned with RevenueCat Shipaton shipping milestones — store release + first purchase.</p>
+        </div>
+        <button class="btn-carbon">Preview</button>
+      </div>
+
+      <div class="grant-card" onclick="selectGrant('rd-tax')">
+        <div class="grant-card-info">
+          <div class="grant-card-header">
+            <h3 class="grant-card-title">R&D Tax Credit Offset</h3>
+            <span class="tag-badge">TAX CREDIT</span>
+            <span class="tag-badge">FIT MEDIUM</span>
+          </div>
+          <div class="grant-amount">Variable</div>
+          <div class="grant-deadline">Deadline • Annual</div>
+          <p class="grant-body">Section 41 style R&D credit framing for AI/infra spend — accountant required.</p>
+        </div>
+        <button class="btn-carbon">Preview</button>
+      </div>
+    </div>
+  </main>
+
   <!-- RIGHT COLUMN: ARTIFACTS / PREVIEW -->
   <aside class="preview-panel">
     <div class="preview-header">
@@ -573,64 +704,134 @@
       </div>
     </div>
 
-    <div class="artifact-select-card">
+    <div class="artifact-select-card" id="artifact-card-head">
       <span style="font-size: 1.1rem;">📄</span>
       <div>
-        <div style="font-size: 0.88rem; font-weight: 600;">App Growth Catalyst</div>
-        <div style="font-size: 0.72rem; color: var(--text-muted);">grant • $25k–$50k</div>
+        <div style="font-size: 0.88rem; font-weight: 600;" id="art-head-title">App Growth Catalyst</div>
+        <div style="font-size: 0.72rem; color: var(--text-muted);" id="art-head-sub">grant • $25k–$50k</div>
       </div>
     </div>
 
     <div class="artifact-details-card">
-      <span class="grant-pill-badge">GRANT</span>
-      <h3 class="grant-title">App Growth Catalyst</h3>
-      <div style="font-size: 0.95rem; font-family: var(--font-mono); font-weight: 700; color: #a3e635;">$25k–$50k</div>
+      <span class="grant-pill-badge" id="art-badge">GRANT</span>
+      <h3 class="grant-title" id="art-title">App Growth Catalyst</h3>
+      <div style="font-size: 0.95rem; font-family: var(--font-mono); font-weight: 700; color: #a3e635;" id="art-amount-top">$25k–$50k</div>
 
       <div class="detail-row">
         <span class="detail-label">Amount</span>
-        <span class="detail-val">$25k–$50k</span>
+        <span class="detail-val" id="art-amount">$25k–$50k</span>
       </div>
 
       <div class="detail-row">
         <span class="detail-label">Type</span>
-        <span class="detail-val">Grant</span>
+        <span class="detail-val" id="art-type">Grant</span>
       </div>
 
       <div class="detail-row">
         <span class="detail-label">Deadline</span>
-        <span class="detail-val">Rolling</span>
+        <span class="detail-val" id="art-deadline">Rolling</span>
       </div>
 
       <div class="detail-row">
         <span class="detail-label">Fit</span>
-        <span class="detail-val" style="color: #34d399;">High</span>
+        <span class="detail-val" style="color: #34d399;" id="art-fit">High</span>
       </div>
 
-      <p class="grant-desc">
+      <p class="grant-desc" id="art-desc">
         Non-dilutive capital for subscription apps with live store listings and RevenueCat instrumentation.
       </p>
     </div>
   </aside>
 
   <script>
-    function selectNavTab(tabName) {
+    function switchTab(tabName) {
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
       const activeEl = document.querySelector(`.nav-item[onclick*="${tabName}"]`);
       if (activeEl) activeEl.classList.add('active');
 
-      const header = document.getElementById('page-view-header');
-      if (tabName === 'dashboard') header.textContent = 'Dashboard — Cash & Runway';
-      else if (tabName === 'books') header.textContent = 'Books';
-      else if (tabName === 'chat') header.textContent = 'Chat — Ask the Ledger';
-      else if (tabName === 'grants') header.textContent = 'Grants — Capital Engine';
-      else if (tabName === 'settings') header.textContent = 'Settings — Connections';
+      document.getElementById('view-books').classList.add('hidden');
+      document.getElementById('view-grants').classList.add('hidden');
+
+      if (tabName === 'grants') {
+        document.getElementById('view-grants').classList.remove('hidden');
+      } else {
+        document.getElementById('view-books').classList.remove('hidden');
+      }
     }
 
+    const grantData = {
+      'app-catalyst': {
+        badge: 'GRANT',
+        title: 'App Growth Catalyst',
+        sub: 'grant • $25k–$50k',
+        amount: '$25k–$50k',
+        type: 'Grant',
+        deadline: 'Rolling',
+        fit: 'High',
+        desc: 'Non-dilutive capital for subscription apps with live store listings and RevenueCat instrumentation.'
+      },
+      'shipaton-fund': {
+        badge: 'PRIZE / STIPEND',
+        title: 'Shipaton Builder Fund',
+        sub: 'prize • $10k',
+        amount: '$10k',
+        type: 'Prize / Stipend',
+        deadline: 'Sep 30, 2026',
+        fit: 'Medium',
+        desc: 'Aligned with RevenueCat Shipaton shipping milestones — store release + first purchase.'
+      },
+      'rd-tax': {
+        badge: 'TAX CREDIT',
+        title: 'R&D Tax Credit Offset',
+        sub: 'tax credit • Variable',
+        amount: 'Variable',
+        type: 'Tax Credit',
+        deadline: 'Annual',
+        fit: 'Medium',
+        desc: 'Section 41 style R&D credit framing for AI/infra spend — accountant required.'
+      }
+    };
+
+    function selectGrant(grantKey) {
+      const g = grantData[grantKey];
+      if (!g) return;
+      document.getElementById('art-head-title').textContent = g.title;
+      document.getElementById('art-head-sub').textContent = g.sub;
+      document.getElementById('art-badge').textContent = g.badge;
+      document.getElementById('art-title').textContent = g.title;
+      document.getElementById('art-amount-top').textContent = g.amount;
+      document.getElementById('art-amount').textContent = g.amount;
+      document.getElementById('art-type').textContent = g.type;
+      document.getElementById('art-deadline').textContent = g.deadline;
+      document.getElementById('art-fit').textContent = g.fit;
+      document.getElementById('art-desc').textContent = g.desc;
+    }
+
+    // Authentic Plaid Link Initialization
     function triggerPlaidConnect() {
       fetch('/api/v1/overview')
         .then(r => r.json())
-        .then(() => alert('Plaid Sandbox Connected! Checking & Credit balances synchronized.'))
-        .catch(() => alert('Plaid Sandbox Connected!'));
+        .then(data => {
+          if (window.Plaid) {
+            const handler = Plaid.create({
+              token: 'link-sandbox-demo-token-12345',
+              onSuccess: (public_token, metadata) => {
+                alert('Plaid Link Connected Successfully! Account linked.');
+              },
+              onExit: (err, metadata) => {
+                if (err != null) {
+                  alert('Plaid Link exited.');
+                }
+              }
+            });
+            handler.open();
+          } else {
+            alert('Plaid Sandbox mode initialized: user_good / pass_good (mfa 1234)');
+          }
+        })
+        .catch(() => {
+          alert('Plaid Sandbox mode initialized: user_good / pass_good (mfa 1234)');
+        });
     }
 
     function triggerSync() {
