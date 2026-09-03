@@ -1,0 +1,52 @@
+{
+  "project_id": "proj_acc4ddfc05",
+  "project_title": "Core Banking Modernization",
+  "category": "CORE_BANKING_MIGRATION",
+  "overall_progress_pct": 40.0,
+  "stages": [
+    {
+      "stage_id": 1,
+      "name": "Architecture & Discovery",
+      "status": "COMPLETED",
+      "progress_pct": 100
+    },
+    {
+      "stage_id": 2,
+      "name": "Subagent DAG Task Spawning",
+      "status": "IN_PROGRESS",
+      "progress_pct": 60
+    },
+    {
+      "stage_id": 3,
+      "name": "Milestone Artifact Synthesis",
+      "status": "PENDING",
+      "progress_pct": 0
+    },
+    {
+      "stage_id": 4,
+      "name": "Final Verification & Signoff",
+      "status": "PENDING",
+      "progress_pct": 0
+    }
+  ],
+  "subagents_assigned": [
+    {
+      "role": "Financial Accounting Engineer",
+      "subagent_id": "sub_fin_01",
+      "status": "ACTIVE"
+    },
+    {
+      "role": "Fintech Architect",
+      "subagent_id": "sub_tech_02",
+      "status": "ACTIVE"
+    },
+    {
+      "role": "UI Design Architect",
+      "subagent_id": "sub_ui_03",
+      "status": "ACTIVE"
+    }
+  ],
+  "created_at": 1787779868.0011039,
+  "updated_at": 1787779868.0011039,
+  "status": "RUNNING"
+}

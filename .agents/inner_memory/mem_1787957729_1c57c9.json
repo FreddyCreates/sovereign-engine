@@ -1,0 +1,119 @@
+{
+  "memory_id": "mem_1787957729_1c57c9",
+  "query": "Underwrite credit risk for user usr_101",
+  "intent": {
+    "query": "Underwrite credit risk for user usr_101",
+    "matched_apps_count": 2,
+    "target_apps": [
+      "QuickBooks Online",
+      "Stripe Monetization"
+    ],
+    "dag_plan": [
+      {
+        "step": 1,
+        "app_id": "app_001",
+        "app_name": "QuickBooks Online",
+        "action": "post_journal_entry",
+        "status": "EXECUTED"
+      },
+      {
+        "step": 2,
+        "app_id": "app_021",
+        "app_name": "Stripe Monetization",
+        "action": "check_entitlement",
+        "status": "EXECUTED"
+      },
+      {
+        "step": 3,
+        "app_id": "app_001",
+        "app_name": "QuickBooks Online",
+        "action": "post_journal_entry",
+        "status": "EXECUTED"
+      },
+      {
+        "step": 4,
+        "app_id": "app_021",
+        "app_name": "Stripe Monetization",
+        "action": "process_charge",
+        "status": "EXECUTED"
+      }
+    ],
+    "kuramoto_phase_coherence": 0.9999,
+    "brain_status": "INTENT_RESOLVED"
+  },
+  "results": [
+    {
+      "app_id": "app_001",
+      "app_name": "QuickBooks Online",
+      "category": "Accounting_Tax",
+      "action": "post_journal_entry",
+      "target_url": "https://quickbooks.api.intuit.com/v3/company/status",
+      "auth_type": "OAuth2_Bearer",
+      "live_key_configured": false,
+      "status_code": 200,
+      "response": {
+        "status": "EXECUTED_SUCCESSFULLY",
+        "app_id": "app_001",
+        "action": "post_journal_entry",
+        "timestamp": "2026-08-28T22:55:29Z",
+        "zero_float_drift": true,
+        "signature_sha256": "c801ecd49275915f5a9ef6e95a8a1e4ddb1eef6c0a3aa0ebe254516d5f4584fc"
+      }
+    },
+    {
+      "app_id": "app_021",
+      "app_name": "Stripe Monetization",
+      "category": "Payments_Monetization",
+      "action": "check_entitlement",
+      "target_url": "https://api.stripe.com/v1/status",
+      "auth_type": "API_Key_Header",
+      "live_key_configured": false,
+      "status_code": 200,
+      "response": {
+        "status": "EXECUTED_SUCCESSFULLY",
+        "app_id": "app_021",
+        "action": "check_entitlement",
+        "timestamp": "2026-08-28T22:55:29Z",
+        "zero_float_drift": true,
+        "signature_sha256": "e1dbb616dfffd8ac07744c03947531f7155d2e1ff297483e7f644ee60436fc4b"
+      }
+    },
+    {
+      "app_id": "app_001",
+      "app_name": "QuickBooks Online",
+      "category": "Accounting_Tax",
+      "action": "post_journal_entry",
+      "target_url": "https://quickbooks.api.intuit.com/v3/company/status",
+      "auth_type": "OAuth2_Bearer",
+      "live_key_configured": false,
+      "status_code": 200,
+      "response": {
+        "status": "EXECUTED_SUCCESSFULLY",
+        "app_id": "app_001",
+        "action": "post_journal_entry",
+        "timestamp": "2026-08-28T22:55:29Z",
+        "zero_float_drift": true,
+        "signature_sha256": "43e84dabf555becb925cad86cba3959eb9326bbcbd809c524240385b12c3495e"
+      }
+    },
+    {
+      "app_id": "app_021",
+      "app_name": "Stripe Monetization",
+      "category": "Payments_Monetization",
+      "action": "process_charge",
+      "target_url": "https://api.stripe.com/v1/status",
+      "auth_type": "API_Key_Header",
+      "live_key_configured": false,
+      "status_code": 200,
+      "response": {
+        "status": "EXECUTED_SUCCESSFULLY",
+        "app_id": "app_021",
+        "action": "process_charge",
+        "timestamp": "2026-08-28T22:55:29Z",
+        "zero_float_drift": true,
+        "signature_sha256": "bac533b46b6f564496af4ab63a169b181a0b6d37fa57795a1b12c53bd893efc6"
+      }
+    }
+  ],
+  "timestamp": "2026-08-28T22:55:29Z"
+}

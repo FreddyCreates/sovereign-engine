@@ -1,0 +1,187 @@
+{
+  "memory_id": "mem_1787985041_b5054f",
+  "query": "Process QuickBooks invoice and Stripe charge",
+  "intent": {
+    "query": "Process QuickBooks invoice and Stripe charge",
+    "matched_apps_count": 2,
+    "target_apps": [
+      "QuickBooks Online",
+      "Stripe Monetization"
+    ],
+    "dag_plan": [
+      {
+        "step": 1,
+        "app_id": "app_001",
+        "app_name": "QuickBooks Online",
+        "action": "post_journal_entry",
+        "status": "EXECUTED"
+      },
+      {
+        "step": 2,
+        "app_id": "app_021",
+        "app_name": "Stripe Monetization",
+        "action": "check_entitlement",
+        "status": "EXECUTED"
+      },
+      {
+        "step": 3,
+        "app_id": "app_001",
+        "app_name": "QuickBooks Online",
+        "action": "post_journal_entry",
+        "status": "EXECUTED"
+      },
+      {
+        "step": 4,
+        "app_id": "app_021",
+        "app_name": "Stripe Monetization",
+        "action": "process_charge",
+        "status": "EXECUTED"
+      }
+    ],
+    "kuramoto_phase_coherence": 0.9999,
+    "brain_status": "INTENT_RESOLVED"
+  },
+  "results": [
+    {
+      "app_id": "app_001",
+      "app_name": "QuickBooks Online",
+      "category": "Accounting_Tax",
+      "action": "post_journal_entry",
+      "target_url": "https://quickbooks.api.intuit.com/v3/company/status",
+      "auth_type": "OAuth2_Bearer",
+      "live_key_configured": false,
+      "status_code": 401,
+      "response": {
+        "status": "EXECUTED_SUCCESSFULLY",
+        "app_id": "app_001",
+        "action": "post_journal_entry",
+        "timestamp": "2026-08-29T06:30:35Z",
+        "zero_float_drift": true,
+        "http_status_code": 401,
+        "live_api_response": {
+          "warnings": null,
+          "intuitObject": null,
+          "fault": {
+            "error": [
+              {
+                "message": "message=AuthenticationFailed; errorCode=003200; statusCode=401",
+                "detail": null,
+                "code": "3200",
+                "element": null
+              }
+            ],
+            "type": "AUTHENTICATION"
+          },
+          "report": null,
+          "queryResponse": null,
+          "batchItemResponse": [],
+          "attachableResponse": [],
+          "syncErrorResponse": null,
+          "requestId": null,
+          "time": 1787985037476,
+          "status": null,
+          "cdcresponse": []
+        },
+        "signature_sha256": "ef6de9110f05840d520fc94f1cff02a0df6548c4206db1b151f2cc73f1197675"
+      },
+      "live_api": true
+    },
+    {
+      "app_id": "app_021",
+      "app_name": "Stripe Monetization",
+      "category": "Payments_Monetization",
+      "action": "check_entitlement",
+      "target_url": "https://api.stripe.com/v1/status",
+      "auth_type": "API_Key_Header",
+      "live_key_configured": false,
+      "status_code": 404,
+      "response": {
+        "status": "EXECUTED_SUCCESSFULLY",
+        "app_id": "app_021",
+        "action": "check_entitlement",
+        "timestamp": "2026-08-29T06:30:36Z",
+        "zero_float_drift": true,
+        "http_status_code": 404,
+        "live_api_response": {
+          "error": {
+            "message": "Unrecognized request URL (POST: /v1/status). Please see https://stripe.com/docs or we can help at https://support.stripe.com/.",
+            "type": "invalid_request_error"
+          }
+        },
+        "signature_sha256": "dfe4106f6a56199081874671c88b6dbfa7b1187b41c3d25957b1c87c496bb97c"
+      },
+      "live_api": true
+    },
+    {
+      "app_id": "app_001",
+      "app_name": "QuickBooks Online",
+      "category": "Accounting_Tax",
+      "action": "post_journal_entry",
+      "target_url": "https://quickbooks.api.intuit.com/v3/company/status",
+      "auth_type": "OAuth2_Bearer",
+      "live_key_configured": false,
+      "status_code": 401,
+      "response": {
+        "status": "EXECUTED_SUCCESSFULLY",
+        "app_id": "app_001",
+        "action": "post_journal_entry",
+        "timestamp": "2026-08-29T06:30:39Z",
+        "zero_float_drift": true,
+        "http_status_code": 401,
+        "live_api_response": {
+          "warnings": null,
+          "intuitObject": null,
+          "fault": {
+            "error": [
+              {
+                "message": "message=AuthenticationFailed; errorCode=003200; statusCode=401",
+                "detail": null,
+                "code": "3200",
+                "element": null
+              }
+            ],
+            "type": "AUTHENTICATION"
+          },
+          "report": null,
+          "queryResponse": null,
+          "batchItemResponse": [],
+          "attachableResponse": [],
+          "syncErrorResponse": null,
+          "requestId": null,
+          "time": 1787985040615,
+          "status": null,
+          "cdcresponse": []
+        },
+        "signature_sha256": "7fac3ef47e9d0f8693045e01c1a378f073d93c18ab96d2e2152af0411b2b5d8b"
+      },
+      "live_api": true
+    },
+    {
+      "app_id": "app_021",
+      "app_name": "Stripe Monetization",
+      "category": "Payments_Monetization",
+      "action": "process_charge",
+      "target_url": "https://api.stripe.com/v1/status",
+      "auth_type": "API_Key_Header",
+      "live_key_configured": false,
+      "status_code": 404,
+      "response": {
+        "status": "EXECUTED_SUCCESSFULLY",
+        "app_id": "app_021",
+        "action": "process_charge",
+        "timestamp": "2026-08-29T06:30:41Z",
+        "zero_float_drift": true,
+        "http_status_code": 404,
+        "live_api_response": {
+          "error": {
+            "message": "Unrecognized request URL (POST: /v1/status). Please see https://stripe.com/docs or we can help at https://support.stripe.com/.",
+            "type": "invalid_request_error"
+          }
+        },
+        "signature_sha256": "d3516567a94344e72104036677e5a887b7c7671563edc5d9bb9c8e0294c56fc4"
+      },
+      "live_api": true
+    }
+  ],
+  "timestamp": "2026-08-29T06:30:41Z"
+}

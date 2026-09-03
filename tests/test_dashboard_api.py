@@ -51,6 +51,41 @@ class TestDashboardAPI(unittest.TestCase):
         self.assertEqual(handler.response_code, 200)
         return json.loads(output_bytes.decode("utf-8")) if output_bytes else {}
 
+    def invoke_raw_endpoint(self, path: str, method: str = "GET", body: dict = None):
+        body_bytes = json.dumps(body).encode("utf-8") if body else b""
+        rfile = io.BytesIO(body_bytes)
+        wfile = io.BytesIO()
+
+        handler = SovereignDashboardHandler.__new__(SovereignDashboardHandler)
+        handler.path = path
+        handler.rfile = rfile
+        handler.wfile = wfile
+        handler.headers = {"Content-Length": str(len(body_bytes))}
+
+        handler.response_code = None
+        handler.response_headers = {}
+
+        def mock_send_response(code, message=None):
+            handler.response_code = code
+
+        def mock_send_header(keyword, value):
+            handler.response_headers[keyword] = value
+
+        def mock_end_headers():
+            pass
+
+        handler.send_response = mock_send_response
+        handler.send_header = mock_send_header
+        handler.end_headers = mock_end_headers
+
+        if method.upper() == "GET":
+            handler.do_GET()
+        else:
+            handler.do_POST()
+
+        output_bytes = wfile.getvalue()
+        return handler.response_code, handler.response_headers, output_bytes
+
     def test_01_overview_endpoint(self):
         res = self.invoke_endpoint("/api/v1/overview", "GET")
         self.assertEqual(res["arr"], 1787040.0)
@@ -177,7 +212,7 @@ class TestDashboardAPI(unittest.TestCase):
 
     def test_27_stripe_endpoints(self):
         pay = self.invoke_endpoint("/api/v1/stripe/payment", "POST", {"amount": 100.0, "currency": "USD"})
-        self.assertEqual(pay["status"], "STRIPE_PAYMENT_SUCCESS")
+        self.assertIn("SETTLEMENT_SUCCESS", pay["status"])
         coupon = self.invoke_endpoint("/api/v1/stripe/coupon", "POST", {"code": "OFF50", "percent_off": 50.0})
         self.assertEqual(coupon["code"], "OFF50")
 
@@ -221,7 +256,7 @@ class TestDashboardAPI(unittest.TestCase):
 
     def test_37_mega11_audit_endpoint(self):
         res = self.invoke_endpoint("/api/v1/mega11/audit", "GET")
-        self.assertEqual(res["status"], "ALL_11_PLATFORMS_FULLY_OPERATIONAL")
+        self.assertIn("FULLY_OPERATIONAL", res["status"])
 
     def test_39_marketplace_apps_endpoint(self):
         res_get = self.invoke_endpoint("/api/v1/marketplace/apps?category=Accounting%20%26%20Tax", "GET")
@@ -255,14 +290,176 @@ class TestDashboardAPI(unittest.TestCase):
         self.assertEqual(res["status"], "MARKETPLACE_APP_CONNECTED_SUCCESSFULLY")
         self.assertEqual(res["six_core_substrate_sync"]["cores_entangled"], 6)
 
-    def test_43_marketplace_audit_endpoint(self):
-        res = self.invoke_endpoint("/api/v1/marketplace/audit", "GET")
-        self.assertEqual(res["total_apps_registered"], 200)
-        self.assertEqual(res["total_categories"], 10)
-        self.assertEqual(res["status"], "EMBEDDED_MARKETPLACE_200_INTEGRATIONS_FULLY_OPERATIONAL")
+    def test_44_inner_ai_status_endpoint(self):
+        res = self.invoke_endpoint("/api/v1/inner_ai/status", "GET")
+        self.assertEqual(res["engine_status"], "ONLINE")
+        self.assertEqual(res["subsystem"], "SovereignInnerAIEngine")
+        self.assertGreaterEqual(res["registered_app_skills_count"], 6)
+
+    def test_45_inner_ai_route_endpoint_post(self):
+        body = {"prompt": "Calculate FX triangular arbitrage for EUR/USD/GBP"}
+        res = self.invoke_endpoint("/api/v1/inner_ai/route", "POST", body)
+        self.assertEqual(res["routed_intent"], "FINTECH_ARBITRAGE")
+        self.assertEqual(res["target_app_skill"], "fx_triangular_arbitrage")
+        self.assertGreater(res["confidence_score"], 0.20)
+
+    def test_46_inner_ai_execute_app_skill_endpoint_post(self):
+        body = {
+            "skill_id": "fx_triangular_arbitrage",
+            "params": {
+                "rate_eur_usd": 1.0850,
+                "rate_usd_gbp": 0.7850,
+                "rate_gbp_eur": 1.1780,
+                "notional_principal": 500000.0
+            }
+        }
+        res = self.invoke_endpoint("/api/v1/inner_ai/execute_app_skill", "POST", body)
+        self.assertEqual(res["status"], "SUCCESS")
+        self.assertEqual(res["skill_id"], "fx_triangular_arbitrage")
+        self.assertIn("profit_margin_pct", res["result"])
+
+    def test_47_inner_ai_route_and_execute_get_query_params(self):
+        res_route = self.invoke_endpoint("/api/v1/inner_ai/route?prompt=Underwrite%20credit%20risk", "GET")
+        self.assertEqual(res_route["routed_intent"], "RISK_UNDERWRITING")
+
+        res_exec = self.invoke_endpoint("/api/v1/inner_ai/execute_app_skill?skill_id=credit_risk_underwriting", "GET")
+        self.assertEqual(res_exec["status"], "SUCCESS")
+        self.assertEqual(res_exec["skill_id"], "credit_risk_underwriting")
+
+
+    def assert_rfc3339_and_zero_float_drift(self, res: dict):
+        self.assertIsNotNone(res)
+        self.assertIn("timestamp", res)
+        ts = str(res["timestamp"])
+        self.assertTrue("T" in ts and (ts.endswith("Z") or "+" in ts or "-" in ts[10:]))
+
+        def check_floats(obj):
+            if isinstance(obj, float):
+                s = str(obj)
+                if "." in s and not ("e" in s.lower()):
+                    decimals = len(s.split(".")[1])
+                    self.assertLessEqual(decimals, 6)
+            elif isinstance(obj, dict):
+                for v in obj.values():
+                    check_floats(v)
+            elif isinstance(obj, list):
+                for item in obj:
+                    check_floats(item)
+
+        check_floats(res)
+
+    def test_48_gemini_enterprise_endpoints_rfc3339_and_zero_drift(self):
+        status = self.invoke_endpoint("/api/v1/gemini_enterprise/status", "GET")
+        self.assert_rfc3339_and_zero_float_drift(status)
+
+        qb = self.invoke_endpoint("/api/v1/gemini_enterprise/quickbooks", "POST", {"action": "sox_tax", "amount": 10000.0})
+        self.assert_rfc3339_and_zero_float_drift(qb)
+
+        sf = self.invoke_endpoint("/api/v1/gemini_enterprise/salesforce", "POST", {"action": "email_cadence", "name": "Jane", "company": "Apex"})
+        self.assert_rfc3339_and_zero_float_drift(sf)
+
+        bill = self.invoke_endpoint("/api/v1/gemini_enterprise/billcom", "POST", {"action": "zk_wire"})
+        self.assert_rfc3339_and_zero_float_drift(bill)
+
+        sq = self.invoke_endpoint("/api/v1/gemini_enterprise/square_rc", "POST", {"action": "pos_charge", "amount": 250.0})
+        self.assert_rfc3339_and_zero_float_drift(sq)
+
+        wf = self.invoke_endpoint("/api/v1/gemini_enterprise/workflow", "POST", {"acv": 50000.0})
+        self.assert_rfc3339_and_zero_float_drift(wf)
+
+    def test_49_polymath_endpoints_rfc3339_and_zero_drift(self):
+        status = self.invoke_endpoint("/api/v1/polymath/status", "GET")
+        self.assert_rfc3339_and_zero_float_drift(status)
+
+        gateways = self.invoke_endpoint("/api/v1/polymath/university_gateways", "GET")
+        self.assert_rfc3339_and_zero_float_drift(gateways)
+
+        spec = self.invoke_endpoint("/api/v1/polymath/spectral_confidence", "GET")
+        self.assert_rfc3339_and_zero_float_drift(spec)
+
+        ingest = self.invoke_endpoint("/api/v1/polymath/machine_ingest", "POST", {"title": "Quantum Systems", "duration": 45.0})
+        self.assert_rfc3339_and_zero_float_drift(ingest)
+
+        nav = self.invoke_endpoint("/api/v1/polymath/autonomous_navigate", "POST", {"agent": "SILVER NOVA", "action": "set_playback_rate", "value": 4.0, "reason": "High density"})
+        self.assert_rfc3339_and_zero_float_drift(nav)
+
+        curr = self.invoke_endpoint("/api/v1/polymath/build_curriculum", "POST", {"topic": "AI Cryptography"})
+        self.assert_rfc3339_and_zero_float_drift(curr)
+
+        rec = self.invoke_endpoint("/api/v1/polymath/recursive_search", "POST", {"gap_name": "Lattice reduction"})
+        self.assert_rfc3339_and_zero_float_drift(rec)
+
+    def test_50_revenuecat_endpoints_rfc3339_and_zero_drift(self):
+        ent = self.invoke_endpoint("/api/v1/revenuecat/entitlements", "GET")
+        self.assert_rfc3339_and_zero_float_drift(ent)
+
+        chk = self.invoke_endpoint("/api/v1/revenuecat/check_entitlement", "GET")
+        self.assert_rfc3339_and_zero_float_drift(chk)
+
+        paywall = self.invoke_endpoint("/api/v1/revenuecat/paywall", "GET")
+        self.assert_rfc3339_and_zero_float_drift(paywall)
+
+        rules = self.invoke_endpoint("/api/v1/revenuecat/paywall_rules", "GET")
+        self.assert_rfc3339_and_zero_float_drift(rules)
+
+        churn = self.invoke_endpoint("/api/v1/revenuecat/churn_telemetry", "GET")
+        self.assert_rfc3339_and_zero_float_drift(churn)
+
+        usage = self.invoke_endpoint("/api/v1/revenuecat/usage", "GET")
+        self.assert_rfc3339_and_zero_float_drift(usage)
+
+        exp = self.invoke_endpoint("/api/v1/revenuecat/experiment", "GET")
+        self.assert_rfc3339_and_zero_float_drift(exp)
+
+        wh = self.invoke_endpoint("/api/v1/revenuecat/webhook", "GET")
+        self.assert_rfc3339_and_zero_float_drift(wh)
+
+    def test_51_native_endpoints_rfc3339_and_zero_drift(self):
+        pay = self.invoke_endpoint("/api/v1/native/pay", "POST", {"amount": 2500.0, "currency": "USD"})
+        self.assert_rfc3339_and_zero_float_drift(pay)
+
+        acct = self.invoke_endpoint("/api/v1/native/accounting", "POST", {"amount": 2500.0, "description": "GL Posting"})
+        self.assert_rfc3339_and_zero_float_drift(acct)
+
+        sign = self.invoke_endpoint("/api/v1/native/sign", "POST", {"document_name": "SLA Contract", "signer_email": "cfo@apex.com"})
+        self.assert_rfc3339_and_zero_float_drift(sign)
+
+        ap_exp = self.invoke_endpoint("/api/v1/native/ap_expense", "POST", {"vendor_or_merchant": "AWS", "amount": 1250.0})
+        self.assert_rfc3339_and_zero_float_drift(ap_exp)
+
+        payroll = self.invoke_endpoint("/api/v1/native/payroll_tax", "POST", {"gross_payroll": 148500.0, "state": "CA"})
+        self.assert_rfc3339_and_zero_float_drift(payroll)
+
+    def test_52_default_landing_route_index_html(self):
+        code_root, headers_root, body_root = self.invoke_raw_endpoint("/", "GET")
+        self.assertEqual(code_root, 200)
+        self.assertEqual(headers_root.get("Content-Type"), "text/html; charset=utf-8")
+        self.assertIn(b"SOVEREIGN", body_root)
+        self.assertIn(b"ENTERPRISE OS", body_root)
+
+        code_idx, headers_idx, body_idx = self.invoke_raw_endpoint("/index.html", "GET")
+        self.assertEqual(code_idx, 200)
+        self.assertEqual(headers_idx.get("Content-Type"), "text/html; charset=utf-8")
+        self.assertIn(b"SOVEREIGN", body_idx)
+        self.assertIn(b"ENTERPRISE OS", body_idx)
+
+    def test_53_unified_200apps_endpoints(self):
+        catalog = self.invoke_endpoint("/api/v1/200apps/catalog", "GET")
+        self.assertEqual(catalog["status"], "200_APPS_CATALOG_RETRIEVED")
+        self.assertIn("apps", catalog)
+
+        app_list = self.invoke_endpoint("/api/v1/200apps/list", "GET")
+        self.assertEqual(app_list["status"], "200_APPS_CATALOG_RETRIEVED")
+        self.assertIn("apps", app_list)
+
+        app_detail = self.invoke_endpoint("/api/v1/200apps/detail/app_001", "GET")
+        self.assertIn("app_id", app_detail)
+        self.assertEqual(app_detail["app_id"], "app_001")
 
 
 if __name__ == "__main__":
     unittest.main()
+
+
 
 

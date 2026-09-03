@@ -35,6 +35,24 @@ from sovereign_infrastructure.nextgen_systems.mega_office_business_suite import 
     SovereignCalendarModule
 )
 
+from sovereign_infrastructure.nextgen_systems.mcp_200_app_adapters_engine import (
+    MCP200AppAdaptersEngine,
+    MCP200AppAdapterEngine,
+    AppAdapter,
+    MCPAction,
+    MCPExecutionResult,
+    FlexResult
+)
+from sovereign_infrastructure.nextgen_systems.virtual_computer_cloud_instance import (
+    VirtualComputerCloudInstance,
+    AgentVMInstance,
+    VirtualTerminal,
+    VirtualDisk,
+    TelemetryEngine,
+    StorageQuotaExceededError,
+    VMStateError
+)
+
 __all__ = [
     "XFINEngine",
     "AURAEngine",
@@ -58,8 +76,121 @@ __all__ = [
     "SovereignMailModule",
     "SovereignDriveModule",
     "SovereignFormsModule",
-    "SovereignCalendarModule"
+    "SovereignCalendarModule",
+    "MCP200AppAdapterEngine",
+    "AppAdapter",
+    "MCPAction",
+    "MCPExecutionResult",
+    "VirtualComputerCloudInstance",
+    "AgentVMInstance",
+    "VirtualTerminal",
+    "VirtualDisk",
+    "TelemetryEngine",
+    "StorageQuotaExceededError",
+    "VMStateError",
+    "SovereignAICodingAgentEngine",
+    "PersistentMemoryStore",
+    "SkillSynthesizer",
+    "AgentToolRegistry",
+    "ScheduledAutomationEngine",
+    "SubagentOrchestrator",
+    "IDEBridgeManager",
+    "SovereignGoServicesEngine",
+    "GoLspAstAnalyzer",
+    "GoWorkerPoolOrchestrator",
+    "GoPersistentMemoryCache",
+    "GoLiveCompilerRunner",
+    "GoSecurityAstScanner",
+    "GoConcurrentWebScraper",
+    "GoDatabaseMigrationEngine",
+    "GoIdeSocketBridge",
+    "GoCronSchedulerEngine",
+    "GoMicroSandboxController",
+    "SovereignInnerAIEngine",
+    "InnerAppSkillRouter",
+    "InnerContextualPlanner",
+    "InnerSkillExecutor",
+    "InnerMemoryConsolidator",
+    "InnerAppTelemetryPulse"
 ]
+
+from sovereign_infrastructure.nextgen_systems.sovereign_inner_ai_engine import (
+    SovereignInnerAIEngine,
+    InnerAppSkillRouter,
+    InnerContextualPlanner,
+    InnerSkillExecutor,
+    InnerMemoryConsolidator,
+    InnerAppTelemetryPulse
+)
+from sovereign_infrastructure.nextgen_systems.sovereign_go_services_engine import (
+    SovereignGoServicesEngine,
+    GoLspAstAnalyzer,
+    GoWorkerPoolOrchestrator,
+    GoPersistentMemoryCache,
+    GoLiveCompilerRunner,
+    GoSecurityAstScanner,
+    GoConcurrentWebScraper,
+    GoDatabaseMigrationEngine,
+    GoIdeSocketBridge,
+    GoCronSchedulerEngine,
+    GoMicroSandboxController
+)
+from sovereign_infrastructure.nextgen_systems.sovereign_ai_coding_agent_engine import (
+    SovereignAICodingAgentEngine,
+    PersistentMemoryStore,
+    SkillSynthesizer,
+    AgentToolRegistry,
+    ScheduledAutomationEngine,
+    SubagentOrchestrator,
+    IDEBridgeManager
+)
+from sovereign_infrastructure.nextgen_systems import (
+    skills_101_150_user_engine,
+    skills_151_200_agentic_workflow_engine,
+    skills_251_300_core_banking_engine
+)
+from sovereign_infrastructure.nextgen_systems.skills_251_300_core_banking_engine import (
+    CoreBankingEngineSkills251To300
+)
+from sovereign_infrastructure.nextgen_systems.omnichannel_email_engine import (
+    OmnichannelEmailEngine,
+    SMTPMessageBuilder,
+    SovereignSMTPSender,
+    TransactionalHTMLTemplateEngine,
+    IMAPInboundParser,
+    IMAPMailboxSimulator,
+    InnerAIAutoResponder,
+    EmailAuditLogger,
+    EmailGLEngine
+)
+
+__all__.extend([
+    "OmnichannelEmailEngine",
+    "SMTPMessageBuilder",
+    "SovereignSMTPSender",
+    "TransactionalHTMLTemplateEngine",
+    "IMAPInboundParser",
+    "IMAPMailboxSimulator",
+    "InnerAIAutoResponder",
+    "EmailAuditLogger",
+    "EmailGLEngine"
+])
+
+from sovereign_infrastructure.nextgen_systems.gemini_embedded_enterprise_suite import (
+    GeminiQuickBooksEngine,
+    GeminiSalesforceEngine,
+    GeminiBillComEngine,
+    GeminiSquareRevenueCatEngine,
+    GeminiEmbeddedEnterpriseSuite
+)
+
+__all__.extend([
+    "GeminiQuickBooksEngine",
+    "GeminiSalesforceEngine",
+    "GeminiBillComEngine",
+    "GeminiSquareRevenueCatEngine",
+    "GeminiEmbeddedEnterpriseSuite"
+])
 
 
 
