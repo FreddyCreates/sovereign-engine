@@ -1347,6 +1347,22 @@ class SovereignDashboardHandler(SimpleHTTPRequestHandler):
             token = params.get("oauth_token", "apple_oauth_token_12345")
             provider = params.get("provider", "apple")
             self.send_json_response(gemini_engine.derive_mpc_wallet(token, provider))
+        elif path in ["/api/v1/monetization_markets/package", "/api/v1/monetization/package_app"]:
+            params = self.parse_query_params()
+            name = params.get("app_name", "PreMonetized AI App")
+            dev = params.get("developer_id", "dev_builder_01")
+            from monetization_markets.monetization_markets_engine import MonetizationMarketsEngine
+            mm_engine = MonetizationMarketsEngine()
+            self.send_json_response(mm_engine.package_monetized_app(name, dev))
+        elif path in ["/api/v1/ai/autonomous_purchase", "/api/v1/agent/purchase"]:
+            params = self.parse_query_params()
+            item = params.get("item", "RunPod GPU Compute 10 Hours")
+            amt = float(params.get("amount", 32.50))
+            vendor = params.get("vendor", "RunPod Inc")
+            usr = params.get("user_id", "builder_101")
+            from monetization_markets.monetization_markets_engine import AutonomousAIPurchasingEngine
+            purchaser = AutonomousAIPurchasingEngine()
+            self.send_json_response(purchaser.execute_autonomous_purchase(item, amt, vendor, usr))
         elif path == "/api/v1/avalara/tax_nexus":
             self.send_json_response(mega11.avalara.calculate_global_tax_nexus(1000.0, "US_CA"))
         elif path == "/api/v1/freshbooks/time_invoice":
