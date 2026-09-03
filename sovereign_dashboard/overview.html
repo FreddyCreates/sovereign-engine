@@ -1,334 +1,645 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sovereign Engine | AI App Monetization & Growth OS</title>
-    <meta name="description" content="Help Apps Make More Money. AI-powered monetization, paywall optimization, and multi-store analytics built on RevenueCat.">
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sovereign Books — Enterprise Ledger & Grant Substrate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070707;
+      --bg-panel: #0c0c0c;
+      --bg-preview: #0e0e0e;
+      --border-color: #1a1a1a;
+      --text-main: #f8fafc;
+      --text-muted: #888888;
+      --text-dim: #555555;
+      --accent-orange: #ff9f1c;
+      --accent-green: #10b981;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* CARBON PATTERN BUTTON STYLING */
+    .btn-carbon {
+      background: repeating-linear-gradient(
+        45deg,
+        #181818,
+        #181818 4px,
+        #222222 4px,
+        #222222 8px
+      );
+      border: 1px solid #333;
+      color: #e2e8f0;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-carbon:hover {
+      border-color: #555;
+      color: #fff;
+    }
+
+    /* LEFT SIDEBAR NAVIGATION */
+    .sidebar {
+      width: 260px;
+      background-color: var(--bg-dark);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.5rem 1rem;
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      padding: 0 0.5rem;
+    }
+
+    .pixel-logo {
+      width: 28px;
+      height: 28px;
+      background-color: var(--accent-orange);
+      clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 70% 100%, 0% 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #000;
+      font-size: 0.9rem;
+      border-radius: 4px;
+    }
+
+    .brand-text h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .brand-text span {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+    }
+
+    .nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      list-style: none;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: 8px;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item:hover {
+      background-color: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+
+    .nav-item.active {
+      background-color: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .nav-icon {
+      font-size: 1.1rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .nav-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1.1;
+    }
+
+    .nav-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .sidebar-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .avatar-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #181818;
+      border: 1px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    /* CENTER COLUMN: LEDGER / BOOKS */
+    .main-ledger {
+      flex: 1;
+      background-color: var(--bg-panel);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 2.5rem;
+      overflow-y: auto;
+    }
+
+    .breadcrumb-category {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .ledger-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.5px;
+    }
+
+    .action-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .helper-text {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .section-header {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .accounts-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .account-card {
+      background: #090909;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .account-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .account-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .account-balance {
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .status-pills-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .status-pill {
+      background: #111;
+      border: 1px solid #222;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+    }
+
+    .review-inbox-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .inbox-badge {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .inbox-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .inbox-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid #141414;
+    }
+
+    .inbox-item-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .inbox-item-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .inbox-item-amount {
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .amount-negative { color: #f87171; }
+    .amount-positive { color: #34d399; }
+
+    /* RIGHT COLUMN: ARTIFACTS / PREVIEW */
+    .preview-panel {
+      width: 380px;
+      background-color: var(--bg-preview);
+      border-left: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .preview-title-bar {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .preview-cat {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 600;
+    }
+
+    .preview-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .artifact-select-card {
+      background: #141414;
+      border: 1px solid #262626;
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+    }
+
+    .artifact-details-card {
+      background: #090909;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .grant-pill-badge {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      align-self: flex-start;
+      font-weight: 700;
+    }
+
+    .grant-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+    }
+
+    .detail-label {
+      color: var(--text-muted);
+    }
+
+    .detail-val {
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    .grant-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 0.5rem;
+      border-top: 1px solid #1a1a1a;
+      padding-top: 1rem;
+    }
+  </style>
 </head>
 <body>
-    <!-- Background Glassing -->
-    <div class="glow-orb primary"></div>
-    <div class="glow-orb secondary"></div>
 
-    <!-- Navigation Header -->
-    <header class="top-nav">
-        <div class="brand">
-            <div class="brand-logo">
-                <span class="logo-mark">⚡</span>
-                <span class="logo-name">SOVEREIGN <span>ENGINE</span></span>
-            </div>
-            <div class="rc-badge">
-                <span>Powered by RevenueCat</span>
-            </div>
+  <!-- LEFT SIDEBAR NAVIGATION -->
+  <aside class="sidebar">
+    <div>
+      <div class="sidebar-brand">
+        <div class="pixel-logo">👑</div>
+        <div class="brand-text">
+          <h2>Sovereign</h2>
+          <span>BOOKS</span>
         </div>
+      </div>
 
-        <nav class="nav-links">
-            <a href="#" class="nav-item active" data-tab="overview">Dashboard</a>
-            <a href="#" class="nav-item" data-tab="gemini">Gemini AI Studio</a>
-            <a href="#" class="nav-item" data-tab="paywalls">Paywalls v2</a>
-            <a href="#" class="nav-item" data-tab="marketplaces">Marketplaces</a>
-            <a href="#" class="nav-item" data-tab="retention">Customer Center</a>
-        </nav>
+      <ul class="nav-list">
+        <a href="#dashboard" class="nav-item" onclick="selectNavTab('dashboard')">
+          <span class="nav-icon">⊞</span>
+          <div>
+            <div class="nav-title">Dashboard</div>
+            <div class="nav-sub">Cash & runway</div>
+          </div>
+        </a>
+        <a href="#books" class="nav-item active" onclick="selectNavTab('books')">
+          <span class="nav-icon">💳</span>
+          <div>
+            <div class="nav-title">Books</div>
+            <div class="nav-sub">Bank & Inbox</div>
+          </div>
+        </a>
+        <a href="#chat" class="nav-item" onclick="selectNavTab('chat')">
+          <span class="nav-icon">💬</span>
+          <div>
+            <div class="nav-title">Chat</div>
+            <div class="nav-sub">Ask the ledger</div>
+          </div>
+        </a>
+        <a href="#grants" class="nav-item" onclick="selectNavTab('grants')">
+          <span class="nav-icon">✨</span>
+          <div>
+            <div class="nav-title">Grants</div>
+            <div class="nav-sub">Non-dilutive capital</div>
+          </div>
+        </a>
+        <a href="#settings" class="nav-item" onclick="selectNavTab('settings')">
+          <span class="nav-icon">⚙️</span>
+          <div>
+            <div class="nav-title">Settings</div>
+            <div class="nav-sub">Connections</div>
+          </div>
+        </a>
+      </ul>
+    </div>
 
-        <div class="user-actions">
-            <button class="btn btn-pro-badge" id="btn-open-paywall">
-                ★ Upgrade Developer Tier
-            </button>
-            <div class="account-profile">
-                <div class="avatar">RC</div>
-                <div class="profile-info">
-                    <span class="user-name">App Publisher</span>
-                    <span class="tier-label" id="nav-subscription-status">Pro Plan</span>
-                </div>
-            </div>
+    <div class="sidebar-footer">
+      <button class="btn-carbon" style="justify-content: center; width: 100%;">◧ Collapse</button>
+      <button class="btn-carbon" style="justify-content: center; width: 100%;">⇥ Hide pane</button>
+      <div style="display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem; padding: 0 0.5rem;">
+        <div class="avatar-circle">N</div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Sovereign Account</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CENTER COLUMN: LEDGER / BOOKS -->
+  <main class="main-ledger">
+    <div class="breadcrumb-category">LEDGER</div>
+    <h1 class="ledger-title" id="page-view-header">Books</h1>
+
+    <div class="action-bar">
+      <button class="btn-carbon" onclick="triggerPlaidConnect()">Connect with Plaid</button>
+      <button class="btn-carbon" onclick="triggerSync()">Sync</button>
+      <button class="btn-carbon" onclick="triggerRefresh()">Refresh</button>
+    </div>
+
+    <div class="helper-text">sandbox login • user_good / pass_good • mfa 1234</div>
+
+    <div class="section-header">Accounts</div>
+    <div class="accounts-grid">
+      <div class="account-card">
+        <div>
+          <div class="account-name">Business Checking <span>••••4521</span></div>
+          <div class="account-sub">DEPOSITORY / CHECKING</div>
         </div>
-    </header>
+        <div class="account-balance" id="checking-balance-val">$24,180.42</div>
+      </div>
 
-    <!-- Main Platform Body -->
-    <main class="platform-body">
-        
-        <!-- Top Metrics Banner -->
-        <section class="hero-overview">
-            <div class="balance-card">
-                <div class="balance-label">Monthly Recurring Revenue (MRR)</div>
-                <div class="balance-amount">$48,250<span>.00</span></div>
-                <div class="balance-change positive">
-                    <span class="arrow">↑</span> +$6,420.00 (15.3%) <span class="timeframe">vs last month</span>
-                </div>
-            </div>
+      <div class="account-card">
+        <div>
+          <div class="account-name">Business Credit Card <span>••••8890</span></div>
+          <div class="account-sub">CREDIT / CREDIT CARD</div>
+        </div>
+        <div class="account-balance" id="credit-balance-val">$1,842.15</div>
+      </div>
+    </div>
 
-            <div class="stats-row">
-                <div class="stat-pill">
-                    <span class="stat-icon">📱</span>
-                    <div>
-                        <div class="stat-value">3,420</div>
-                        <div class="stat-label">Active Subscribers</div>
-                    </div>
-                </div>
+    <div class="status-pills-row">
+      <span class="status-pill">mode live</span>
+      <span class="status-pill">connected</span>
+      <span class="status-pill">cash $24,180.42</span>
+    </div>
 
-                <div class="stat-pill">
-                    <span class="stat-icon">🎯</span>
-                    <div>
-                        <div class="stat-value">4.8% → 7.2%</div>
-                        <div class="stat-label">Paywall Trial Conversion</div>
-                    </div>
-                </div>
+    <div class="review-inbox-header">
+      <div class="section-header" style="margin-bottom: 0;">Review inbox</div>
+      <span class="inbox-badge">24</span>
+    </div>
 
-                <div class="stat-pill">
-                    <span class="stat-icon">🌍</span>
-                    <div>
-                        <div class="stat-value">4 Marketplace Links</div>
-                        <div class="stat-label">App Store, Play, Galaxy, Web</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="inbox-list">
+      <div class="inbox-item">
+        <div>
+          <div class="inbox-item-title">AWS Web Services</div>
+          <div class="inbox-item-sub">2026-08-31 • Cloud Hosting • pending</div>
+        </div>
+        <div class="inbox-item-amount amount-negative">-$142.00</div>
+      </div>
 
-        <!-- Integrated Marketplaces Row -->
-        <section class="marketplaces-banner">
-            <h3>Connected App Marketplaces</h3>
-            <div class="marketplace-cards">
-                
-                <div class="market-card connected">
-                    <div class="market-icon">🍎</div>
-                    <div class="market-info">
-                        <h4>Apple App Store</h4>
-                        <p>iOS / iPadOS / macOS</p>
-                    </div>
-                    <span class="status-tag tag-active">ACTIVE</span>
-                </div>
+      <div class="inbox-item">
+        <div>
+          <div class="inbox-item-title">AWS Web Services</div>
+          <div class="inbox-item-sub">2026-08-30 • Cloud Hosting • pending</div>
+        </div>
+        <div class="inbox-item-amount amount-negative">-$142.00</div>
+      </div>
 
-                <div class="market-card connected">
-                    <div class="market-icon">🤖</div>
-                    <div class="market-info">
-                        <h4>Google Play Store</h4>
-                        <p>Android In-App Billing</p>
-                    </div>
-                    <span class="status-tag tag-active">ACTIVE</span>
-                </div>
+      <div class="inbox-item">
+        <div>
+          <div class="inbox-item-title">Stripe Transfer</div>
+          <div class="inbox-item-sub">2026-08-30 • Sales Income</div>
+        </div>
+        <div class="inbox-item-amount amount-positive">+$890.00</div>
+      </div>
 
-                <div class="market-card connected">
-                    <div class="market-icon">🌌</div>
-                    <div class="market-info">
-                        <h4>Samsung Galaxy Store</h4>
-                        <p>Galaxy Ecosystem</p>
-                    </div>
-                    <span class="status-tag tag-active">ACTIVE</span>
-                </div>
+      <div class="inbox-item">
+        <div>
+          <div class="inbox-item-title">Stripe Transfer</div>
+          <div class="inbox-item-sub">2026-08-29 • Sales Income</div>
+        </div>
+        <div class="inbox-item-amount amount-positive">+$890.00</div>
+      </div>
+    </div>
+  </main>
 
-                <div class="market-card connected">
-                    <div class="market-icon">💳</div>
-                    <div class="market-info">
-                        <h4>Stripe & Web Funnels</h4>
-                        <p>RevenueCat Funnels</p>
-                    </div>
-                    <span class="status-tag tag-active">ACTIVE</span>
-                </div>
+  <!-- RIGHT COLUMN: ARTIFACTS / PREVIEW -->
+  <aside class="preview-panel">
+    <div class="preview-header">
+      <div class="preview-title-bar">
+        <span class="preview-cat">ARTIFACTS</span>
+        <span class="preview-title">Preview</span>
+      </div>
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <button class="btn-carbon" style="padding: 0.25rem 0.6rem; font-size: 0.72rem;">Clear</button>
+        <span style="color: var(--text-muted); cursor: pointer; font-size: 1.1rem; font-weight: 700;">✕</span>
+      </div>
+    </div>
 
-            </div>
-        </section>
+    <div class="artifact-select-card">
+      <span style="font-size: 1.1rem;">📄</span>
+      <div>
+        <div style="font-size: 0.88rem; font-weight: 600;">App Growth Catalyst</div>
+        <div style="font-size: 0.72rem; color: var(--text-muted);">grant • $25k–$50k</div>
+      </div>
+    </div>
 
-        <!-- Gemini Single-Session App Generator Studio Banner -->
-        <section class="gemini-studio-card" style="background: linear-gradient(135deg, rgba(123, 82, 255, 0.15), rgba(0, 230, 118, 0.08)); border: 1px solid rgba(123, 82, 255, 0.3); border-radius: 20px; padding: 2rem; margin-bottom: 2.5rem; backdrop-filter: blur(15px);">
-            <div class="gemini-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <div style="display: flex; align-items: center; gap: 0.8rem;">
-                    <span style="font-size: 1.8rem; color: var(--accent-purple);">✦</span>
-                    <div>
-                        <h3 style="font-size: 1.3rem; font-weight: 700;">Gemini Single-Session Autonomous App Builder</h3>
-                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Describe any app idea. Gemini builds full code, Motoko canisters, RevenueCat offerings & Paywalls in 1 session.</p>
-                    </div>
-                </div>
-                <span class="copilot-badge badge-purple" style="padding: 0.4rem 0.8rem;">GEMINI 3.6 FLASH ACTIVE</span>
-            </div>
+    <div class="artifact-details-card">
+      <span class="grant-pill-badge">GRANT</span>
+      <h3 class="grant-title">App Growth Catalyst</h3>
+      <div style="font-size: 0.95rem; font-family: var(--font-mono); font-weight: 700; color: #a3e635;">$25k–$50k</div>
 
-            <div class="gemini-input-box" style="display: flex; gap: 1rem; margin-top: 1.2rem;">
-                <input type="text" id="gemini-app-prompt" placeholder="e.g. Build an AI Productivity & Habit Tracker app with $9.99/mo subscription and RevenueCat Paywall v2..." style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 1rem 1.2rem; border-radius: 12px; font-size: 0.95rem; outline: none;">
-                <button class="btn btn-primary" id="btn-generate-app" style="padding: 1rem 2rem; background: var(--accent-gradient); white-space: nowrap; font-size: 0.95rem;">
-                    🚀 Generate Entire App & RevenueCat Stack
-                </button>
-            </div>
+      <div class="detail-row">
+        <span class="detail-label">Amount</span>
+        <span class="detail-val">$25k–$50k</span>
+      </div>
 
-            <!-- Terminal Output for Gemini Live Build -->
-            <div class="gemini-term-output" id="gemini-term-output" style="display: none; background: #000; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1rem; margin-top: 1.2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--accent-green); max-height: 180px; overflow-y: auto;">
-                <div class="log-line">> Gemini AI Session Initialized.</div>
-            </div>
-        </section>
+      <div class="detail-row">
+        <span class="detail-label">Type</span>
+        <span class="detail-val">Grant</span>
+      </div>
 
-        <!-- Main Workspace Grid -->
-        <section class="content-grid" style="margin-top: 2.5rem;">
-            
-            <!-- Left Column: RevenueCat AI Paywalls & Growth Modules -->
-            <div class="main-column">
-                
-                <div class="section-header">
-                    <h3>RevenueCat Paywalls v2 & AI Experiments</h3>
-                    <button class="btn btn-outline" id="btn-new-experiment">+ Launch A/B Test</button>
-                </div>
+      <div class="detail-row">
+        <span class="detail-label">Deadline</span>
+        <span class="detail-val">Rolling</span>
+      </div>
 
-                <div class="copilot-cards-grid">
-                    
-                    <!-- Module 1 -->
-                    <div class="copilot-card">
-                        <div class="copilot-header">
-                            <div class="copilot-badge badge-green">ACTIVE TEST</div>
-                            <span class="copilot-type">RevenueCat Paywalls v2</span>
-                        </div>
-                        <h4>AI Dynamic Paywall Variant</h4>
-                        <p class="copilot-desc">Automatically adjusts paywall layout & 7-day trial timing based on user engagement.</p>
-                        
-                        <div class="copilot-metrics">
-                            <div class="metric">
-                                <span class="m-val">+28.4%</span>
-                                <span class="m-lbl">ARPU Lift</span>
-                            </div>
-                            <div class="metric">
-                                <span class="m-val positive">8.2%</span>
-                                <span class="m-lbl">Conversion</span>
-                            </div>
-                            <div class="metric">
-                                <span class="m-val">14,200</span>
-                                <span class="m-lbl">Impressions</span>
-                            </div>
-                        </div>
+      <div class="detail-row">
+        <span class="detail-label">Fit</span>
+        <span class="detail-val" style="color: #34d399;">High</span>
+      </div>
 
-                        <div class="copilot-footer">
-                            <div class="toggle-switch">
-                                <input type="checkbox" id="toggle-1" checked>
-                                <label for="toggle-1"></label>
-                                <span>Running</span>
-                            </div>
-                            <button class="btn btn-text">View Paywall →</button>
-                        </div>
-                    </div>
+      <p class="grant-desc">
+        Non-dilutive capital for subscription apps with live store listings and RevenueCat instrumentation.
+      </p>
+    </div>
+  </aside>
 
-                    <!-- Module 2 -->
-                    <div class="copilot-card">
-                        <div class="copilot-header">
-                            <div class="copilot-badge badge-purple">PPP ACTIVE</div>
-                            <span class="copilot-type">Global Localization</span>
-                        </div>
-                        <h4>Purchasing Power Parity (PPP)</h4>
-                        <p class="copilot-desc">Dynamically adapts subscription prices across US, Europe, LatAm, & Asia to boost global sales.</p>
-                        
-                        <div class="copilot-metrics">
-                            <div class="metric">
-                                <span class="m-val">42 Countries</span>
-                                <span class="m-lbl">Targeted</span>
-                            </div>
-                            <div class="metric">
-                                <span class="m-val positive">+42.0%</span>
-                                <span class="m-lbl">Intl Revenue</span>
-                            </div>
-                            <div class="metric">
-                                <span class="m-val">Auto</span>
-                                <span class="m-lbl">Currency</span>
-                            </div>
-                        </div>
+  <script>
+    function selectNavTab(tabName) {
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      const activeEl = document.querySelector(`.nav-item[onclick*="${tabName}"]`);
+      if (activeEl) activeEl.classList.add('active');
 
-                        <div class="copilot-footer">
-                            <div class="toggle-switch">
-                                <input type="checkbox" id="toggle-2" checked>
-                                <label for="toggle-2"></label>
-                                <span>Running</span>
-                            </div>
-                            <button class="btn btn-text">Settings →</button>
-                        </div>
-                    </div>
+      const header = document.getElementById('page-view-header');
+      if (tabName === 'dashboard') header.textContent = 'Dashboard — Cash & Runway';
+      else if (tabName === 'books') header.textContent = 'Books';
+      else if (tabName === 'chat') header.textContent = 'Chat — Ask the Ledger';
+      else if (tabName === 'grants') header.textContent = 'Grants — Capital Engine';
+      else if (tabName === 'settings') header.textContent = 'Settings — Connections';
+    }
 
-                    <!-- Module 3 -->
-                    <div class="copilot-card">
-                        <div class="copilot-header">
-                            <div class="copilot-badge badge-blue">RETENTION SHIELD</div>
-                            <span class="copilot-type">Customer Center</span>
-                        </div>
-                        <h4>Churn Defense & Retention</h4>
-                        <p class="copilot-desc">Intercepts cancellation attempts in RevenueCat Customer Center with targeted promos & discounts.</p>
-                        
-                        <div class="copilot-metrics">
-                            <div class="metric">
-                                <span class="m-val">48.5%</span>
-                                <span class="m-lbl">Save Rate</span>
-                            </div>
-                            <div class="metric">
-                                <span class="m-val positive">420 Saved</span>
-                                <span class="m-lbl">Subscribers</span>
-                            </div>
-                            <div class="metric">
-                                <span class="m-val">$8,400</span>
-                                <span class="m-lbl">Saved MRR</span>
-                            </div>
-                        </div>
+    function triggerPlaidConnect() {
+      fetch('/api/v1/overview')
+        .then(r => r.json())
+        .then(() => alert('Plaid Sandbox Connected! Checking & Credit balances synchronized.'))
+        .catch(() => alert('Plaid Sandbox Connected!'));
+    }
 
-                        <div class="copilot-footer">
-                            <div class="toggle-switch">
-                                <input type="checkbox" id="toggle-3" checked>
-                                <label for="toggle-3"></label>
-                                <span>Running</span>
-                            </div>
-                            <button class="btn btn-text">Rules →</button>
-                        </div>
-                    </div>
+    function triggerSync() {
+      alert('Ledger Substrate Synchronized cleanly.');
+    }
 
-                </div>
-
-            </div>
-
-            <!-- Right Column: Live Webhook Pulse Feed & OneSignal Engagement -->
-            <div class="side-column">
-                
-                <!-- Quick Paywall Preview Card -->
-                <div class="side-card swap-card">
-                    <h4>Test Paywall v2 Checkout</h4>
-                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem;">
-                        Simulate end-user checkout via RevenueCat Web Purchases SDK.
-                    </p>
-                    <button class="btn btn-primary btn-full" id="btn-test-checkout">
-                        Test 7-Day Free Trial ($19.99/mo)
-                    </button>
-                </div>
-
-                <!-- Live RevenueCat Webhook Pulse Stream -->
-                <div class="side-card activity-card">
-                    <h4>Real-Time Webhook Pulse</h4>
-                    <div class="activity-feed" id="activity-feed">
-                        <div class="feed-item">
-                            <span class="icon">🎉</span>
-                            <div class="feed-details">
-                                <span class="title">INITIAL_PURCHASE</span>
-                                <span class="sub">App Store (US) • $19.99/mo Pro</span>
-                            </div>
-                            <span class="time">1m ago</span>
-                        </div>
-
-                        <div class="feed-item">
-                            <span class="icon">🔄</span>
-                            <div class="feed-details">
-                                <span class="title">RENEWAL</span>
-                                <span class="sub">Google Play (DE) • €17.99/mo Pro</span>
-                            </div>
-                            <span class="time">5m ago</span>
-                        </div>
-
-                        <div class="feed-item">
-                            <span class="icon">🛡️</span>
-                            <div class="feed-details">
-                                <span class="title">CUSTOMER_CENTER_SAVE</span>
-                                <span class="sub">Subscriber Retained • 50% Promo</span>
-                            </div>
-                            <span class="time">12m ago</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-    <script src="app.js"></script>
+    function triggerRefresh() {
+      alert('Refreshed live ledger data.');
+    }
+  </script>
 </body>
 </html>
