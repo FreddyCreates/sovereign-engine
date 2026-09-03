@@ -1,1245 +1,334 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Autonomous Business OS — C-Suite Command Center</title>
-  <link rel="stylesheet" href="index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Engine | AI App Monetization & Growth OS</title>
+    <meta name="description" content="Help Apps Make More Money. AI-powered monetization, paywall optimization, and multi-store analytics built on RevenueCat.">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- TOP NAVBAR -->
-  <nav class="navbar">
-    <div class="brand">
-      <div class="brand-icon">S</div>
-      <div>
-        <div class="brand-title">Autonomous Business OS</div>
-        <div style="font-size: 0.75rem; color: var(--text-muted);">C-Suite Enterprise Command Center Workspace</div>
-      </div>
-    </div>
-    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-      <button class="badge-revenuecat" onclick="openRevenueCatPaywallModal()" title="Configure RevenueCat Entitlements">
-        ⚡ RevenueCat Substrate Active
-      </button>
-      <span id="overview-nav-entitlement-badge" class="entitlement-badge badge-enterprise" onclick="openRevenueCatPaywallModal()" title="Click to manage subscription entitlements">
-        💎 ENTERPRISE
-      </span>
-      <div class="system-status-indicator">
-        <div class="pulse-dot"></div>
-        <span>6 Cores Entangled</span>
-      </div>
-      <button class="btn-primary" onclick="toggleGeminiCopilot()" style="padding: 0.4rem 0.9rem; font-size: 0.82rem;">
-        🤖 Gemini Copilot
-      </button>
-    </div>
-  </nav>
+    <!-- Background Glassing -->
+    <div class="glow-orb primary"></div>
+    <div class="glow-orb secondary"></div>
 
-  <!-- NAVIGATION TABS -->
-  <div class="nav-tabs-container">
-    <div class="nav-tabs">
-      <a href="overview.html" class="tab-btn active">⚡ Command Center</a>
-      <a href="office.html" class="tab-btn">🏢 Sovereign Office</a>
-      <a href="quickbooks.html" class="tab-btn">💼 QuickBooks Replacement</a>
-      <a href="stripe.html" class="tab-btn">💳 Stripe Replacement</a>
-      <a href="tokenomics.html" class="tab-btn">🪙 Tokenomics & Treasury</a>
-      <a href="personal_finance.html" class="tab-btn">📈 Personal Finance</a>
-      <a href="iot.html" class="tab-btn">⌚ Wear OS & IoT Mesh</a>
-      <a href="nexs.html" class="tab-btn">⚡ Neural Synthesizer</a>
-      <a href="marketplace.html" class="tab-btn">🛍️ App Marketplace</a>
-    </div>
-  </div>
-
-  <!-- PAGE HEADER TITLE -->
-  <div class="page-header-title">
-    <div>
-      <h1>⚡ Sovereign OS Command Center Workspace</h1>
-      <div class="page-header-sub">Unified enterprise workspace integrating real-time telemetry, 200 apps, 26 A-Z workflows, MCP console, and container sandboxes.</div>
-    </div>
-    <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
-      <button class="btn-card-action" onclick="openSandboxDrawer(1)">🧪 Container Sandbox</button>
-      <button class="btn-card-action" onclick="openRevenueCatPaywallModal()">⚙️ RevenueCat Paywalls</button>
-      <button class="btn-primary" onclick="refreshOverview()">🔄 Sync Substrate Telemetry</button>
-    </div>
-  </div>
-
-  <!-- EXECUTIVE METRICS BAR -->
-  <section class="metrics-bar">
-    <div class="metric-card">
-      <div class="metric-label">Monthly Recurring Revenue (MRR)</div>
-      <div class="metric-value" id="mrr-val">$148,920.00</div>
-      <div class="metric-change positive">▲ +18.4% vs last month</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Annual Run Rate (ARR)</div>
-      <div class="metric-value" id="arr-val">$1,787,040.00</div>
-      <div class="metric-change positive">▲ +22.1% YoY</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">LTV / CAC Efficiency Ratio</div>
-      <div class="metric-value">8.4x</div>
-      <div class="metric-change positive">▲ Top 1% SaaS Efficiency</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Autonomic Net Profit Margin</div>
-      <div class="metric-value">74.2%</div>
-      <div class="metric-change positive">▲ QuickBooks Autonomically Calculated</div>
-    </div>
-  </section>
-
-  <!-- QUOTA USAGE METER CARD -->
-  <div style="max-width: 1400px; margin: 1rem auto 0 auto; padding: 0 1.5rem;">
-    <div class="quota-meter-card">
-      <div class="quota-header">
-        <div class="quota-title">
-          <span>🤖 AI Copilot Quota Usage Meter</span>
-          <span id="overview-quota-badge-tier-tag" class="entitlement-badge badge-pro" style="font-size: 0.65rem; padding: 0.15rem 0.5rem;" onclick="openRevenueCatPaywallModal()">⚡ PRO</span>
-        </div>
-        <div class="quota-val-text" id="overview-quota-meter-text">94 / 100 AI Generations (94%)</div>
-      </div>
-      <div class="quota-bar-track">
-        <div class="quota-bar-fill warning" id="overview-quota-bar-fill-elem" style="width: 94%;"></div>
-      </div>
-      <div class="quota-sub-info">
-        <span id="overview-quota-sub-reset-text">⚡ 6 AI Generations left in cycle • Resets in 6 Days</span>
-        <div style="display: flex; gap: 0.5rem;">
-          <button class="sheet-btn" onclick="testAIGenerationQuota()" style="padding: 0.25rem 0.6rem; font-size: 0.76rem;">✨ Test AI Generation (+1)</button>
-          <button class="sheet-btn sheet-btn-primary" onclick="openRevenueCatPaywallModal()" style="padding: 0.25rem 0.65rem; font-size: 0.76rem;">⚡ Upgrade Entitlement</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MAIN COMMAND CENTER CONTAINER -->
-  <main class="main-container" style="margin-top: 1rem;">
-    
-    <!-- COMMAND CENTER WORKSPACE VIEW TABS -->
-      <button class="view-tab-btn active" id="view-btn-telemetry" onclick="switchCommandCenterView('telemetry')">📊 Executive Telemetry & Substrate</button>
-      <button class="view-tab-btn" id="view-btn-office" onclick="switchCommandCenterView('office')">🏢 Sovereign Office & Suite</button>
-      <button class="view-tab-btn" id="view-btn-apps" onclick="switchCommandCenterView('apps')">🛍️ 200 Ecosystem Apps Catalog</button>
-      <button class="view-tab-btn" id="view-btn-az" onclick="switchCommandCenterView('az')">⚡ 26 A-to-Z Workflows Studio</button>
-      <button class="view-tab-btn" id="view-btn-mcp" onclick="switchCommandCenterView('mcp')">🛠️ MCP Tool Console</button>
-      <button class="view-tab-btn" id="view-btn-sandbox" onclick="switchCommandCenterView('sandbox')">🧪 Container Sandboxes</button>
-      <button class="view-tab-btn" id="view-btn-autonomic" onclick="switchCommandCenterView('autonomic')">🤖 Alpha Autonomic Work Studio</button>
-      <button class="view-tab-btn" id="view-btn-analytics" onclick="switchCommandCenterView('analytics')">📈 Long-Term Analytics</button>
-    </div>
-
-    <!-- VIEW 1: EXECUTIVE TELEMETRY & SUBSTRATE RADAR -->
-    <div id="sec-telemetry-view">
-      <div class="grid-2">
-        <!-- STORE MRR TELEMETRY PANEL -->
-        <div class="glass-panel">
-          <div class="panel-header">
-            <h3 class="panel-title">📈 Multi-Store Subscription Telemetry</h3>
-            <span class="status-pill cyan">Live RevenueCat SDK</span>
-          </div>
-          <div style="margin-bottom: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
-              <span style="display: flex; align-items: center; gap: 0.4rem;">🍎 Apple App Store (StoreKit 2)</span>
-              <strong style="color: var(--accent-cyan); font-family: var(--font-mono);">$68,500.00 (46%)</strong>
+    <!-- Navigation Header -->
+    <header class="top-nav">
+        <div class="brand">
+            <div class="brand-logo">
+                <span class="logo-mark">⚡</span>
+                <span class="logo-name">SOVEREIGN <span>ENGINE</span></span>
             </div>
-            <div style="background: rgba(255,255,255,0.06); height: 10px; border-radius: 6px; overflow: hidden; padding: 2px;">
-              <div style="background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple)); width: 46%; height: 100%; border-radius: 4px; box-shadow: 0 0 10px var(--accent-cyan);"></div>
+            <div class="rc-badge">
+                <span>Powered by RevenueCat</span>
             </div>
-          </div>
-
-          <div style="margin-bottom: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
-              <span style="display: flex; align-items: center; gap: 0.4rem;">🤖 Google Play Store (Android Billing)</span>
-              <strong style="color: var(--accent-violet); font-family: var(--font-mono);">$54,200.00 (36%)</strong>
-            </div>
-            <div style="background: rgba(255,255,255,0.06); height: 10px; border-radius: 6px; overflow: hidden; padding: 2px;">
-              <div style="background: linear-gradient(90deg, var(--accent-violet), var(--accent-magenta)); width: 36%; height: 100%; border-radius: 4px; box-shadow: 0 0 10px var(--accent-violet);"></div>
-            </div>
-          </div>
-
-          <div style="margin-bottom: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
-              <span style="display: flex; align-items: center; gap: 0.4rem;">📱 Samsung Galaxy Store (Foldables)</span>
-              <strong style="color: var(--accent-green); font-family: var(--font-mono);">$16,400.00 (11%)</strong>
-            </div>
-            <div style="background: rgba(255,255,255,0.06); height: 10px; border-radius: 6px; overflow: hidden; padding: 2px;">
-              <div style="background: linear-gradient(90deg, var(--accent-green), #34d399); width: 11%; height: 100%; border-radius: 4px; box-shadow: 0 0 10px var(--accent-green);"></div>
-            </div>
-          </div>
-
-          <div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
-              <span style="display: flex; align-items: center; gap: 0.4rem;">💳 Stripe Web Paywalls (RevenueCat Web)</span>
-              <strong style="color: var(--accent-gold); font-family: var(--font-mono);">$9,820.00 (7%)</strong>
-            </div>
-            <div style="background: rgba(255,255,255,0.06); height: 10px; border-radius: 6px; overflow: hidden; padding: 2px;">
-              <div style="background: linear-gradient(90deg, var(--accent-gold), #fbbf24); width: 7%; height: 100%; border-radius: 4px; box-shadow: 0 0 10px var(--accent-gold);"></div>
-            </div>
-          </div>
         </div>
 
-        <!-- LIVE SUBSTRATE STREAM TERMINAL -->
-        <div class="glass-panel">
-          <div class="panel-header">
-            <h3 class="panel-title">⚡ Live Protocol Substrate Stream</h3>
-            <span class="status-pill success">● Stream Connected</span>
-          </div>
+        <nav class="nav-links">
+            <a href="#" class="nav-item active" data-tab="overview">Dashboard</a>
+            <a href="#" class="nav-item" data-tab="gemini">Gemini AI Studio</a>
+            <a href="#" class="nav-item" data-tab="paywalls">Paywalls v2</a>
+            <a href="#" class="nav-item" data-tab="marketplaces">Marketplaces</a>
+            <a href="#" class="nav-item" data-tab="retention">Customer Center</a>
+        </nav>
 
-          <div class="terminal-wrapper">
-            <div class="terminal-header">
-              <div class="terminal-dots">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
-              </div>
-              <span class="terminal-title">substrate_daemon.log — 6 Cores Entangled</span>
-            </div>
-            <div id="live-stream-box" class="code-preview-box" style="height: 240px;">
-[00:01.02] XFIN: FX Micro-Settlement BRL 4,950 -> $1,000.00 USD Settled to Treasury
-[00:01.45] AURA: Credit Underwriting usr_981 -> APPROVED ($500 Micro-Line, Score: 780)
-[00:02.10] PULSE: Churn Intercept Triggered -> Customer Center 50% Winback Offer Accepted
-[00:02.89] MINT: 5,000 FORMA Burned on Subscription Renewal Event (Golden Ratio Yield)
-[00:03.14] GRID: Wear OS Watch Hardware Unlocked for Subscriber usr_981 (Heart Rate: 72 BPM)
-[00:03.95] NEXS: UCB1 Paywall Variant B Converted (+24% Conversion Rate Increase)
-[00:04.22] REVENUECAT: Webhook Received — Subscribed 'pro_access_annual' $99.99
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- INGESTION TELEMETRY RADAR PANEL -->
-      <div class="glass-panel" style="margin-top: 1.5rem;">
-        <div class="panel-header">
-          <div>
-            <h3 class="panel-title">📡 Executive Data Ingestion Telemetry Radar</h3>
-            <div style="font-size: 0.8rem; color: var(--text-muted);">Real-time multi-node ingestion radar across StoreKit 2, Android Billing, Stripe, Wear OS, Kafka, and ZK Gate</div>
-          </div>
-          <span class="status-pill success">● 85.2k Events/sec Active</span>
-        </div>
-
-        <div class="radar-grid">
-          <div class="radar-screen-wrapper">
-            <div class="radar-canvas-container" id="radar-canvas-container">
-              <div class="radar-ring radar-ring-1"></div>
-              <div class="radar-ring radar-ring-2"></div>
-              <div class="radar-ring radar-ring-3"></div>
-              <div class="radar-axis-h"></div>
-              <div class="radar-axis-v"></div>
-              <div class="radar-sweep-line"></div>
-            </div>
-            <div style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 600; text-transform: uppercase;">Ingestion Sweep Active</div>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 1rem;">
-            <div style="background: rgba(10, 15, 26, 0.8); border: 1px solid var(--border-glow); border-radius: 14px; padding: 1rem;">
-              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Selected Ingestion Node</div>
-              <h4 id="radar-selected-node-name" style="font-family: var(--font-heading); color: #fff; font-size: 1.15rem; margin: 0.2rem 0;">Apache Kafka Stream</h4>
-              <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.88rem;">
-                <div>Rate: <span id="radar-selected-node-rate" style="color: var(--accent-cyan); font-weight: 700;">45,000 ev/s</span></div>
-                <div>Latency: <span id="radar-selected-node-latency" style="color: var(--accent-green); font-weight: 700;">0.4 ms</span></div>
-              </div>
-            </div>
-
-            <div style="display: flex; gap: 1rem;">
-              <button onclick="switchCommandCenterView('mcp')" class="btn-card-action" style="flex: 1; justify-content: center;">🛠️ Launch MCP Tool Console</button>
-              <button onclick="switchCommandCenterView('az')" class="btn-card-action btn-card-primary" style="flex: 1; justify-content: center;">⚡ Open 26 Workflows Studio</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 2: 200 ECOSYSTEM APPS CATALOG -->
-    <div id="sec-apps-view" style="display: none;">
-      <section class="search-filter-section">
-        <div class="search-bar-row">
-          <div class="search-input-wrapper">
-            <span class="search-input-icon">🔍</span>
-            <input 
-              type="text" 
-              id="marketplace-search" 
-              class="search-input" 
-              placeholder="Instant search 200 apps by name, tag, feature, publisher, or pricing tier..." 
-              oninput="handleSearchInput(this.value)"
-            >
-            <button id="search-clear-btn" class="search-clear-btn" style="display: none;" onclick="clearSearchInput()" title="Clear Search (Esc)">✕</button>
-          </div>
-          <div class="shortcut-badge">Ctrl + /</div>
-        </div>
-
-        <div class="category-tabs-wrapper" id="category-tabs-container">
-          <!-- Rendered by JS -->
-        </div>
-
-        <div class="filter-controls-bar">
-          <div class="filter-selects">
-            <select id="filter-tier" class="select-custom" onchange="applyFilters()">
-              <option value="all">Pricing: All Tiers</option>
-              <option value="free">Free Tier Only</option>
-              <option value="pro">RevenueCat Pro ($29/mo)</option>
-              <option value="quantum">Enterprise Quantum ($199/mo)</option>
-            </select>
-
-            <select id="filter-status" class="select-custom" onchange="applyFilters()">
-              <option value="all">Status: All Apps</option>
-              <option value="installed">Installed Only</option>
-              <option value="uninstalled">Available to Install</option>
-              <option value="featured">Featured Plugins</option>
-            </select>
-
-            <select id="filter-sort" class="select-custom" onchange="applyFilters()">
-              <option value="rating">Sort by: Top Rated (★ 5.0)</option>
-              <option value="reviews">Sort by: Most Popular</option>
-              <option value="name">Sort by: Name (A - Z)</option>
-              <option value="newest">Sort by: Newest Releases</option>
-            </select>
-          </div>
-
-          <div class="results-meta">
-            <span id="results-count-text">Showing 200 of 200 Apps</span>
-            <span style="color: var(--border-glass-bright);">•</span>
-            <span id="active-category-label" style="color: var(--accent-cyan); font-weight: 600;">All Ecosystem Apps</span>
-          </div>
-        </div>
-      </section>
-
-      <div id="app-grid" class="app-grid">
-        <!-- 200 App cards dynamically rendered here -->
-      </div>
-
-      <div class="pagination-container">
-        <div style="font-size: 0.84rem; color: var(--text-muted);" id="pagination-info">
-          Page 1 of 9 (Showing 24 apps per page)
-        </div>
-
-        <div class="pagination-pages" id="pagination-buttons">
-          <!-- Page buttons dynamically rendered -->
-        </div>
-
-        <div style="display: flex; align-items: center; gap: 0.5rem;">
-          <span style="font-size: 0.8rem; color: var(--text-muted);">Per Page:</span>
-          <select id="per-page-select" class="select-custom" onchange="changePerPage(this.value)">
-            <option value="24" selected>24 Cards</option>
-            <option value="48">48 Cards</option>
-            <option value="96">96 Cards</option>
-            <option value="200">Show All 200</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 3: ALPHA AUTONOMIC WORK STUDIO (200 APPS TASK GENERATOR) -->
-    <div id="sec-autonomic-view" style="display: none;" class="glass-panel autonomic-studio-panel">
-      <div class="panel-header">
-        <div>
-          <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.25rem;">
-            <h3 class="panel-title">🤖 Alpha Autonomic Work Studio</h3>
-            <span class="status-pill cyan">● 200 Apps Real-Time Task Mesh</span>
-            <span id="autonomic-loop-badge" class="status-pill success glow-pulse">● Live Stream Active</span>
-          </div>
-          <div style="font-size: 0.82rem; color: var(--text-muted);">
-            SOVEREIGN OS autonomic multi-agent task synthesizer continuously generating, scheduling, and executing tasks for all 200 apps across 6 entangled core modules.
-          </div>
-        </div>
-        <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
-          <button class="btn-primary" onclick="triggerBatchTaskGeneration()">⚡ Generate Tasks for 200 Apps</button>
-          <button id="btn-toggle-autonomic-loop" class="btn-card-action btn-card-primary" onclick="toggleAutonomicLiveLoop()">⏸ Pause Live Loop</button>
-          <button class="btn-card-action" onclick="clearAutonomicTaskQueue()">🧹 Clear Queue</button>
-        </div>
-      </div>
-
-      <!-- AUTONOMIC WORK STUDIO METRICS BAR -->
-      <div class="autonomic-metrics-bar">
-        <div class="autonomic-metric-card">
-          <div class="autonomic-metric-icon" style="background: rgba(0, 242, 254, 0.12); color: var(--accent-cyan);">⚡</div>
-          <div>
-            <div class="autonomic-metric-label">Real-Time Tasks Generated</div>
-            <div class="autonomic-metric-value" id="metric-tasks-generated">1,482</div>
-            <div class="autonomic-metric-sub">▲ All 200 Apps Entangled</div>
-          </div>
-        </div>
-        <div class="autonomic-metric-card">
-          <div class="autonomic-metric-icon" style="background: rgba(121, 40, 202, 0.15); color: #c084fc;">🤖</div>
-          <div>
-            <div class="autonomic-metric-label">Active App Agents</div>
-            <div class="autonomic-metric-value" id="metric-apps-active">200 / 200</div>
-            <div class="autonomic-metric-sub">▲ 100% Autonomic Coverage</div>
-          </div>
-        </div>
-        <div class="autonomic-metric-card">
-          <div class="autonomic-metric-icon" style="background: rgba(16, 185, 129, 0.12); color: var(--accent-green);">🚀</div>
-          <div>
-            <div class="autonomic-metric-label">Task Synthesizer Rate</div>
-            <div class="autonomic-metric-value" id="metric-task-speed">48.5 / sec</div>
-            <div class="autonomic-metric-sub">⚡ Sub-millisecond Execution</div>
-          </div>
-        </div>
-        <div class="autonomic-metric-card">
-          <div class="autonomic-metric-icon" style="background: rgba(245, 158, 11, 0.12); color: var(--accent-gold);">🪙</div>
-          <div>
-            <div class="autonomic-metric-label">Autonomic Cost Efficiency</div>
-            <div class="autonomic-metric-value" id="metric-cost-saved">$54,920 / mo</div>
-            <div class="autonomic-metric-sub">▲ Zero Human Touchpoint</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- MAIN STUDIO 3-COLUMN / GRID LAYOUT -->
-      <div class="autonomic-studio-grid" style="margin-top: 1.25rem;">
-        
-        <!-- COLUMN 1: APP SELECTOR & DOMAIN FILTERS & 26 A-Z WORKFLOWS -->
-        <div class="autonomic-panel-box">
-          <div class="panel-header-sub">
-            <h4 style="font-family: var(--font-heading); color: #fff; font-size: 1.05rem; margin: 0;">🎯 Target App & Domain Filter</h4>
-            <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.15rem;">Select any of the 200 apps to generate targeted autonomic tasks</div>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 0.85rem;">
-            <div>
-              <label style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 0.4rem;">Select App (200 Ecosystem Apps)</label>
-              <select id="autonomic-app-selector" class="select-custom" style="width: 100%; font-size: 0.85rem;" onchange="handleAutonomicAppSelect(this.value)">
-                <option value="all">⚡ ALL 200 APPS (Global Ecosystem Mesh)</option>
-                <!-- Dynamically populated with all 200 apps by JS -->
-              </select>
-            </div>
-
-            <div>
-              <label style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 0.4rem;">Domain Filter</label>
-              <div class="autonomic-domain-pills" id="autonomic-domain-pills">
-                <button class="domain-pill active" onclick="filterStudioByDomain('all')">All (200)</button>
-                <button class="domain-pill" onclick="filterStudioByDomain('ai')">🤖 AI (35)</button>
-                <button class="domain-pill" onclick="filterStudioByDomain('finance')">💼 Finance (30)</button>
-                <button class="domain-pill" onclick="filterStudioByDomain('payments')">💳 Pay (25)</button>
-                <button class="domain-pill" onclick="filterStudioByDomain('web3')">🪙 Web3 (30)</button>
-                <button class="domain-pill" onclick="filterStudioByDomain('iot')">⌚ IoT (25)</button>
-                <button class="domain-pill" onclick="filterStudioByDomain('zk')">🔒 ZK (25)</button>
-                <button class="domain-pill" onclick="filterStudioByDomain('workflow')">⚡ Workflows (30)</button>
-              </div>
-            </div>
-
-            <button class="btn-primary" style="width: 100%; justify-content: center; padding: 0.65rem; margin-top: 0.25rem;" onclick="generateTaskForSelectedApp()">
-              ⚡ Synthesize Task for Selected App
+        <div class="user-actions">
+            <button class="btn btn-pro-badge" id="btn-open-paywall">
+                ★ Upgrade Developer Tier
             </button>
-          </div>
-
-          <div style="margin-top: 1.25rem; border-top: 1px solid var(--border-glass); padding-top: 1rem;">
-            <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center;">
-              <span>📜 26 A-to-Z Workflows</span>
-              <span style="color: var(--accent-cyan); font-family: var(--font-mono); font-size: 0.72rem;">Ready</span>
-            </div>
-            <div class="az-workflow-catalog" id="az-workflows-grid" style="max-height: 260px; overflow-y: auto;">
-              <!-- Rendered by JS -->
-            </div>
-          </div>
-        </div>
-
-        <!-- COLUMN 2: LIVE GENERATED TASKS FEED -->
-        <div class="autonomic-panel-box">
-          <div class="panel-header-sub" style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <h4 style="font-family: var(--font-heading); color: #fff; font-size: 1.05rem; margin: 0;">⚡ Real-Time Generated Tasks</h4>
-              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.15rem;">Live task generation feed across all 200 apps</div>
-            </div>
-            <span class="status-pill success" style="font-size: 0.7rem;" id="task-feed-count-badge">Active Feed</span>
-          </div>
-
-          <div id="autonomic-tasks-feed-container" class="autonomic-task-feed">
-            <!-- Rendered dynamically by JS -->
-          </div>
-        </div>
-
-        <!-- COLUMN 3: PIPELINE EXECUTION & TERMINAL LOGS -->
-        <div class="autonomic-panel-box">
-          <div class="panel-header-sub">
-            <h4 style="font-family: var(--font-heading); color: #fff; font-size: 1.05rem; margin: 0;">⚙️ Pipeline Runner & Terminal</h4>
-            <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.15rem;">Substrate Core execution telemetry stream</div>
-          </div>
-
-          <div style="background: rgba(6, 9, 18, 0.85); border: 1px solid var(--border-glow); border-radius: 14px; padding: 1rem; margin-bottom: 1rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-              <div style="display: flex; align-items: center; gap: 0.65rem;">
-                <div class="az-badge" id="az-selected-badge">A</div>
-                <div>
-                  <h4 id="az-selected-title" style="font-family: var(--font-heading); color: #fff; font-size: 0.98rem; margin: 0;">Automated Financial Audit</h4>
-                  <div id="az-selected-desc" style="font-size: 0.76rem; color: var(--text-muted); margin-top: 0.1rem;">Scans double-entry transactions and reconciles bank deposits vs ACH payouts.</div>
+            <div class="account-profile">
+                <div class="avatar">RC</div>
+                <div class="profile-info">
+                    <span class="user-name">App Publisher</span>
+                    <span class="tier-label" id="nav-subscription-status">Pro Plan</span>
                 </div>
-              </div>
-              <button id="az-run-btn" class="btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="runAZWorkflow()">▶ Execute Pipeline</button>
             </div>
-
-            <div class="pipeline-flow-container" id="pipeline-flow-container" style="margin-top: 0.85rem; padding: 0.75rem 0.5rem;">
-              <!-- Pipeline steps rendered by JS -->
-            </div>
-          </div>
-
-          <div style="background: #04060c; border: 1px solid var(--border-glass); border-radius: 14px; padding: 1rem; flex: 1; display: flex; flex-direction: column;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">🖥️ Substrate Task Telemetry Terminal</div>
-              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-cyan);" id="autonomic-terminal-rate">48.5 ev/s</span>
-            </div>
-            <div id="az-terminal-output" style="font-family: var(--font-mono); font-size: 0.78rem; color: #a7f3d0; height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.25rem;">
-              <div>[INFO] Alpha Autonomic Work Studio connected. Real-time task generator active for all 200 apps.</div>
-            </div>
-          </div>
         </div>
+    </header>
 
-      </div>
-    </div>
-
-    <!-- VIEW 4: INTERACTIVE MCP TOOL CONSOLE -->
-    <div id="sec-mcp-view" style="display: none;" class="glass-panel">
-      <div class="panel-header">
-        <div>
-          <h3 class="panel-title">🛠️ Interactive Model Context Protocol (MCP) Tool Console</h3>
-          <div style="font-size: 0.8rem; color: var(--text-muted);">Inspect tool schemas, construct JSON-RPC 2.0 payloads, execute tools, and measure real-time substrate latency</div>
-        </div>
-        <span class="status-pill cyan">MCP Protocol v1.0 Active</span>
-      </div>
-
-      <div class="mcp-console-grid">
-        <div>
-          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.6rem;">Available Substrate MCP Tools</div>
-          <div class="mcp-tool-list" id="mcp-tool-list-container">
-            <!-- Rendered by JS -->
-          </div>
-        </div>
-
-        <div class="mcp-execution-panel">
-          <div style="background: rgba(10, 15, 26, 0.8); border: 1px solid var(--border-glass); border-radius: 14px; padding: 1.25rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-              <div>
-                <h4 id="mcp-selected-name" style="font-family: var(--font-mono); color: var(--accent-cyan); font-size: 1.1rem; margin: 0;">tools/query_ledger</h4>
-                <div id="mcp-selected-desc" style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">Query double-entry financial ledger accounts and balances</div>
-              </div>
-              <button class="btn-primary" onclick="executeMCPTool()">▶ Execute MCP Tool</button>
-            </div>
-
-            <div class="mcp-form-row">
-              <label class="mcp-label">Tool Input Parameters (JSON Schema)</label>
-              <textarea id="mcp-params-json" class="mcp-input" rows="5" style="width: 100%; resize: vertical;"></textarea>
-            </div>
-          </div>
-
-          <div style="background: #04060c; border: 1px solid var(--border-glass-bright); border-radius: 14px; padding: 1.25rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
-              <div style="display: flex; align-items: center; gap: 0.6rem;">
-                <span style="font-family: var(--font-heading); font-size: 0.9rem; color: #fff; font-weight: 700;">JSON-RPC 2.0 Response Payload</span>
-                <span id="mcp-status-badge" style="font-size: 0.75rem; color: var(--accent-green); font-weight: 600;">● READY</span>
-              </div>
-              <span id="mcp-latency-badge" class="badge-revenuecat" style="background: rgba(0, 242, 254, 0.1); color: var(--accent-cyan); border-color: rgba(0, 242, 254, 0.3);">⚡ 0 ms</span>
-            </div>
-            <pre id="mcp-json-output" class="mcp-json-output">{ "jsonrpc": "2.0", "result": "Ready for MCP tool execution." }</pre>
-          </div>
-
-          <div>
-            <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem;">Recent Execution Log</div>
-            <div id="mcp-history-list" style="display: flex; flex-direction: column; gap: 0.4rem;">
-              <!-- History rendered by JS -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 5: CONTAINER SANDBOX WORKSPACE -->
-    <div id="sec-sandbox-view" style="display: none;" class="glass-panel">
-      <div class="panel-header">
-        <div>
-          <h3 class="panel-title">🧪 Real-Time Container Sandbox Workspace</h3>
-          <div style="font-size: 0.8rem; color: var(--text-muted);">Monitor and debug container execution, memory limits, and socket channels in zero-trust isolation</div>
-        </div>
-        <span class="status-pill success">● 38 Containers Active</span>
-      </div>
-
-      <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-        <div style="background: rgba(13, 19, 33, 0.8); border: 1px solid var(--border-glass); border-radius: 14px; padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-          <div style="display: flex; align-items: center; gap: 1rem;">
-            <span style="font-size: 2rem;">🤖</span>
-            <div>
-              <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin: 0;">QuantAlpha Neural Predictor Sandbox</h3>
-              <div style="font-size: 0.8rem; color: var(--text-muted);">Status: <span id="sandbox-status-pill-view" style="color: var(--accent-green); font-weight: 700;">● RUNNING</span></div>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 0.75rem;">
-            <button class="btn-card-action btn-card-primary" onclick="startSandboxSimulation()">▶ Start Sandbox</button>
-            <button class="btn-card-action" onclick="pauseSandboxSimulation()">⏸ Pause</button>
-            <button class="btn-card-action" onclick="clearSandboxLogs()">🧹 Clear Stream</button>
-          </div>
-        </div>
-
-        <div class="sandbox-gauges-grid">
-          <div class="sandbox-gauge-card">
-            <div class="sandbox-gauge-header">
-              <span>CPU Utilization</span>
-              <span>2 Cores</span>
-            </div>
-            <div class="sandbox-gauge-value" id="sandbox-cpu-val-view">24%</div>
-            <div class="sandbox-progress-bg">
-              <div class="sandbox-progress-bar" id="sandbox-cpu-bar-view" style="width: 24%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));"></div>
-            </div>
-          </div>
-
-          <div class="sandbox-gauge-card">
-            <div class="sandbox-gauge-header">
-              <span>RAM Memory</span>
-              <span>Allocated</span>
-            </div>
-            <div class="sandbox-gauge-value" id="sandbox-ram-val-view">184 MB / 512 MB</div>
-            <div class="sandbox-progress-bg">
-              <div class="sandbox-progress-bar" id="sandbox-ram-bar-view" style="width: 36%; background: linear-gradient(90deg, var(--accent-violet), var(--accent-magenta));"></div>
-            </div>
-          </div>
-        </div>
-
-        <div style="background: rgba(10, 15, 26, 0.7); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem;">
-          <span style="color: var(--text-muted);">Network I/O Throughput:</span>
-          <span id="sandbox-net-val-view" style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 600;">3.8 MB/s IN | 1.2 MB/s OUT</span>
-        </div>
-
-        <div style="background: #04060c; border: 1px solid var(--border-glass); border-radius: 14px; padding: 1.25rem;">
-          <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.75rem;">Live Sandbox Runtime Console Stream</div>
-          <div id="sandbox-terminal-stream-view" class="sandbox-terminal-stream" style="height: 260px;">
-            <!-- Rendered by JS -->
-          </div>
-        </div>
-    </div>
-
-    <!-- VIEW 6: ALPHA AUTONOMIC WORK STUDIO -->
-    <div id="sec-autonomic-view" style="display: none;" class="glass-panel autonomic-studio-panel">
-      <div class="panel-header" style="flex-wrap: wrap; gap: 1rem;">
-        <div>
-          <div style="display: flex; align-items: center; gap: 0.6rem;">
-            <h3 class="panel-title" style="font-size: 1.35rem;">🤖 Alpha Autonomic Work Studio</h3>
-            <span class="status-pill cyan">200 Apps Entangled</span>
-            <span class="status-pill success">● Swarm Active</span>
-          </div>
-          <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">
-            Autonomous task synthesis, real-time dispatch queue for all 200 ecosystem apps, active parallel workers, and sub-millisecond execution telemetry.
-          </div>
-        </div>
-        <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
-          <button id="autonomic-toggle-btn" class="btn-card-action btn-card-primary" onclick="toggleAutonomicEngine()">⏸ Pause Autonomic Swarm</button>
-          <button class="btn-card-action" onclick="triggerAutonomicBurst()">⚡ Dispatch Batch (1,000 Tasks)</button>
-          <button class="btn-card-action" onclick="flushAutonomicQueue()">🧹 Flush Queue</button>
-        </div>
-      </div>
-
-      <div class="autonomic-metrics-bar">
-        <div class="autonomic-metric-card">
-          <div class="autonomic-metric-icon" style="background: rgba(0, 242, 254, 0.15); color: var(--accent-cyan);">⚡</div>
-          <div>
-            <div class="autonomic-metric-label">Tasks Generated</div>
-            <div class="autonomic-metric-value" id="autonomic-tasks-generated">14,892</div>
-            <div class="autonomic-metric-sub" id="autonomic-tasks-rate">342 tasks/sec</div>
-          </div>
-        </div>
-
-        <div class="autonomic-metric-card">
-          <div class="autonomic-metric-icon" style="background: rgba(121, 40, 202, 0.15); color: var(--accent-violet);">⚙️</div>
-          <div>
-            <div class="autonomic-metric-label">Active Parallel Workers</div>
-            <div class="autonomic-metric-value" id="autonomic-workers-count">8 / 8 Workers</div>
-            <div class="autonomic-metric-sub" style="color: var(--accent-green);">100% Core Entanglement</div>
-          </div>
-        </div>
-
-        <div class="autonomic-metric-card">
-          <div class="autonomic-metric-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--accent-green);">🎯</div>
-          <div>
-            <div class="autonomic-metric-label">Execution Latency SLA</div>
-            <div class="autonomic-metric-value" id="autonomic-avg-latency">0.18 ms</div>
-            <div class="autonomic-metric-sub" style="color: var(--accent-green);">▲ 99.99% Autonomic SLA</div>
-          </div>
-        </div>
-
-        <div class="autonomic-metric-card">
-          <div class="autonomic-metric-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--accent-gold);">🛍️</div>
-          <div>
-            <div class="autonomic-metric-label">Ecosystem Apps Pool</div>
-            <div class="autonomic-metric-value">200 / 200 Apps</div>
-            <div class="autonomic-metric-sub" style="color: var(--accent-cyan);">7 Tech Domains Covered</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="autonomic-studio-grid">
-        <!-- PANEL 1: REAL-TIME TASK GENERATION FOR ALL 200 APPS -->
-        <div class="autonomic-panel-box">
-          <div class="panel-header-sub">
-            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-              <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span style="font-size: 1.1rem;">⚡</span>
-                <span style="font-weight: 700; color: #fff; font-family: var(--font-heading);">Real-Time Task Queue (200 Apps)</span>
-              </div>
-              <span class="badge-revenuecat" style="background: rgba(0, 242, 254, 0.1); color: var(--accent-cyan); border-color: rgba(0, 242, 254, 0.3);" id="autonomic-queue-depth">Queue Depth: 42</span>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem;">
-            <input 
-              type="text" 
-              id="autonomic-task-search" 
-              class="search-input" 
-              style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 8px;" 
-              placeholder="Filter tasks by App title, ID (1-200), or opcode..." 
-              oninput="renderAutonomicTaskFeed()"
-            >
-            <select id="autonomic-domain-filter" class="select-custom" style="padding: 0.4rem 0.6rem; font-size: 0.8rem; border-radius: 8px; width: 130px;" onchange="renderAutonomicTaskFeed()">
-              <option value="all">All Domains</option>
-              <option value="ai">🤖 AI & Neural</option>
-              <option value="finance">💼 Finance</option>
-              <option value="payments">💳 Payments</option>
-              <option value="web3">🪙 Web3</option>
-              <option value="iot">⌚ IoT Mesh</option>
-              <option value="zk">🔒 Zero-Knowledge</option>
-              <option value="workflow">⚡ Workflow</option>
-            </select>
-          </div>
-
-          <div id="autonomic-task-feed" class="autonomic-task-feed">
-            <!-- Rendered by JS -->
-          </div>
-        </div>
-
-        <!-- PANEL 2: ACTIVE PARALLEL WORKERS POOL -->
-        <div class="autonomic-panel-box">
-          <div class="panel-header-sub">
-            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-              <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span style="font-size: 1.1rem;">⚙️</span>
-                <span style="font-weight: 700; color: #fff; font-family: var(--font-heading);">Active Parallel Workers Pool</span>
-              </div>
-              <div style="display: flex; align-items: center; gap: 0.4rem;">
-                <span style="font-size: 0.75rem; color: var(--text-muted);">Threads:</span>
-                <select id="autonomic-worker-count-select" class="select-custom" style="padding: 0.2rem 0.5rem; font-size: 0.75rem; border-radius: 6px;" onchange="changeWorkerCount(this.value)">
-                  <option value="4">4 Workers</option>
-                  <option value="8" selected>8 Workers</option>
-                  <option value="12">12 Workers</option>
-                  <option value="16">16 Workers</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div id="autonomic-workers-grid" class="autonomic-workers-grid">
-            <!-- Rendered by JS -->
-          </div>
-        </div>
-
-        <!-- PANEL 3: LIVE TASK EXECUTION TELEMETRY & LOG STREAM -->
-        <div class="autonomic-panel-box">
-          <div class="panel-header-sub">
-            <div style="display: flex; align-items: center; gap: 0.5rem;">
-              <span style="font-size: 1.1rem;">📡</span>
-              <span style="font-weight: 700; color: #fff; font-family: var(--font-heading);">Live Task Execution Telemetry</span>
-            </div>
-          </div>
-
-          <div style="background: rgba(10, 15, 26, 0.8); border: 1px solid var(--border-glass); border-radius: 12px; padding: 0.85rem; margin-bottom: 0.85rem;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.4rem;">
-              <span>Parallel App Domain Execution Density</span>
-              <span style="color: var(--accent-cyan); font-family: var(--font-mono);" id="autonomic-active-apps-count">200 Apps Entangled</span>
-            </div>
-
-            <div class="autonomic-domain-bars" id="autonomic-domain-bars">
-              <!-- Rendered by JS -->
-            </div>
-          </div>
-
-          <div style="background: #04060c; border: 1px solid var(--border-glass-bright); border-radius: 12px; padding: 0.85rem; flex: 1; display: flex; flex-direction: column;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-              <div style="display: flex; align-items: center; gap: 0.4rem;">
-                <div class="terminal-dots">
-                  <div class="dot red"></div>
-                  <div class="dot yellow"></div>
-                  <div class="dot green"></div>
+    <!-- Main Platform Body -->
+    <main class="platform-body">
+        
+        <!-- Top Metrics Banner -->
+        <section class="hero-overview">
+            <div class="balance-card">
+                <div class="balance-label">Monthly Recurring Revenue (MRR)</div>
+                <div class="balance-amount">$48,250<span>.00</span></div>
+                <div class="balance-change positive">
+                    <span class="arrow">↑</span> +$6,420.00 (15.3%) <span class="timeframe">vs last month</span>
                 </div>
-                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">alpha_autonomic_telemetry.log</span>
-              </div>
-              <span class="status-pill success" style="font-size: 0.7rem; padding: 0.1rem 0.4rem;">● LIVE</span>
             </div>
 
-            <div id="autonomic-terminal-stream" class="code-preview-box" style="height: 220px; font-size: 0.78rem; line-height: 1.5; flex: 1;">
-              <!-- Log stream rendered by JS -->
+            <div class="stats-row">
+                <div class="stat-pill">
+                    <span class="stat-icon">📱</span>
+                    <div>
+                        <div class="stat-value">3,420</div>
+                        <div class="stat-label">Active Subscribers</div>
+                    </div>
+                </div>
+
+                <div class="stat-pill">
+                    <span class="stat-icon">🎯</span>
+                    <div>
+                        <div class="stat-value">4.8% → 7.2%</div>
+                        <div class="stat-label">Paywall Trial Conversion</div>
+                    </div>
+                </div>
+
+                <div class="stat-pill">
+                    <span class="stat-icon">🌍</span>
+                    <div>
+                        <div class="stat-value">4 Marketplace Links</div>
+                        <div class="stat-label">App Store, Play, Galaxy, Web</div>
+                    </div>
+                </div>
             </div>
-          </div>
+        </section>
 
-        </div>
+        <!-- Integrated Marketplaces Row -->
+        <section class="marketplaces-banner">
+            <h3>Connected App Marketplaces</h3>
+            <div class="marketplace-cards">
+                
+                <div class="market-card connected">
+                    <div class="market-icon">🍎</div>
+                    <div class="market-info">
+                        <h4>Apple App Store</h4>
+                        <p>iOS / iPadOS / macOS</p>
+                    </div>
+                    <span class="status-tag tag-active">ACTIVE</span>
+                </div>
 
-    <!-- VIEW 7: SOVEREIGN OFFICE & BUSINESS PRODUCTIVITY SUITE -->
-    <div id="sec-office-view" style="display: none;" class="glass-panel">
-      <div class="panel-header" style="flex-wrap: wrap; gap: 1rem;">
-        <div>
-          <div style="display: flex; align-items: center; gap: 0.6rem;">
-            <h3 class="panel-title" style="font-size: 1.35rem;">🏢 Sovereign Office & Business Productivity Suite</h3>
-            <span class="status-pill cyan">Live Spreadsheets & Docs</span>
-            <span class="status-pill success">● Co-Pilot Entangled</span>
-          </div>
-          <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">
-            Glassmorphic productivity workspace with real-time financial spreadsheet formulas, executive document editors, pitch deck presentation engines, and multi-artifact AI drawers.
-          </div>
-        </div>
-        <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
-          <a href="office.html" class="btn-card-action btn-card-primary" style="text-decoration: none;">🚀 Launch Full Office Suite</a>
-          <button class="btn-card-action" onclick="openMultiArtifactDrawer()">🤖 Multi-Artifact AI Drawer</button>
-        </div>
-      </div>
+                <div class="market-card connected">
+                    <div class="market-icon">🤖</div>
+                    <div class="market-info">
+                        <h4>Google Play Store</h4>
+                        <p>Android In-App Billing</p>
+                    </div>
+                    <span class="status-tag tag-active">ACTIVE</span>
+                </div>
 
-      <div class="grid-2" style="margin-top: 1rem;">
-        <!-- MINI SPREADSHEET PREVIEW -->
-        <div style="background: rgba(4,7,14,0.85); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.25rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-            <h4 style="font-family: var(--font-heading); font-size: 0.95rem; color: #fff;">📊 Sovereign Financial Grid Snapshot</h4>
-            <button class="sheet-btn" onclick="aiAutofillGrid()">✨ AI Autofill</button>
-          </div>
-          <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan); margin-bottom: 0.5rem;">
-            [Formula Engine =SUM(B2:E2)] • MRR Total: $148,920.00
-          </div>
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4rem; font-family: var(--font-mono); font-size: 0.76rem; background: rgba(0,0,0,0.4); padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-glass);">
-            <div style="color: var(--text-muted);">Channel</div><div style="color: var(--text-muted);">Q1 26</div><div style="color: var(--text-muted);">Q2 26</div><div style="color: var(--text-muted);">Q3 26</div>
-            <div>StoreKit 2</div><div>$42.5k</div><div>$51.0k</div><div style="color: var(--accent-green); font-weight:bold;">$68.5k</div>
-            <div>Play Billing</div><div>$38.0k</div><div>$44.2k</div><div style="color: var(--accent-green); font-weight:bold;">$54.2k</div>
-            <div>Galaxy Store</div><div>$11.0k</div><div>$13.5k</div><div style="color: var(--accent-green); font-weight:bold;">$16.4k</div>
-          </div>
-        </div>
+                <div class="market-card connected">
+                    <div class="market-icon">🌌</div>
+                    <div class="market-info">
+                        <h4>Samsung Galaxy Store</h4>
+                        <p>Galaxy Ecosystem</p>
+                    </div>
+                    <span class="status-tag tag-active">ACTIVE</span>
+                </div>
 
-        <!-- MINI DOCUMENT PREVIEW -->
-        <div style="background: rgba(4,7,14,0.85); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.25rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-            <h4 style="font-family: var(--font-heading); font-size: 0.95rem; color: #fff;">📝 Sovereign Executive Document</h4>
-            <button class="sheet-btn" onclick="aiPolishDoc()">✨ AI Polish</button>
-          </div>
-          <div style="background: rgba(0,0,0,0.4); padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-glass); font-size: 0.8rem; line-height: 1.5; color: #cbd5e1; max-height: 120px; overflow-y: auto;">
-            <strong style="color: var(--accent-purple);"># Series A Executive Memorandum</strong><br/>
-            Sovereign Engine OS has reached $1.78M ARR with 74.2% Autonomic Net Profit Margin by unifying zero-knowledge accounting with RevenueCat multi-store billing.
-          </div>
-        </div>
-      </div>
-    <!-- VIEW 8: LONG-TERM ANALYTICS & REVENUECAT TELEMETRY -->
-    <div id="sec-analytics-view" style="display: none;">
-      <section class="analytics-dashboard-panel">
-        <div class="analytics-header-bar">
-          <div>
-            <h2 style="font-family: var(--font-heading); color: #fff; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.25rem;">
-              📈 Long-Term Subscription & Telemetry Analytics
-            </h2>
-            <div style="font-size: 0.8rem; color: var(--text-muted);">
-              Historical MRR retention, RevenueCat entitlement conversion velocity, and AI token telemetry trends.
+                <div class="market-card connected">
+                    <div class="market-icon">💳</div>
+                    <div class="market-info">
+                        <h4>Stripe & Web Funnels</h4>
+                        <p>RevenueCat Funnels</p>
+                    </div>
+                    <span class="status-tag tag-active">ACTIVE</span>
+                </div>
+
             </div>
-          </div>
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div class="timeframe-pill-selector">
-              <button class="timeframe-btn" onclick="selectAnalyticsTimeframe('7D', this)">7D</button>
-              <button class="timeframe-btn" onclick="selectAnalyticsTimeframe('30D', this)">30D</button>
-              <button class="timeframe-btn" onclick="selectAnalyticsTimeframe('90D', this)">90D</button>
-              <button class="timeframe-btn active" onclick="selectAnalyticsTimeframe('12M', this)">12M</button>
-              <button class="timeframe-btn" onclick="selectAnalyticsTimeframe('ALL', this)">ALL</button>
+        </section>
+
+        <!-- Gemini Single-Session App Generator Studio Banner -->
+        <section class="gemini-studio-card" style="background: linear-gradient(135deg, rgba(123, 82, 255, 0.15), rgba(0, 230, 118, 0.08)); border: 1px solid rgba(123, 82, 255, 0.3); border-radius: 20px; padding: 2rem; margin-bottom: 2.5rem; backdrop-filter: blur(15px);">
+            <div class="gemini-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                    <span style="font-size: 1.8rem; color: var(--accent-purple);">✦</span>
+                    <div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700;">Gemini Single-Session Autonomous App Builder</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Describe any app idea. Gemini builds full code, Motoko canisters, RevenueCat offerings & Paywalls in 1 session.</p>
+                    </div>
+                </div>
+                <span class="copilot-badge badge-purple" style="padding: 0.4rem 0.8rem;">GEMINI 3.6 FLASH ACTIVE</span>
             </div>
-            <button class="btn-card-action" onclick="refreshAnalyticsData()" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;">🔄 Sync Data</button>
-          </div>
-        </div>
 
-        <!-- KPI STAT CARDS -->
-        <div class="analytics-kpi-grid">
-          <div class="analytics-kpi-card">
-            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Monthly Recurring Revenue</div>
-            <div style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 800; color: #fff;" id="overview-analytics-mrr-val">$148,920.00</div>
-            <div style="font-size: 0.76rem; color: var(--accent-green);">▲ +18.4% YoY • StoreKit 2 & Web</div>
-          </div>
-          <div class="analytics-kpi-card">
-            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">AI Generation Velocity</div>
-            <div style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 800; color: var(--accent-cyan);" id="overview-analytics-tokens-val">4.2M Tokens/s</div>
-            <div style="font-size: 0.76rem; color: var(--accent-cyan);">▲ 94.2k Generations/mo</div>
-          </div>
-          <div class="analytics-kpi-card">
-            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Paywall Conversion Rate</div>
-            <div style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 800; color: var(--accent-violet);" id="overview-analytics-conv-val">14.8%</div>
-            <div style="font-size: 0.76rem; color: var(--accent-green);">▲ +3.2% vs previous period</div>
-          </div>
-          <div class="analytics-kpi-card">
-            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Net Revenue Retention (NRR)</div>
-            <div style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 800; color: var(--accent-gold);" id="overview-analytics-nrr-val">124.6%</div>
-            <div style="font-size: 0.76rem; color: var(--accent-green);">▲ Enterprise Cohort Retention</div>
-          </div>
-        </div>
-
-        <!-- 12-MONTH VISUAL CSS BAR GRAPH -->
-        <div style="margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
-          <div style="font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700; color: #fff;">
-            📊 Historical MRR & RevenueCat Entitlement Growth Trajectory
-          </div>
-          <div style="font-size: 0.75rem; color: var(--text-muted);">
-            StoreKit 2 (46%) • Android Billing (36%) • Web Paywalls (18%)
-          </div>
-        </div>
-
-        <div class="analytics-chart-wrapper" id="overview-analytics-chart-container">
-          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 35%;" data-value="$68k"></div><span class="analytics-bar-label">Jan</span></div>
-          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 42%;" data-value="$74k"></div><span class="analytics-bar-label">Feb</span></div>
-          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 48%;" data-value="$82k"></div><span class="analytics-bar-label">Mar</span></div>
-          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 55%;" data-value="$91k"></div><span class="analytics-bar-label">Apr</span></div>
-          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 62%;" data-value="$104k"></div><span class="analytics-bar-label">May</span></div>
-          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 70%;" data-value="$118k"></div><span class="analytics-bar-label">Jun</span></div>
-          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 78%;" data-value="$129k"></div><span class="analytics-bar-label">Jul</span></div>
-          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 85%;" data-value="$138k"></div><span class="analytics-bar-label">Aug</span></div>
-          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 92%;" data-value="$144k"></div><span class="analytics-bar-label">Sep</span></div>
-          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 96%;" data-value="$148k"></div><span class="analytics-bar-label">Oct</span></div>
-          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 98%;" data-value="$156k"></div><span class="analytics-bar-label">Nov</span></div>
-          <div class="analytics-bar-col"><div class="analytics-bar-fill" style="height: 100%;" data-value="$168k"></div><span class="analytics-bar-label">Dec</span></div>
-        </div>
-      </section>
-    </div>
-
-  </main>
-
-  <!-- MODAL INSTALLATION DRAWER -->
-  <div id="app-modal" class="modal-overlay" onclick="handleModalOverlayClick(event)">
-    <div class="modal-glass-container">
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 1rem;">
-          <div class="app-icon" id="modal-app-icon">🤖</div>
-          <div>
-            <div style="display: flex; align-items: center; gap: 0.6rem;">
-              <h2 id="modal-app-title" style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem; margin: 0;">App Title</h2>
-              <span id="modal-app-version" class="app-version">v1.0.0</span>
+            <div class="gemini-input-box" style="display: flex; gap: 1rem; margin-top: 1.2rem;">
+                <input type="text" id="gemini-app-prompt" placeholder="e.g. Build an AI Productivity & Habit Tracker app with $9.99/mo subscription and RevenueCat Paywall v2..." style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 1rem 1.2rem; border-radius: 12px; font-size: 0.95rem; outline: none;">
+                <button class="btn btn-primary" id="btn-generate-app" style="padding: 1rem 2rem; background: var(--accent-gradient); white-space: nowrap; font-size: 0.95rem;">
+                    🚀 Generate Entire App & RevenueCat Stack
+                </button>
             </div>
-            <div style="display: flex; align-items: center; gap: 0.6rem; margin-top: 0.2rem; font-size: 0.8rem; color: var(--text-muted);">
-              <span id="modal-app-publisher">Sovereign Core</span>
-              <span>•</span>
-              <span id="modal-app-category" class="app-badge-category badge-ai">AI & Neural</span>
-              <span>•</span>
-              <span id="modal-app-rating" style="color: var(--accent-gold); font-weight: 600;">★ 4.9</span>
+
+            <!-- Terminal Output for Gemini Live Build -->
+            <div class="gemini-term-output" id="gemini-term-output" style="display: none; background: #000; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1rem; margin-top: 1.2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--accent-green); max-height: 180px; overflow-y: auto;">
+                <div class="log-line">> Gemini AI Session Initialized.</div>
             </div>
-          </div>
-        </div>
-        <button class="modal-close-btn" onclick="closeAppModal()">✕</button>
-      </div>
+        </section>
 
-      <div class="modal-body">
-        <div style="margin-bottom: 1.5rem;">
-          <h4 style="color: var(--accent-cyan); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">Architecture Overview</h4>
-          <p id="modal-app-desc" style="color: var(--text-main); font-size: 0.95rem; line-height: 1.6;"></p>
-        </div>
+        <!-- Main Workspace Grid -->
+        <section class="content-grid" style="margin-top: 2.5rem;">
+            
+            <!-- Left Column: RevenueCat AI Paywalls & Growth Modules -->
+            <div class="main-column">
+                
+                <div class="section-header">
+                    <h3>RevenueCat Paywalls v2 & AI Experiments</h3>
+                    <button class="btn btn-outline" id="btn-new-experiment">+ Launch A/B Test</button>
+                </div>
 
-        <div class="grid-2" style="margin-bottom: 1.5rem; gap: 1rem;">
-          <div style="background: rgba(10, 15, 26, 0.7); border: 1px solid var(--border-glass); padding: 1rem; border-radius: 14px;">
-            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Node Memory Requirement</div>
-            <div id="modal-spec-ram" style="font-family: var(--font-mono); font-size: 1rem; color: #fff; font-weight: 600; margin-top: 0.2rem;">512 MB Allocation</div>
-          </div>
-          <div style="background: rgba(10, 15, 26, 0.7); border: 1px solid var(--border-glass); padding: 1rem; border-radius: 14px;">
-            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Core Entanglement</div>
-            <div id="modal-spec-cpu" style="font-family: var(--font-mono); font-size: 1rem; color: #fff; font-weight: 600; margin-top: 0.2rem;">2 Cores Synchronized</div>
-          </div>
-          <div style="background: rgba(10, 15, 26, 0.7); border: 1px solid var(--border-glass); padding: 1rem; border-radius: 14px;">
-            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">RevenueCat Entitlement Key</div>
-            <div id="modal-spec-key" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-cyan); font-weight: 600; margin-top: 0.2rem;">sov_pro_tier</div>
-          </div>
-          <div style="background: rgba(10, 15, 26, 0.7); border: 1px solid var(--border-glass); padding: 1rem; border-radius: 14px;">
-            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Zero-Knowledge Proof</div>
-            <div id="modal-spec-zk" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-green); font-weight: 600; margin-top: 0.2rem;">Groth16 / Halo2 Verified</div>
-          </div>
-        </div>
+                <div class="copilot-cards-grid">
+                    
+                    <!-- Module 1 -->
+                    <div class="copilot-card">
+                        <div class="copilot-header">
+                            <div class="copilot-badge badge-green">ACTIVE TEST</div>
+                            <span class="copilot-type">RevenueCat Paywalls v2</span>
+                        </div>
+                        <h4>AI Dynamic Paywall Variant</h4>
+                        <p class="copilot-desc">Automatically adjusts paywall layout & 7-day trial timing based on user engagement.</p>
+                        
+                        <div class="copilot-metrics">
+                            <div class="metric">
+                                <span class="m-val">+28.4%</span>
+                                <span class="m-lbl">ARPU Lift</span>
+                            </div>
+                            <div class="metric">
+                                <span class="m-val positive">8.2%</span>
+                                <span class="m-lbl">Conversion</span>
+                            </div>
+                            <div class="metric">
+                                <span class="m-val">14,200</span>
+                                <span class="m-lbl">Impressions</span>
+                            </div>
+                        </div>
 
-        <div style="background: rgba(13, 19, 33, 0.8); border: 1px solid var(--border-glass); border-radius: 16px; padding: 1.25rem; margin-bottom: 1.5rem;">
-          <h4 style="color: #fff; font-size: 0.9rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem;">
-            <span>🛡️ Enterprise Security & Permissions</span>
-          </h4>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.6rem; font-size: 0.82rem; color: var(--text-muted);">
-            <div>✓ Encrypted Storage Sandbox</div>
-            <div>✓ Keyring Access Granted</div>
-            <div>✓ Gemini Copilot Telemetry Bridge</div>
-            <div>✓ Node P2P Mesh Routing</div>
-          </div>
-        </div>
+                        <div class="copilot-footer">
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="toggle-1" checked>
+                                <label for="toggle-1"></label>
+                                <span>Running</span>
+                            </div>
+                            <button class="btn btn-text">View Paywall →</button>
+                        </div>
+                    </div>
 
-        <div id="modal-install-terminal" style="display: none; background: #04060c; border: 1px solid var(--border-glow); border-radius: 14px; padding: 1rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan); margin-bottom: 1rem; max-height: 120px; overflow-y: auto;">
-          <div>[INFO] Initializing plugin installer for node deployment...</div>
-          <div id="terminal-log-content"></div>
-        </div>
-      </div>
+                    <!-- Module 2 -->
+                    <div class="copilot-card">
+                        <div class="copilot-header">
+                            <div class="copilot-badge badge-purple">PPP ACTIVE</div>
+                            <span class="copilot-type">Global Localization</span>
+                        </div>
+                        <h4>Purchasing Power Parity (PPP)</h4>
+                        <p class="copilot-desc">Dynamically adapts subscription prices across US, Europe, LatAm, & Asia to boost global sales.</p>
+                        
+                        <div class="copilot-metrics">
+                            <div class="metric">
+                                <span class="m-val">42 Countries</span>
+                                <span class="m-lbl">Targeted</span>
+                            </div>
+                            <div class="metric">
+                                <span class="m-val positive">+42.0%</span>
+                                <span class="m-lbl">Intl Revenue</span>
+                            </div>
+                            <div class="metric">
+                                <span class="m-val">Auto</span>
+                                <span class="m-lbl">Currency</span>
+                            </div>
+                        </div>
 
-      <div class="modal-footer">
-        <div id="modal-price-display" class="app-price-tag" style="font-size: 1rem;">Free</div>
-        <div style="display: flex; gap: 0.75rem;">
-          <button class="btn-card-action" onclick="closeAppModal()">Close</button>
-          <button id="modal-primary-btn" class="btn-card-action btn-card-primary" onclick="toggleModalAppInstallation()">
-            ⚡ Install & Deploy Plugin
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+                        <div class="copilot-footer">
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="toggle-2" checked>
+                                <label for="toggle-2"></label>
+                                <span>Running</span>
+                            </div>
+                            <button class="btn btn-text">Settings →</button>
+                        </div>
+                    </div>
 
-  <!-- REVENUECAT PAYWALL CONFIGURATION DRAWER -->
-  <div id="revenuecat-drawer" class="revenuecat-drawer">
-    <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center; background: rgba(8, 12, 22, 0.9);">
-      <div style="display: flex; align-items: center; gap: 0.75rem;">
-        <span style="font-size: 1.5rem;">⚡</span>
-        <div>
-          <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.15rem; margin: 0;">RevenueCat Substrate Paywall</h3>
-          <div style="font-size: 0.75rem; color: var(--text-muted);">StoreKit 2 & Google Play Entitlements Engine</div>
-        </div>
-      </div>
-      <button class="modal-close-btn" onclick="closeRevenueCatDrawer()">✕</button>
-    </div>
+                    <!-- Module 3 -->
+                    <div class="copilot-card">
+                        <div class="copilot-header">
+                            <div class="copilot-badge badge-blue">RETENTION SHIELD</div>
+                            <span class="copilot-type">Customer Center</span>
+                        </div>
+                        <h4>Churn Defense & Retention</h4>
+                        <p class="copilot-desc">Intercepts cancellation attempts in RevenueCat Customer Center with targeted promos & discounts.</p>
+                        
+                        <div class="copilot-metrics">
+                            <div class="metric">
+                                <span class="m-val">48.5%</span>
+                                <span class="m-lbl">Save Rate</span>
+                            </div>
+                            <div class="metric">
+                                <span class="m-val positive">420 Saved</span>
+                                <span class="m-lbl">Subscribers</span>
+                            </div>
+                            <div class="metric">
+                                <span class="m-val">$8,400</span>
+                                <span class="m-lbl">Saved MRR</span>
+                            </div>
+                        </div>
 
-    <div style="padding: 1.5rem; flex: 1; overflow-y: auto;">
-      <div style="background: linear-gradient(135deg, rgba(121, 40, 202, 0.2), rgba(0, 242, 254, 0.15)); border: 1px solid var(--border-glow); border-radius: 18px; padding: 1.25rem; margin-bottom: 1.5rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-          <span style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Active Account Entitlement</span>
-          <span class="badge-revenuecat" style="background: rgba(16, 185, 129, 0.2); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.4);">LIVE SUBSCRIBER</span>
-        </div>
-        <div style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #fff;" id="rc-active-tier-name">Enterprise Quantum Tier</div>
-        <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">
-          All 200 Apps Unlocked • Unlimited Gemini AI Copilot • ZK Security Mesh
-        </div>
-      </div>
+                        <div class="copilot-footer">
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="toggle-3" checked>
+                                <label for="toggle-3"></label>
+                                <span>Running</span>
+                            </div>
+                            <button class="btn btn-text">Rules →</button>
+                        </div>
+                    </div>
 
-      <h4 style="color: #fff; font-size: 0.9rem; margin-bottom: 0.85rem; font-family: var(--font-heading);">🔑 RevenueCat Entitlement Keys</h4>
-      <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem;">
-        <div style="display: flex; justify-content: space-between; background: rgba(13, 19, 33, 0.7); border: 1px solid var(--border-glass); padding: 0.75rem 1rem; border-radius: 12px; font-size: 0.84rem;">
-          <span style="font-family: var(--font-mono); color: var(--text-main);">sov_app_marketplace</span>
-          <span style="color: var(--accent-green); font-weight: 600;">ACTIVE (Unlocked)</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; background: rgba(13, 19, 33, 0.7); border: 1px solid var(--border-glass); padding: 0.75rem 1rem; border-radius: 12px; font-size: 0.84rem;">
-          <span style="font-family: var(--font-mono); color: var(--text-main);">sov_pro_tier</span>
-          <span style="color: var(--accent-green); font-weight: 600;">ACTIVE (Unlocked)</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; background: rgba(13, 19, 33, 0.7); border: 1px solid var(--border-glass); padding: 0.75rem 1rem; border-radius: 12px; font-size: 0.84rem;">
-          <span style="font-family: var(--font-mono); color: var(--text-main);">sov_quantum_zk_security</span>
-          <span style="color: var(--accent-green); font-weight: 600;" id="rc-flag-quantum">ACTIVE (Unlocked)</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; background: rgba(13, 19, 33, 0.7); border: 1px solid var(--border-glass); padding: 0.75rem 1rem; border-radius: 12px; font-size: 0.84rem;">
-          <span style="font-family: var(--font-mono); color: var(--text-main);">sov_gemini_ai_copilot</span>
-          <span style="color: var(--accent-green); font-weight: 600;">ACTIVE (Unlocked)</span>
-        </div>
-      </div>
+                </div>
 
-      <h4 style="color: #fff; font-size: 0.9rem; margin-bottom: 0.85rem; font-family: var(--font-heading);">💳 Paywall Offering Tiers</h4>
-      <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
-        <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 16px; padding: 1.1rem; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div style="font-family: var(--font-heading); font-weight: 700; color: #fff;">Starter Sovereign</div>
-            <div style="font-size: 0.78rem; color: var(--text-muted);">Basic 50 plugins • Standard node speed</div>
-            <div style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 700; margin-top: 0.3rem;">Free Always</div>
-          </div>
-          <button class="btn-card-action" onclick="simulateRevenueCatPurchase('free')">Select Tier</button>
-        </div>
-
-        <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 16px; padding: 1.1rem; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div style="font-family: var(--font-heading); font-weight: 700; color: #fff;">Pro Substrate</div>
-            <div style="font-size: 0.78rem; color: var(--text-muted);">150 Plugins • Gemini AI Copilot • 6 Cores</div>
-            <div style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 700; margin-top: 0.3rem;">$29.00 / month</div>
-          </div>
-          <button class="btn-card-action btn-card-primary" onclick="simulateRevenueCatPurchase('pro')">Upgrade Pro</button>
-        </div>
-
-        <div style="background: linear-gradient(135deg, rgba(0, 242, 254, 0.1), rgba(121, 40, 202, 0.15)); border: 1px solid var(--border-glow); border-radius: 16px; padding: 1.1rem; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div style="display: flex; align-items: center; gap: 0.4rem;">
-              <span style="font-family: var(--font-heading); font-weight: 700; color: #fff;">Enterprise Quantum</span>
-              <span style="background: var(--accent-magenta); color: #fff; font-size: 0.65rem; padding: 0.1rem 0.4rem; border-radius: 6px; font-weight: 800;">TOP TIER</span>
             </div>
-            <div style="font-size: 0.78rem; color: var(--text-muted);">All 200 Apps • Post-Quantum ZK Security • Priority Mesh</div>
-            <div style="font-family: var(--font-mono); color: var(--accent-magenta); font-weight: 700; margin-top: 0.3rem;">$199.00 / month</div>
-          </div>
-          <button class="btn-card-action btn-card-primary" style="background: linear-gradient(135deg, var(--accent-magenta), var(--accent-violet)); color: #fff;" onclick="simulateRevenueCatPurchase('quantum')">Unlock Quantum</button>
-        </div>
-      </div>
 
-      <div style="background: rgba(10, 15, 26, 0.8); border: 1px solid var(--border-glass); border-radius: 14px; padding: 1rem; text-align: center;">
-        <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.6rem;">StoreKit 2 / Google Play Billing Sandbox Testing</div>
-        <button class="btn-primary" style="width: 100%; justify-content: center;" onclick="simulateRevenueCatPurchase('quantum')">
-          ⚡ Simulate StoreKit 2 Purchase Success
-        </button>
-      </div>
-    </div>
-  </div>
+            <!-- Right Column: Live Webhook Pulse Feed & OneSignal Engagement -->
+            <div class="side-column">
+                
+                <!-- Quick Paywall Preview Card -->
+                <div class="side-card swap-card">
+                    <h4>Test Paywall v2 Checkout</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                        Simulate end-user checkout via RevenueCat Web Purchases SDK.
+                    </p>
+                    <button class="btn btn-primary btn-full" id="btn-test-checkout">
+                        Test 7-Day Free Trial ($19.99/mo)
+                    </button>
+                </div>
 
-  <!-- REAL-TIME APP SANDBOX DRAWER -->
-  <div id="app-sandbox-drawer" class="sandbox-drawer">
-    <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-glass); display: flex; justify-content: space-between; align-items: center; background: rgba(8, 12, 22, 0.95);">
-      <div style="display: flex; align-items: center; gap: 0.75rem;">
-        <span id="sandbox-app-icon" style="font-size: 1.6rem;">🤖</span>
-        <div>
-          <h3 id="sandbox-app-title" style="font-family: var(--font-heading); color: #fff; font-size: 1.15rem; margin: 0;">QuantAlpha Neural Predictor Sandbox</h3>
-          <div style="font-size: 0.75rem; color: var(--text-muted);">Real-Time Container Sandbox & Runtime Debugger</div>
-        </div>
-      </div>
-      <button class="modal-close-btn" onclick="closeSandboxDrawer()">✕</button>
-    </div>
+                <!-- Live RevenueCat Webhook Pulse Stream -->
+                <div class="side-card activity-card">
+                    <h4>Real-Time Webhook Pulse</h4>
+                    <div class="activity-feed" id="activity-feed">
+                        <div class="feed-item">
+                            <span class="icon">🎉</span>
+                            <div class="feed-details">
+                                <span class="title">INITIAL_PURCHASE</span>
+                                <span class="sub">App Store (US) • $19.99/mo Pro</span>
+                            </div>
+                            <span class="time">1m ago</span>
+                        </div>
 
-    <div style="padding: 1.5rem; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 1.25rem;">
-      <div style="background: rgba(13, 19, 33, 0.8); border: 1px solid var(--border-glass); border-radius: 14px; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
-        <div style="display: flex; align-items: center; gap: 0.6rem;">
-          <span style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Sandbox State:</span>
-          <span id="sandbox-status-pill" style="font-size: 0.85rem; font-weight: 700; color: var(--accent-green);">● RUNNING</span>
-        </div>
-        <div style="display: flex; gap: 0.5rem;">
-          <button class="btn-card-action btn-card-primary" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;" onclick="startSandboxSimulation()">▶ Start</button>
-          <button class="btn-card-action" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;" onclick="pauseSandboxSimulation()">⏸ Pause</button>
-          <button class="btn-card-action" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;" onclick="clearSandboxLogs()">🧹 Clear Logs</button>
-        </div>
-      </div>
+                        <div class="feed-item">
+                            <span class="icon">🔄</span>
+                            <div class="feed-details">
+                                <span class="title">RENEWAL</span>
+                                <span class="sub">Google Play (DE) • €17.99/mo Pro</span>
+                            </div>
+                            <span class="time">5m ago</span>
+                        </div>
 
-      <div class="sandbox-gauges-grid">
-        <div class="sandbox-gauge-card">
-          <div class="sandbox-gauge-header">
-            <span>CPU Utilization</span>
-            <span>2 Cores</span>
-          </div>
-          <div class="sandbox-gauge-value" id="sandbox-cpu-val">24%</div>
-          <div class="sandbox-progress-bg">
-            <div class="sandbox-progress-bar" id="sandbox-cpu-bar" style="width: 24%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));"></div>
-          </div>
-        </div>
+                        <div class="feed-item">
+                            <span class="icon">🛡️</span>
+                            <div class="feed-details">
+                                <span class="title">CUSTOMER_CENTER_SAVE</span>
+                                <span class="sub">Subscriber Retained • 50% Promo</span>
+                            </div>
+                            <span class="time">12m ago</span>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="sandbox-gauge-card">
-          <div class="sandbox-gauge-header">
-            <span>RAM Memory</span>
-            <span>Allocated</span>
-          </div>
-          <div class="sandbox-gauge-value" id="sandbox-ram-val">184 MB / 512 MB</div>
-          <div class="sandbox-progress-bg">
-            <div class="sandbox-progress-bar" id="sandbox-ram-bar" style="width: 36%; background: linear-gradient(90deg, var(--accent-violet), var(--accent-magenta));"></div>
-          </div>
-        </div>
-      </div>
-
-      <div style="background: rgba(10, 15, 26, 0.7); border: 1px solid var(--border-glass); border-radius: 12px; padding: 0.85rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem;">
-        <span style="color: var(--text-muted);">Network I/O Throughput:</span>
-        <span id="sandbox-net-val" style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 600;">3.8 MB/s IN | 1.2 MB/s OUT</span>
-      </div>
-
-      <div>
-        <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem;">Live Sandbox Runtime Console Stream</div>
-        <div id="sandbox-terminal-stream" class="sandbox-terminal-stream"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- REVENUECAT LIVE PAYWALL MODAL -->
-  <div id="revenuecat-paywall-modal" class="sovereign-modal-backdrop" style="display: none;">
-    <div class="sovereign-modal-card paywall-modal-card">
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
-          <span style="font-size: 1.5rem;">⚡</span>
-          <div>
-            <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.15rem; margin: 0;">RevenueCat Substrate Paywall & Entitlements</h3>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">StoreKit 2, Google Play Billing & Stripe Web Checkout</div>
-          </div>
-        </div>
-        <button class="copilot-close-btn" onclick="closeRevenueCatPaywallModal()">✕</button>
-      </div>
-
-      <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
-        <!-- CURRENT ENTITLEMENT STATUS -->
-        <div style="background: linear-gradient(135deg, rgba(121, 40, 202, 0.25), rgba(0, 242, 254, 0.15)); border: 1px solid var(--border-glow); border-radius: 18px; padding: 1.2rem; margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-          <div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Active RevenueCat Entitlement</div>
-            <div style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; color: #fff;" id="rc-modal-active-tier-name-overview">PRO Substrate Tier</div>
-            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;" id="rc-modal-active-tier-sub-overview">Quota: 94 / 500 AI Generations • Full Sovereign Office Unlocked</div>
-          </div>
-          <div id="rc-modal-badge-slot-overview">
-            <span class="entitlement-badge badge-pro">⚡ PRO ACTIVE</span>
-          </div>
-        </div>
-
-        <!-- BILLING CYCLE TOGGLE -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
-          <h4 style="color: #fff; font-size: 0.95rem; margin: 0; font-family: var(--font-heading);">💳 Select Entitlement Offering</h4>
-          <div class="paywall-billing-toggle">
-            <button class="paywall-billing-btn active" id="billing-btn-monthly-overview" onclick="setPaywallBilling('monthly')">Monthly</button>
-            <button class="paywall-billing-btn" id="billing-btn-annual-overview" onclick="setPaywallBilling('annual')">Annual (Save 20%)</button>
-          </div>
-        </div>
-
-        <!-- TIER GRID -->
-        <div class="paywall-tier-grid">
-          <!-- STARTER -->
-          <div class="paywall-tier-option">
-            <div>
-              <div style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #fff;">Starter Sovereign</div>
-              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">Basic workspace & formula grid</div>
-              <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 800; color: var(--accent-cyan); margin: 0.8rem 0;">Free</div>
-              <ul style="list-style: none; font-size: 0.8rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem;">
-                <li>✓ 100 AI Generations / mo</li>
-                <li>✓ 10 GB SovereignDrive Storage</li>
-                <li>✓ Basic Formulas (=SUM, =AVG)</li>
-                <li>✕ ZK Security Vault</li>
-                <li>✕ Multi-Artifact Copilot</li>
-              </ul>
             </div>
-            <button class="btn-card-action" onclick="simulateRevenueCatPurchase('free')">Downgrade Starter</button>
-          </div>
 
-          <!-- PRO -->
-          <div class="paywall-tier-option popular">
-            <div>
-              <div style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #fff;">PRO Substrate</div>
-              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">Complete Office & Financial AI Suite</div>
-              <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 800; color: var(--accent-violet); margin: 0.8rem 0;" id="price-pro-val-overview">$29.00 <span style="font-size: 0.75rem; color: var(--text-muted);">/ mo</span></div>
-              <ul style="list-style: none; font-size: 0.8rem; color: #e2e8f0; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem;">
-                <li>✓ 500 AI Generations / mo</li>
-                <li>✓ 100 GB SovereignDrive Vault</li>
-                <li>✓ All Advanced Formulas & NPV</li>
-                <li>✓ Multi-Artifact AI Drawer</li>
-                <li>✓ Priority Execution Speed</li>
-              </ul>
-            </div>
-            <button class="btn-card-action btn-card-primary" onclick="simulateRevenueCatPurchase('pro')">Upgrade PRO ($29)</button>
-          </div>
+        </section>
 
-          <!-- ENTERPRISE -->
-          <div class="paywall-tier-option">
-            <div>
-              <div style="display: flex; align-items: center; justify-content: space-between;">
-                <span style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #fff;">ENTERPRISE</span>
-                <span class="entitlement-badge badge-enterprise" style="font-size: 0.6rem; padding: 0.1rem 0.4rem;">MAX POWER</span>
-              </div>
-              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">200 Apps & Quantum ZK Vault</div>
-              <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 800; color: var(--accent-green); margin: 0.8rem 0;" id="price-enterprise-val-overview">$199.00 <span style="font-size: 0.75rem; color: var(--text-muted);">/ mo</span></div>
-              <ul style="list-style: none; font-size: 0.8rem; color: #e2e8f0; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem;">
-                <li>✓ 2,500 AI Generations / mo</li>
-                <li>✓ Unlimited ZK Drive Vault</li>
-                <li>✓ All 200 Marketplace Plugins</li>
-                <li>✓ 24/7 Priority SLA & Node Mesh</li>
-              </ul>
-            </div>
-            <button class="btn-card-action btn-card-primary" style="background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan)); color: #000; font-weight: 800;" onclick="simulateRevenueCatPurchase('enterprise')">Unlock Enterprise ($199)</button>
-          </div>
+    </main>
 
-          <!-- UNLIMITED AI -->
-          <div class="paywall-tier-option" style="background: linear-gradient(145deg, rgba(240,0,255,0.15), rgba(245,158,11,0.15)); border: 1px solid rgba(240,0,255,0.4);">
-            <div>
-              <div style="display: flex; align-items: center; justify-content: space-between;">
-                <span style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #fff;">UNLIMITED AI</span>
-                <span class="entitlement-badge badge-unlimited" style="font-size: 0.6rem; padding: 0.1rem 0.4rem;">INFINITY</span>
-              </div>
-              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">Zero rate limits & Autonomic Mesh</div>
-              <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 800; color: var(--accent-magenta); margin: 0.8rem 0;" id="price-unlimited-val-overview">$499.00 <span style="font-size: 0.75rem; color: var(--text-muted);">/ mo</span></div>
-              <ul style="list-style: none; font-size: 0.8rem; color: #fef08a; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem;">
-                <li>🚀 UNLIMITED AI Generations</li>
-                <li>⚡ Dedicated 6-Core Neural Mesh</li>
-                <li>💎 Custom SDK Integrations</li>
-                <li>🔒 Quantum Sovereign Cryptography</li>
-              </ul>
-            </div>
-            <button class="btn-card-action btn-card-primary" style="background: linear-gradient(135deg, var(--accent-magenta), var(--accent-gold)); color: #fff; font-weight: 800;" onclick="simulateRevenueCatPurchase('unlimited')">Activate Unlimited ($499)</button>
-          </div>
-        </div>
-
-        <!-- SANDBOX TEST PAYLOAD LOG -->
-        <div style="margin-top: 1rem;">
-          <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: bold; margin-bottom: 0.4rem; display: flex; justify-content: space-between;">
-            <span>⚡ STOREKIT 2 / REVENUECAT SDK TELEMETRY LOG</span>
-            <span style="color: var(--accent-green);">● API Status: 200 OK</span>
-          </div>
-          <div class="rc-sandbox-payload-box" id="rc-sandbox-payload-json-overview">
-            { "event": "ENTITLEMENT_SYNC_OK", "offering_id": "sov_pro_monthly", "entitlement": "sov_pro_tier", "subscriber_id": "user_sov_88492", "status": "active" }
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="toast-container" class="toast-container"></div>
-  <script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
