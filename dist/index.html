@@ -348,6 +348,8 @@
     </div>
     <div class="nav-links">
       <a href="#architecture">Architecture</a>
+      <a href="#infra">Infra</a>
+      <a href="#finance">Finance</a>
       <a href="#cache">Intelligent Cache</a>
       <a href="#workers">Workers</a>
       <a href="pages/nova.html">NOVA Protocol</a>
@@ -449,6 +451,25 @@
     </div>
   </section>
 
+  <section class="architecture" id="infra">
+    <h2 class="section-title">Live <strong>infra</strong> · KILN + POCKET</h2>
+    <p class="hero-sub" style="margin-bottom:24px">Measured on this machine. Pocket ships with KILN. Host down is reported as down.</p>
+    <div class="arch-grid" id="infra-grid">
+      <div class="arch-card"><h3>POCKET</h3><p id="infra-pocket">probing :8787…</p><span class="tag">KILN ECOSYSTEM</span></div>
+      <div class="arch-card"><h3>KILN</h3><p id="infra-kiln">reading registry…</p><span class="tag">ItsNotAILABS/KILN</span></div>
+      <div class="arch-card"><h3>XFIN</h3><p id="infra-xfin">loading engine…</p><span class="tag">FX SETTLEMENT</span></div>
+      <div class="arch-card"><h3>JOURNAL</h3><p id="infra-journal">zero-drift check…</p><span class="tag">DEBITS = CREDITS</span></div>
+    </div>
+  </section>
+  <section class="architecture" id="finance">
+    <h2 class="section-title">Live <strong>financial infra</strong></h2>
+    <div class="arch-grid" id="finance-grid">
+      <div class="arch-card"><h3>MINT</h3><p id="fin-mint">bonding curve…</p></div>
+      <div class="arch-card"><h3>BILLING</h3><p id="fin-bill">webhook HMAC…</p></div>
+      <div class="arch-card"><h3>TREASURY</h3><p id="fin-treas">XFIN treasury…</p></div>
+    </div>
+  </section>
+
   <section class="workers" id="workers">
     <h2 class="section-title">Sovereign <strong>AI Workers</strong></h2>
     <div class="workers-grid">
@@ -499,5 +520,29 @@
       <a href="pages/nova.html">NOVA Protocol</a>
     </p>
   </footer>
+<script>
+(async function(){
+  const api = (location.port === '8090' || location.hostname === '127.0.0.1')
+    ? '' : 'http://127.0.0.1:8090';
+  function set(id, t){ const el=document.getElementById(id); if(el) el.textContent=t; }
+  try{
+    const j = await fetch(api+'/api/v1/infra',{cache:'no-store'}).then(r=>r.json());
+    const p=j.pocket||{}; const k=j.kiln||{}; const f=(j.finance&&j.finance.engines)||{};
+    set('infra-pocket', p.host_up
+      ? ('UP · MCP '+((p.registry_counts&&p.registry_counts.mcp_apps)||0)+' · apps '+((p.registry_counts&&p.registry_counts.phoneai_apps)||0))
+      : ('DOWN · '+((p.health&&p.health.error)||'not listening on :8787')));
+    set('infra-kiln', 'pocket seeded='+(k.pocket_seeded?'yes':'no')+' · projects '+((k.project_ids||[]).join(', ')||'none'));
+    set('infra-xfin', f.xfin&&f.xfin.loaded ? ('treasury $'+f.xfin.treasury_usd+' · USD/EUR '+f.xfin.usd_eur) : ((f.xfin&&f.xfin.error)||'not loaded'));
+    const jr=(j.finance&&j.finance.journal)||{};
+    set('infra-journal', jr.balanced ? ('balanced · $'+jr.debits+' = $'+jr.credits) : 'UNBALANCED');
+    set('fin-mint', f.mint&&f.mint.loaded ? ('supply '+f.mint.circulating+' · burn '+(f.mint.burn_rate*100)+'% · spot $'+f.mint.spot) : 'not loaded');
+    set('fin-bill', f.billing&&f.billing.loaded ? ('empty HMAC rejected · renewal Δ '+f.billing.renewal_mrr_delta) : 'not loaded');
+    set('fin-treas', f.xfin&&f.xfin.loaded ? ('last settle $'+f.xfin.last_settle_usd) : 'not loaded');
+  }catch(e){
+    set('infra-pocket','open this page from dashboard :8090 — '+e);
+  }
+})();
+</script>
 </body>
 </html>
+

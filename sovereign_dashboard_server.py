@@ -579,6 +579,8 @@ def generate_openapi_spec() -> dict:
     endpoints = {
         "/api/v1/openapi.json": {"get": {"summary": "Retrieve OpenAPI 3.0 specification document", "tags": ["System"]}},
         "/api/v1/overview": {"get": {"summary": "Get system overview financial and operational metrics", "tags": ["Overview"]}},
+        "/api/v1/infra": {"get": {"summary": "Live KILN + POCKET + engine probes for the frontend", "tags": ["Infra"]}},
+        "/api/v1/finance": {"get": {"summary": "Live XFIN/MINT/billing + zero-drift journal for the frontend", "tags": ["Financial"]}},
         "/api/v1/agent/tools": {"get": {"summary": "List registered AI coding agent tools", "tags": ["Agent"]}},
         "/api/v1/agent/skills/catalog": {"get": {"summary": "Get agent skills catalog version and status", "tags": ["Agent"]}},
         "/api/v1/agent/status": {"get": {"summary": "Get AI coding agent runtime status", "tags": ["Agent"]}},
@@ -936,18 +938,21 @@ class SovereignDashboardHandler(SimpleHTTPRequestHandler):
             return
 
         if path in ["/", "/index.html"]:
-            dash_dir = os.path.join(os.path.dirname(__file__), "sovereign_dashboard")
-            target_file = os.path.join(dash_dir, "index.html")
-            if os.path.exists(target_file) and os.path.isfile(target_file):
-                with open(target_file, "rb") as f:
-                    content = f.read()
-                self.send_response(200)
-                self.send_header("Content-Type", "text/html; charset=utf-8")
-                self.send_header("Content-Length", str(len(content)))
-                self._send_cors_headers()
-                self.end_headers()
-                self.wfile.write(content)
-                return
+            here = os.path.dirname(__file__)
+            for target_file in (
+                os.path.join(here, "sovereign_dashboard", "index.html"),
+                os.path.join(here, "dist", "index.html"),
+            ):
+                if os.path.exists(target_file) and os.path.isfile(target_file):
+                    with open(target_file, "rb") as f:
+                        content = f.read()
+                    self.send_response(200)
+                    self.send_header("Content-Type", "text/html; charset=utf-8")
+                    self.send_header("Content-Length", str(len(content)))
+                    self._send_cors_headers()
+                    self.end_headers()
+                    self.wfile.write(content)
+                    return
         elif path == "/api/v1/openapi.json":
             self.send_json_response(generate_openapi_spec())
             return
@@ -975,6 +980,16 @@ class SovereignDashboardHandler(SimpleHTTPRequestHandler):
                 "timestamp": time.time(),
                 "checks": ready_checks
             }, status_code=status_code)
+        elif path in ("/api/v1/infra", "/api/v1/frontend/infra"):
+            from sovereign_infrastructure.frontend_infra import snapshot as infra_snapshot
+
+            self.send_json_response(infra_snapshot())
+            return
+        elif path in ("/api/v1/finance", "/api/v1/frontend/finance"):
+            from sovereign_infrastructure.frontend_infra import financial_snapshot
+
+            self.send_json_response(financial_snapshot())
+            return
         elif path == "/api/v1/overview":
             params = self.parse_query_params()
             res = {
