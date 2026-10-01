@@ -1,1 +1,0 @@
-# QuickBook Paywall Sync Skill

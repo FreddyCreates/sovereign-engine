@@ -8,18 +8,20 @@ import hmac
 import hashlib
 import json
 import logging
+import os
 from typing import Dict, Any, List
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("BillingCore")
 
 class RevenueCatBillingCore:
-    def __init__(self, webhook_secret: str = "rc_whsec_live_sovereign_2026"):
-        self.webhook_secret = webhook_secret
+    def __init__(self, webhook_secret: str = None):
+        # No baked-in secret: unset means webhooks cannot be verified.
+        self.webhook_secret = webhook_secret or os.environ.get("REVENUECAT_WEBHOOK_SECRET", "")
         logger.info("[Billing Core Engine] Initialized RevenueCat Billing & Multi-Store Sync Core.")
 
     def verify_webhook_signature(self, payload_bytes: bytes, signature_header: str) -> bool:
-        if not signature_header:
+        if not signature_header or not self.webhook_secret:
             return False
         expected_sig = hmac.new(self.webhook_secret.encode(), payload_bytes, hashlib.sha256).hexdigest()
         return hmac.compare_digest(expected_sig, signature_header)

@@ -1,19 +1,26 @@
-version: '3.8'
-
 services:
-  sovereign-substrate:
+  sovereign-books-api:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: sovereign_substrate_microservice
+    container_name: sovereign_books_api
     ports:
-      - "8089:8089"
+      - "8090:8090"
+    env_file:
+      - path: .env
+        required: false
     environment:
-      - REVENUECAT_WEBHOOK_SECRET=rc_whsec_live_sovereign_2026
       - PYTHONUNBUFFERED=1
+      - SOVEREIGN_BOOKS_DB=/app/data/sovereign_books.db
+      # Secrets are read from .env; nothing is baked into the image.
+      - REVENUECAT_SECRET_API_KEY=${REVENUECAT_SECRET_API_KEY:-}
+      - REVENUECAT_WEBHOOK_AUTH=${REVENUECAT_WEBHOOK_AUTH:-}
+      - REVENUECAT_WEBHOOK_SECRET=${REVENUECAT_WEBHOOK_SECRET:-}
+      - PLAID_CLIENT_ID=${PLAID_CLIENT_ID:-}
+      - PLAID_SECRET=${PLAID_SECRET:-}
     volumes:
-      - sqlite_data:/app/sovereign_revenuecat_protocols
+      - books_data:/app/data
     restart: unless-stopped
 
 volumes:
-  sqlite_data:
+  books_data:

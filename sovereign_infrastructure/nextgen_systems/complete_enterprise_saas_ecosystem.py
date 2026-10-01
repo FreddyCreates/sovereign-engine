@@ -24,6 +24,7 @@ Matrix Features:
 import time
 import math
 import logging
+import os
 import hmac
 import hashlib
 import json
@@ -774,12 +775,16 @@ class DeflationaryTokenomicsEngine:
 
 class RevenueCatSDKWebhookIngestionEngine:
     """17. RevenueCat SDK Webhook Ingestion Engine"""
-    def __init__(self, webhook_secret: str = "rc_whsec_live_sovereign_2026"):
-        self.webhook_secret = webhook_secret
+    def __init__(self, webhook_secret: str = None):
+        # The shared secret is the Authorization value configured in the
+        # RevenueCat dashboard. Unset means every webhook is rejected.
+        self.webhook_secret = webhook_secret or os.environ.get("REVENUECAT_WEBHOOK_SECRET", "")
         self.subscribers: Dict[str, Dict[str, Any]] = {}
 
     def verify_webhook_signature(self, payload_bytes: bytes, signature_header: Optional[str] = None) -> bool:
         if not signature_header:
+            return False
+        if not self.webhook_secret:
             return False
         expected_sig = hmac.new(self.webhook_secret.encode('utf-8'), payload_bytes, hashlib.sha256).hexdigest()
         sig_to_check = signature_header.replace("t=", "").replace("v1=", "").split(",")[-1].strip()

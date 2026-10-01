@@ -11,8 +11,8 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+/lib/
+/lib64/
 parts/
 sdist/
 var/
@@ -20,6 +20,8 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.venv/
+/data/
 *.db
 *.sqlite3
 
@@ -42,3 +44,21 @@ skyhi-client/dist/
 .gemini/
 .env
 *.log
+
+# Runtime memory written by agent engines during tests and server runs
+.agents/inner_memory/
+.agents/projects/
+
+# Android: per-machine settings, signing material, build caches
+android-app/local.properties
+android-app/.gradle/
+android-app/.kotlin/
+android-app/build/
+android-app/app/build/
+*.jks
+*.keystore
+*.pepk
+
+# Books SQLite database
+data/*.db
+data/*.db-journal

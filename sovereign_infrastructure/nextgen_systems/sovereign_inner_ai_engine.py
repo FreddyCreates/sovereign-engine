@@ -66,7 +66,7 @@ class SovereignZKDilithiumProofEngine:
     """
 
     @staticmethod
-    def generate_proof(data_bytes: bytes, secret_key: str = "sovereign_sec_key_2026") -> Dict[str, Any]:
+    def generate_proof(data_bytes: bytes, secret_key: str = os.environ.get("SOVEREIGN_PROOF_SECRET", "sovereign_dev_proof_key")) -> Dict[str, Any]:
         if ZKDilithiumProofGenerator is not None:
             try:
                 return ZKDilithiumProofGenerator.generate_proof(data_bytes, secret_key)
@@ -88,7 +88,7 @@ class SovereignZKDilithiumProofEngine:
         }
 
     @staticmethod
-    def verify_proof(data_bytes: bytes, proof_dict: Dict[str, Any], secret_key: str = "sovereign_sec_key_2026") -> bool:
+    def verify_proof(data_bytes: bytes, proof_dict: Dict[str, Any], secret_key: str = os.environ.get("SOVEREIGN_PROOF_SECRET", "sovereign_dev_proof_key")) -> bool:
         expected_sha = hashlib.sha256(data_bytes + secret_key.encode('utf-8')).hexdigest()
         provided_hash = proof_dict.get("proof_hash", "").replace("0x", "")
         return expected_sha == provided_hash or proof_dict.get("verified") == "TRUE"

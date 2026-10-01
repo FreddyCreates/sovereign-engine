@@ -8,6 +8,7 @@ import time
 import math
 import logging
 import json
+import os
 import hashlib
 import uuid
 import re
@@ -440,7 +441,7 @@ class ZKDilithiumProofGenerator:
         }
 
     @staticmethod
-    def generate_proof(data_bytes: bytes, secret_key: str = "sovereign_sec_key_2026") -> Dict[str, Any]:
+    def generate_proof(data_bytes: bytes, secret_key: str = os.environ.get("SOVEREIGN_PROOF_SECRET", "sovereign_dev_proof_key")) -> Dict[str, Any]:
         """
         Generates post-quantum ZK Dilithium5 proof signature and ZK-SNARK commitment.
         """
@@ -460,7 +461,7 @@ class ZKDilithiumProofGenerator:
         return proof_obj
 
     @staticmethod
-    def verify_proof(data_bytes: bytes, proof_dict: Union[Dict[str, Any], str], secret_key: str = "sovereign_sec_key_2026") -> Dict[str, Any]:
+    def verify_proof(data_bytes: bytes, proof_dict: Union[Dict[str, Any], str], secret_key: str = os.environ.get("SOVEREIGN_PROOF_SECRET", "sovereign_dev_proof_key")) -> Dict[str, Any]:
         """
         Verifies ZK Dilithium5 signature commitment against original data payload.
         """
@@ -496,7 +497,7 @@ class ZKDilithiumProofGenerator:
         else:
             raw_bytes = doc_payload
 
-        sec_key = private_key or "sovereign_sec_key_2026"
+        sec_key = private_key or os.environ.get("SOVEREIGN_PROOF_SECRET", "sovereign_dev_proof_key")
         return cls.generate_proof(raw_bytes, secret_key=sec_key)
 
     @classmethod

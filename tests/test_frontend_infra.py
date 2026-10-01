@@ -21,6 +21,8 @@ class TestFrontendInfra(unittest.TestCase):
         self.assertEqual(s["schema"], "sovereign.frontend_infra.v1")
         self.assertTrue(s["pocket"]["comes_with_kiln"])
         self.assertEqual(s["pocket"]["mcp"], "http://127.0.0.1:8787")
+        if not s["kiln"].get("registry"):
+            self.skipTest("KILN registry not on this disk")
         self.assertIn("pocket", s["kiln"].get("project_ids") or [])
         self.assertTrue(s["kiln"].get("pocket_seeded"))
 

@@ -1,0 +1,24 @@
+# Copy to android-app/local.properties (git-ignored). Values can also be
+# supplied as environment variables with the same names.
+
+# Android SDK location (Android Studio sets this automatically).
+sdk.dir=/path/to/Android/sdk
+
+# RevenueCat public SDK key for the Google Play app. Found under
+# Project settings > Apps > Google Play in the RevenueCat dashboard.
+REVENUECAT_GOOGLE_API_KEY=goog_xxxxxxxxxxxxxxxxxxxxxxxx
+REVENUECAT_ENTITLEMENT_ID=pro_access
+
+# Where the Sovereign Books API is running. 10.0.2.2 reaches the host
+# machine from the Android emulator.
+BOOKS_API_BASE_URL=http://10.0.2.2:8090
+
+# Release signing. Leave unset for unsigned CI bundles.
+KEYSTORE_PATH=/absolute/path/to/upload-keystore.jks
+KEYSTORE_PASSWORD=
+KEY_ALIAS=upload
+KEY_PASSWORD=
+
+# Bump for every Play Console upload.
+VERSION_CODE=1
+VERSION_NAME=1.0.0

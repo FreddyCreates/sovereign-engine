@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.11](https://img.shields.io/badge/Python-3.11%20Pro-blue.svg)](https://www.python.org/)
 [![Android 14](https://img.shields.io/badge/Android-SDK%2034%20Kotlin-green.svg)](https://developer.android.com/)
-[![Tests Passed](https://img.shields.io/badge/Tests-492%2F492%20Passed-brightgreen.svg)]()
+[![CI](https://github.com/ThyFriendlyFox/sovereign-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/ThyFriendlyFox/sovereign-engine/actions/workflows/ci.yml)
 [![Docker Verified](https://img.shields.io/badge/Docker-Multi--Stage%20Verified-blue.svg)](https://www.docker.com/)
 
 **SOVEREIGN OS** is an enterprise-grade autonomous operating system, multi-agent fintech substrate, virtual computer cloud engine, and embedded application matrix engineered for **RevenueCat Shipaton 2026**. 
@@ -14,6 +14,37 @@
 Rather than treating third-party SaaS integrations as isolated, passive web destinations, SOVEREIGN OS embeds **200 real-world SaaS applications** directly into a unified operating system kernel anchored by a strict double-entry General Ledger state vector \(\mathbf{S}_t \in \mathbb{R}^n\) enforcing \(\sum \text{Debits} = \sum \text{Credits}\). 
 
 It connects mobile applications (Android Kotlin / Jetpack Compose & iOS StoreKit 2), connected Wear OS / IoT hardware nodes, native **Model Context Protocol (MCP)** JSON-RPC 2.0 interfaces, a **26 A-to-Z Workflow Mesh**, and global app marketplaces (**Apple App Store, Google Play Store, Samsung Galaxy Store, & Stripe Web**).
+
+---
+
+## Run it
+
+```bash
+# API (SQLite, mock bank data unless PLAID_* is set)
+pip install -r requirements.txt
+python sovereign_dashboard_server.py          # http://localhost:8090
+
+# Web console (Next.js)
+cd web && npm ci && npm run dev               # http://localhost:3000, NEXT_PUBLIC_BOOKS_API=http://localhost:8090
+
+# Android app (Kotlin, Jetpack Compose, RevenueCat)
+cd android-app && cp local.properties.example local.properties && ./gradlew :app:assembleDebug
+
+# Tests
+python -m pytest tests -q
+```
+
+Secrets are never in source. Copy `.env.example` to `.env` for the API and
+`android-app/local.properties.example` to `android-app/local.properties` for the app.
+
+## Sovereign Books for Android
+
+`android-app/` is the Google Play client: an approval card stack (confirm a
+category, approve a research-credit claim file, send an invoice follow-up),
+cash and runway, the Section 41 tax credit estimate, and a Pro subscription
+through RevenueCat Paywalls and Customer Center. See `android-app/README.md`
+for the layout and `docs/play-store/` for the privacy policy, listing copy,
+data safety answers, and the release checklist.
 
 ---
 

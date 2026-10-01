@@ -644,7 +644,8 @@ class GoLiveCompilerRunner:
 
     def compile_and_run(self, source_code: str, args: Optional[List[str]] = None, timeout: float = 10.0) -> Dict[str, Any]:
         """Compiles and executes Go code via `go run` or pure Python fallback interpreter."""
-        if is_go_available():
+        looks_like_go = bool(re.search(r"^\s*package\s+\w+", source_code or "", re.M))
+        if is_go_available() and looks_like_go:
             with tempfile.TemporaryDirectory() as tmpdir:
                 go_file = os.path.join(tmpdir, "main.go")
                 with open(go_file, "w", encoding="utf-8") as f:

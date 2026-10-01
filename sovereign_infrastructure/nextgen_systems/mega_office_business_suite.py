@@ -2293,7 +2293,7 @@ class SovereignRevenueCatSuiteEngine:
     RevenueCat SDK Webhook Ingestion, Entitlement Gating ('sovereign_office_pro', 'sovereign_office_enterprise'),
     Dynamic Paywall AST Synthesis, and Long-Term SaaS Usage Metering & LTV Engine.
     """
-    def __init__(self, webhook_secret: str = "rc_whsec_live_sovereign_2026"):
+    def __init__(self, webhook_secret: str = None):
         self.webhook_engine = RevenueCatSDKWebhookIngestionEngine(webhook_secret=webhook_secret)
         self.gating_engine = RevenueCatEntitlementGatingEngine(webhook_engine=self.webhook_engine)
         self.paywall_engine = DynamicPaywallASTSynthesizer()

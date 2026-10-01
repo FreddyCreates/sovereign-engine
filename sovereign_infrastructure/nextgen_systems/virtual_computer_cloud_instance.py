@@ -223,17 +223,108 @@ class AgentVMInstance:
             
         real_cwd = self._resolve_virtual_cwd()
         os.makedirs(real_cwd, exist_ok=True)
-        
-        # For cross-platform compatibility in tests (echo, cat, mkdir)
+
+        # Host execution is opt-in. The HTTP API exposes this method, so by
+        # default commands run inside the virtual shell below and never touch
+        # a real process on the host.
+        if os.environ.get("SOVEREIGN_VM_HOST_EXEC") == "1":
+            return self._run_on_host(cmd_str, real_cwd)
+        return self._run_virtual(cmd_str, real_cwd)
+
+    # Commands the virtual shell answers without spawning a process.
+    _SIMULATED_COMMANDS = {
+        "docker": "CONTAINER ID   IMAGE                 COMMAND   STATUS         NAMES\n",
+        "git": "On branch main\nnothing to commit, working tree clean",
+        "python": "Python 3.11.0",
+        "python3": "Python 3.11.0",
+        "curl": "HTTP/1.1 200 OK",
+        "ps": "  PID TTY          TIME CMD\n    1 ?        00:00:00 init",
+        "top": "Tasks: 1 total, 1 running, 0 sleeping",
+        "df": "Filesystem  Size  Used Avail Use% Mounted on\n/dev/vda1   64G   2G   62G   4% /",
+        "free": "              total        used        free\nMem:        8192000      512000     7680000",
+        "uname": "Linux sovereign-vm 6.8.0-sovereign-kernel x86_64 GNU/Linux",
+        "whoami": "agent",
+        "hostname": "sovereign-vm",
+        "true": "",
+    }
+
+    def _safe_join(self, real_cwd: str, rel: str) -> Optional[str]:
+        """Resolve a path inside the VM directory, refusing traversal outside it."""
+        root = os.path.realpath(self.workspace_dir)
+        candidate = os.path.realpath(os.path.join(real_cwd, rel))
+        if candidate == root or candidate.startswith(root + os.sep):
+            return candidate
+        return None
+
+    def _run_virtual(self, cmd_str: str, real_cwd: str) -> Dict[str, Any]:
+        """A small built-in shell: file operations stay inside the VM directory."""
+        ok = {"exit_code": 0, "stdout": "", "stderr": ""}
+        parts = cmd_str.split()
+        if not parts:
+            return ok
+        name, args = parts[0], parts[1:]
+
+        try:
+            if name == "echo":
+                text = cmd_str[len("echo"):].strip()
+                target = None
+                if ">" in text:
+                    text, target = [t.strip() for t in text.split(">", 1)]
+                text = text.strip('"').strip("'")
+                if target:
+                    dest = self._safe_join(real_cwd, target)
+                    if dest is None:
+                        return {"exit_code": 1, "stdout": "", "stderr": "path outside VM"}
+                    with open(dest, "w", encoding="utf-8") as f:
+                        f.write(text + "\n")
+                    return ok
+                return {"exit_code": 0, "stdout": text, "stderr": ""}
+            if name == "cat":
+                outs = []
+                for a in args:
+                    dest = self._safe_join(real_cwd, a)
+                    if dest is None or not os.path.isfile(dest):
+                        return {"exit_code": 1, "stdout": "", "stderr": f"cat: {a}: No such file"}
+                    with open(dest, encoding="utf-8") as f:
+                        outs.append(f.read().rstrip("\n"))
+                return {"exit_code": 0, "stdout": "\n".join(outs), "stderr": ""}
+            if name == "ls":
+                target = next((a for a in args if not a.startswith("-")), ".")
+                dest = self._safe_join(real_cwd, target)
+                if dest is None or not os.path.isdir(dest):
+                    return {"exit_code": 1, "stdout": "", "stderr": f"ls: {target}: No such directory"}
+                return {"exit_code": 0, "stdout": "\n".join(sorted(os.listdir(dest))), "stderr": ""}
+            if name in ("mkdir", "touch", "rm"):
+                for a in args:
+                    if a.startswith("-"):
+                        continue
+                    dest = self._safe_join(real_cwd, a)
+                    if dest is None:
+                        return {"exit_code": 1, "stdout": "", "stderr": "path outside VM"}
+                    if name == "mkdir":
+                        os.makedirs(dest, exist_ok=True)
+                    elif name == "touch":
+                        open(dest, "a", encoding="utf-8").close()
+                    elif os.path.isdir(dest):
+                        shutil.rmtree(dest)
+                    elif os.path.exists(dest):
+                        os.remove(dest)
+                return ok
+            if name in self._SIMULATED_COMMANDS:
+                return {"exit_code": 0, "stdout": self._SIMULATED_COMMANDS[name], "stderr": ""}
+        except OSError as e:
+            return {"exit_code": 1, "stdout": "", "stderr": str(e)}
+
+        return {"exit_code": 127, "stdout": "", "stderr": f"{name}: command not found"}
+
+    def _run_on_host(self, cmd_str: str, real_cwd: str) -> Dict[str, Any]:
+        """Real process execution. Only reachable when SOVEREIGN_VM_HOST_EXEC=1."""
         if sys.platform == "win32":
-            # Translate unix commands for windows cmd
             if cmd_str.startswith("cat "):
                 cmd_str = cmd_str.replace("cat ", "type ", 1)
-            # Use powershell for better bash-like support or just cmd
             run_cmd = f"cmd.exe /c {cmd_str}"
         else:
             run_cmd = cmd_str
-
         try:
             result = subprocess.run(
                 run_cmd,
@@ -252,7 +343,6 @@ class AgentVMInstance:
         except subprocess.TimeoutExpired:
             return {"exit_code": 124, "stdout": "", "stderr": "Command timed out"}
         except Exception as e:
-            # If the command isn't found or fails to execute entirely
             return {"exit_code": 127, "stdout": "", "stderr": f"command not found or error: {str(e)}"}
 
 class VirtualComputerCloudInstance:

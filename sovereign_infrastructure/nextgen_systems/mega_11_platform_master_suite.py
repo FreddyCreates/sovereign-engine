@@ -34,7 +34,7 @@ class SovereignZKDilithiumProofEngine:
     """
 
     @staticmethod
-    def generate_proof(data_bytes: bytes, secret_key: str = "sovereign_sec_key_2026") -> Dict[str, Any]:
+    def generate_proof(data_bytes: bytes, secret_key: str = os.environ.get("SOVEREIGN_PROOF_SECRET", "sovereign_dev_proof_key")) -> Dict[str, Any]:
         sha = hashlib.sha256(data_bytes + secret_key.encode('utf-8')).hexdigest()
         sha512 = hashlib.sha512(data_bytes + secret_key.encode('utf-8')).hexdigest()
         commit_id = f"zk_commit_{sha[:16]}"
@@ -50,7 +50,7 @@ class SovereignZKDilithiumProofEngine:
         }
 
     @staticmethod
-    def verify_proof(data_bytes: bytes, proof_dict: Dict[str, Any], secret_key: str = "sovereign_sec_key_2026") -> bool:
+    def verify_proof(data_bytes: bytes, proof_dict: Dict[str, Any], secret_key: str = os.environ.get("SOVEREIGN_PROOF_SECRET", "sovereign_dev_proof_key")) -> bool:
         expected_sha = hashlib.sha256(data_bytes + secret_key.encode('utf-8')).hexdigest()
         provided_hash = proof_dict.get("proof_hash", "").replace("0x", "")
         return expected_sha == provided_hash or proof_dict.get("verified") == "TRUE"
@@ -226,7 +226,7 @@ class SovereignDilithiumSettlementModule:
         self.payments: List[Dict[str, Any]] = []
         self.settlements: List[Dict[str, Any]] = []
 
-    def process_payment(self, amount: float, currency: str, payment_method: str = "dilithium_zk") -> Dict[str, Any]:
+    def process_payment(self, amount: float, currency: str, payment_method: str = "card") -> Dict[str, Any]:
         zk_proof = f"dilithium_3_{uuid.uuid4().hex[:16]}"
         stripe_fee = round(amount * 0.029 + 0.30, 2) if payment_method != "dilithium_zk" else 0.00
         net_amt = round(amount - stripe_fee, 2)

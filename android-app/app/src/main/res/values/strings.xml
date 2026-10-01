@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">Sovereign Books</string>
+    <string name="tagline">Your books run themselves. You approve the exceptions.</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_approvals">Approvals</string>
+    <string name="nav_credits">Credits</string>
+    <string name="nav_pro">Pro</string>
+    <string name="nav_settings">Settings</string>
+
+    <string name="home_cash">Cash on hand</string>
+    <string name="home_runway">Runway</string>
+    <string name="home_months">%1$s months</string>
+    <string name="home_needs_you">%1$d items need you</string>
+    <string name="home_all_clear">Inbox clear. Nothing needs you.</string>
+    <string name="home_review">Review</string>
+    <string name="home_agent_log">What the agents did today</string>
+    <string name="home_bank_connected">Bank connected</string>
+    <string name="home_bank_demo">Demo bank data</string>
+    <string name="home_bank_offline">Offline sample data</string>
+
+    <string name="approve">Approve</string>
+    <string name="skip">Skip</string>
+    <string name="send">Send</string>
+    <string name="confirm_category">Confirm category</string>
+    <string name="agent_confidence">Agent confidence</string>
+    <string name="similar_charges">Similar charges</string>
+    <string name="evidence">Evidence</string>
+    <string name="approvals_done">All caught up</string>
+    <string name="approvals_done_body">Every exception has a decision. The agents take it from here.</string>
+    <string name="approvals_locked">Free plan covers %1$d approvals a day. Upgrade for unlimited approvals and the tax credit engine.</string>
+
+    <string name="credits_title">Tax credits found</string>
+    <string name="credits_total">Estimated credits this quarter</string>
+    <string name="credits_qre">Qualified research expenses</string>
+    <string name="credits_state">State credit</string>
+    <string name="credits_refs">Statutory references</string>
+    <string name="credits_locked">The tax credit engine is a Pro feature.</string>
+    <string name="credits_state_picker">State</string>
+
+    <string name="pro_title">Sovereign Books Pro</string>
+    <string name="pro_body">Unlimited approvals, the Section 41 tax credit engine, runway alerts, and accountant export.</string>
+    <string name="pro_active">Pro is active</string>
+    <string name="pro_inactive">Free plan</string>
+    <string name="pro_upgrade">See plans</string>
+    <string name="pro_restore">Restore purchases</string>
+    <string name="pro_manage">Manage subscription</string>
+    <string name="pro_not_configured">Purchases are not configured in this build.</string>
+
+    <string name="settings_api">Books API base URL</string>
+    <string name="settings_api_hint">http://10.0.2.2:8090</string>
+    <string name="settings_user">App user ID</string>
+    <string name="settings_save">Save and reload</string>
+    <string name="settings_source">Data source</string>
+    <string name="settings_privacy">Privacy policy</string>
+    <string name="settings_version">Version %1$s</string>
+    <string name="settings_demo_mode">Use offline sample data</string>
+
+    <string name="tax_question">Tax question</string>
+    <string name="tax_deductible_pct">%1$d%% deductible</string>
+    <string name="tax_pick_answer">Pick who was there to set the deduction</string>
+    <string name="tax_result">%1$s of %2$s deductible</string>
+    <string name="credits_next">Go do this next</string>
+    <string name="credits_deductions">Deductions this year</string>
+    <string name="credits_deductible">Deductible</string>
+    <string name="credits_nondeductible">Not deductible</string>
+    <string name="credits_open">Open questions</string>
+    <string name="credits_opportunities">Opportunities, nearest first</string>
+    <string name="credits_status_close">Close</string>
+    <string name="credits_status_qualified">Qualified</string>
+    <string name="credits_status_not_yet">Not yet</string>
+    <string name="credits_by_class">By tax class</string>
+    <string name="credits_research">Research credit estimate</string>
+    <string name="credits_more_locked">%1$d more opportunities with Pro</string>
+
+    <string name="error_network">Could not reach the books API. Showing sample data.</string>
+    <string name="retry">Retry</string>
+</resources>

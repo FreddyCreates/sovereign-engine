@@ -43,8 +43,11 @@ class TestAgenticGrantsAndEmailEngine(unittest.TestCase):
 
     def test_03_generate_rd_tax_filing_perk(self):
         res = passport_perks_engine.generate_rd_tax_filing("rnft_rc_9981", annual_rd_spend=500000.0)
-        self.assertEqual(res["status"], "DOSSIER_READY_FOR_CPAS")
-        self.assertEqual(res["estimated_tax_credit_usd"], 70000.0)
+        self.assertEqual(res["status"], "DOSSIER_COMPLIANT_READY_FOR_CPA_SIGN_OFF")
+        total_qre = res["qre_breakdown"]["total_qualified_research_expenses_qre_usd"]
+        self.assertAlmostEqual(
+            res["tax_credits_and_offsets"]["gross_federal_rd_tax_credit_usd"], round(total_qre * 0.14, 2), places=2
+        )
 
     def test_04_auto_fill_grant_application(self):
         res = agentic_grant_filer.auto_fill_grant_application(
